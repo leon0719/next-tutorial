@@ -151,7 +151,7 @@
 			"importantNote": "error.tsx must be a Client Component (\"use client\"). Error boundaries use React's class component lifecycle which only works on the client.",
 			"basicErrorTitle": "Basic error.tsx",
 			"globalErrorTitle": "global-error.tsx",
-			"globalErrorDescription": "Catches errors in the root layout itself. It must render its own {'<'}html{'>'} and {'<'}body{'>'} tags since it replaces the root layout when active.",
+			"globalErrorDescription": "Catches errors in the root layout itself. It must render its own html and body tags since it replaces the root layout when active.",
 			"errorRecoveryTitle": "Error Recovery with reset()",
 			"howResetWorksTitle": "How reset() works",
 			"howResetWorksDesc1": "The reset() function attempts to re-render the error boundary's children. If the error was transient (e.g., a network hiccup), the re-render may succeed without the error recurring.",

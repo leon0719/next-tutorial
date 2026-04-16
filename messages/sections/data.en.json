@@ -99,7 +99,7 @@
 			"revalidateTagLabel": "revalidateTag",
 			"updateTagLabel": "updateTag (v16 new)",
 			"keyPoints": "Key Points",
-			"tagOverPath": "Tag {'>'} Path",
+			"tagOverPath": "Tag > Path",
 			"tagOverPathDescription": "Prefer revalidateTag over revalidatePath. Tags are precise — you invalidate exactly the data that changed, not an entire page.",
 			"updateTagForForms": "updateTag for Forms",
 			"updateTagForFormsDescription": "Use updateTag in Server Actions so the user sees their change immediately after submitting a form. revalidateTag would show stale data first.",
@@ -140,7 +140,7 @@
 		},
 		"streaming": {
 			"title": "Streaming",
-			"description": "Streaming lets you progressively render UI. Wrap slow components in {'<'}Suspense{'>'} to show a fallback instantly while the content loads.",
+			"description": "Streaming lets you progressively render UI. Wrap slow components in Suspense to show a fallback instantly while the content loads.",
 			"liveDemo": "Live Demo — Watch Components Stream In",
 			"liveDemoDescription": "Posts load after ~2s, Stats after ~4s. The rest of the page is instant. Refresh to see it again!",
 			"howItWorks": "How It Works",

@@ -99,7 +99,7 @@
 			"revalidateTagLabel": "revalidateTag",
 			"updateTagLabel": "updateTag（v16 新功能）",
 			"keyPoints": "重點整理",
-			"tagOverPath": "Tag {'>'} Path",
+			"tagOverPath": "Tag > Path",
 			"tagOverPathDescription": "優先使用 revalidateTag 而非 revalidatePath。Tag 更精確 — 你只使變更的資料失效，而非整個頁面。",
 			"updateTagForForms": "updateTag 用於表單",
 			"updateTagForFormsDescription": "在 Server Actions 中使用 updateTag，讓使用者在提交表單後立即看到變更。revalidateTag 會先顯示過期資料。",
@@ -140,7 +140,7 @@
 		},
 		"streaming": {
 			"title": "Streaming",
-			"description": "Streaming 讓你漸進式渲染 UI。用 {'<'}Suspense{'>'} 包裹慢速元件，立即顯示替代內容，同時載入實際內容。",
+			"description": "Streaming 讓你漸進式渲染 UI。用 Suspense 包裹慢速元件，立即顯示替代內容，同時載入實際內容。",
 			"liveDemo": "即時展示 — 觀看元件串流載入",
 			"liveDemoDescription": "文章在 ~2 秒後載入，統計在 ~4 秒後載入。頁面其餘部分是即時的。重新整理看看！",
 			"howItWorks": "運作原理",

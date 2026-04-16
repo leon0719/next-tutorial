@@ -151,7 +151,7 @@
 			"importantNote": "error.tsx 必須是客戶端元件（\"use client\"）。錯誤邊界使用 React 的類別元件生命週期，只在客戶端運作。",
 			"basicErrorTitle": "基本 error.tsx",
 			"globalErrorTitle": "global-error.tsx",
-			"globalErrorDescription": "捕捉根佈局本身的錯誤。它必須渲染自己的 {'<'}html{'>'} 和 {'<'}body{'>'} 標籤，因為當它啟用時會取代根佈局。",
+			"globalErrorDescription": "捕捉根佈局本身的錯誤。它必須渲染自己的 html 和 body 標籤，因為當它啟用時會取代根佈局。",
 			"errorRecoveryTitle": "使用 reset() 恢復錯誤",
 			"howResetWorksTitle": "reset() 的運作方式",
 			"howResetWorksDesc1": "reset() 函式嘗試重新渲染錯誤邊界的子元素。如果錯誤是暫時性的（例如網路波動），重新渲染可能會成功而不會再次發生錯誤。",

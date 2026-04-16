@@ -21,7 +21,7 @@
 		},
 		"images": {
 			"title": "Image Optimization",
-			"description": "The next/image component extends HTML {'<'}img{'>'} with automatic optimization, lazy loading, and responsive sizing.",
+			"description": "The next/image component extends HTML img with automatic optimization, lazy loading, and responsive sizing.",
 			"liveExampleTitle": "Live Example",
 			"liveExampleDesc": "The Next.js logo below uses the Image component from next/image.",
 			"fillModeTitle": "Fill Mode",
