@@ -1,12 +1,17 @@
 import { Hono } from "hono";
+import { zValidator } from "@hono/zod-validator";
+import { z } from "zod";
 import { ImageResponse } from "next/og";
 
 export const ogRoute = new Hono();
 
-ogRoute.get("/", (c) => {
-  const title = c.req.query("title") || "Next.js Learning Hub";
-  const description =
-    c.req.query("description") || "Interactive feature showcase";
+const ogQuerySchema = z.object({
+  title: z.string().max(100).default("Next.js Learning Hub"),
+  description: z.string().max(200).default("Interactive feature showcase"),
+});
+
+ogRoute.get("/", zValidator("query", ogQuerySchema), (c) => {
+  const { title, description } = c.req.valid("query");
 
   return new ImageResponse(
     (

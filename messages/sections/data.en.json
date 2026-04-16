@@ -99,7 +99,7 @@
 			"revalidateTagLabel": "revalidateTag",
 			"updateTagLabel": "updateTag (v16 new)",
 			"keyPoints": "Key Points",
-			"tagOverPath": "Tag > Path",
+			"tagOverPath": "Tag over Path",
 			"tagOverPathDescription": "Prefer revalidateTag over revalidatePath. Tags are precise — you invalidate exactly the data that changed, not an entire page.",
 			"updateTagForForms": "updateTag for Forms",
 			"updateTagForFormsDescription": "Use updateTag in Server Actions so the user sees their change immediately after submitting a form. revalidateTag would show stale data first.",

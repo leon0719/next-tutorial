@@ -42,7 +42,7 @@
 			"keyLoadingState": "Loading 狀態",
 			"keyLoadingStateDesc": "loading 選項讓你在元件載入時顯示佔位符，適合 skeleton UI。",
 			"keyNamedExports": "Named Exports",
-			"keyNamedExportsDesc": "使用箭頭函式形式引入 named exports：dynamic(() => import('./mod').then(m => m.MyComponent))。"
+			"keyNamedExportsDesc": "使用箭頭函式形式引入 named exports：dynamic(() ='' import('./mod').then(m ='' m.MyComponent))。"
 		}
 	},
 	"routing": {
@@ -68,7 +68,7 @@
 			"keyMultipleValues": "多重值",
 			"keyMultipleValuesDesc": "一個 key 可以有多個值（如 ?color=red&color=blue），值會變成字串陣列。",
 			"keyTypeSignature": "型別簽名",
-			"keyTypeSignatureDesc": "型別是 Promise<Record<string, string | string[] | undefined>>。務必處理可選參數的 undefined 情況。"
+			"keyTypeSignatureDesc": "型別是 Promise，包含 Record，key 為 string，value 為 string、string 陣列或 undefined。務必處理可選參數的 undefined 情況。"
 		}
 	}
 }

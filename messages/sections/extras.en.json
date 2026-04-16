@@ -42,7 +42,7 @@
 			"keyLoadingState": "Loading States",
 			"keyLoadingStateDesc": "The loading option lets you show a placeholder while the component loads. Great for skeleton UIs.",
 			"keyNamedExports": "Named Exports",
-			"keyNamedExportsDesc": "Use the arrow function form to import named exports: dynamic(() => import('./mod').then(m => m.MyComponent))."
+			"keyNamedExportsDesc": "Use the arrow function form to import named exports: dynamic(() ='' import('./mod').then(m ='' m.MyComponent))."
 		}
 	},
 	"routing": {
@@ -68,7 +68,7 @@
 			"keyMultipleValues": "Multiple Values",
 			"keyMultipleValuesDesc": "A key can have multiple values (e.g., ?color=red&color=blue). The value becomes a string array instead of a string.",
 			"keyTypeSignature": "Type Signature",
-			"keyTypeSignatureDesc": "The type is Promise<Record<string, string | string[] | undefined>>. Always handle the undefined case for optional params."
+			"keyTypeSignatureDesc": "The type is Promise of Record with string keys and string, string array, or undefined values. Always handle the undefined case for optional params."
 		}
 	}
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -146,6 +147,13 @@ function isGroupActive(group: NavGroup, pathname: string): boolean {
 export function AppSidebar() {
 	const pathname = usePathname();
 	const t = useTranslations("nav");
+	const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() => {
+		const initial: Record<string, boolean> = {};
+		for (const group of navGroups) {
+			initial[group.labelKey] = isGroupActive(group, pathname);
+		}
+		return initial;
+	});
 
 	return (
 		<Sidebar>
@@ -166,8 +174,15 @@ export function AppSidebar() {
 			<SidebarContent>
 				{navGroups.map((group) => {
 					const active = isGroupActive(group, pathname);
+					const isOpen = openGroups[group.labelKey] || active;
 					return (
-						<Collapsible.Root key={group.labelKey} defaultOpen={active}>
+						<Collapsible.Root
+							key={group.labelKey}
+							open={isOpen}
+							onOpenChange={(open) =>
+								setOpenGroups((prev) => ({ ...prev, [group.labelKey]: open }))
+							}
+						>
 							<SidebarGroup>
 								<Collapsible.Trigger
 									nativeButton={false}

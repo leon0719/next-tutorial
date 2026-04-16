@@ -12,7 +12,12 @@ async function sleep(ms: number) {
 export async function SlowPosts() {
 	const t = await getTranslations("data.streaming");
 	await sleep(2000); // Simulate 2 second delay
-	const allPosts = db.select().from(posts).limit(3).all();
+	let allPosts: (typeof posts.$inferSelect)[] = [];
+	try {
+		allPosts = db.select().from(posts).limit(3).all();
+	} catch (e) {
+		console.error("Failed to fetch posts:", e);
+	}
 
 	return (
 		<Card>

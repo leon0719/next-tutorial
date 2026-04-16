@@ -99,7 +99,7 @@
 			"revalidateTagLabel": "revalidateTag",
 			"updateTagLabel": "updateTag（v16 新功能）",
 			"keyPoints": "重點整理",
-			"tagOverPath": "Tag > Path",
+			"tagOverPath": "Tag 優於 Path",
 			"tagOverPathDescription": "優先使用 revalidateTag 而非 revalidatePath。Tag 更精確 — 你只使變更的資料失效，而非整個頁面。",
 			"updateTagForForms": "updateTag 用於表單",
 			"updateTagForFormsDescription": "在 Server Actions 中使用 updateTag，讓使用者在提交表單後立即看到變更。revalidateTag 會先顯示過期資料。",

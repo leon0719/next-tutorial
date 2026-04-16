@@ -10,19 +10,30 @@ export function StreamDemo() {
 	async function startStream() {
 		setLines([]);
 		setIsStreaming(true);
-		const res = await fetch("/api/stream");
-		const reader = res.body?.getReader();
-		const decoder = new TextDecoder();
-		if (!reader) return;
+		try {
+			const res = await fetch("/api/stream");
+			if (!res.ok) {
+				setLines(["Error: Failed to start stream"]);
+				setIsStreaming(false);
+				return;
+			}
+			const reader = res.body?.getReader();
+			const decoder = new TextDecoder();
+			if (!reader) return;
 
-		while (true) {
-			const { done, value } = await reader.read();
-			if (done) break;
-			const text = decoder.decode(value);
-			const newLines = text.split("\n").filter(Boolean);
-			setLines((prev) => [...prev, ...newLines]);
+			while (true) {
+				const { done, value } = await reader.read();
+				if (done) break;
+				const text = decoder.decode(value);
+				const newLines = text.split("\n").filter(Boolean);
+				setLines((prev) => [...prev, ...newLines]);
+			}
+		} catch (e) {
+			console.error("Stream fetch error:", e);
+			setLines(["Error: Failed to connect to stream"]);
+		} finally {
+			setIsStreaming(false);
 		}
-		setIsStreaming(false);
 	}
 
 	return (

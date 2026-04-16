@@ -11,7 +11,12 @@ async function sleep(ms: number) {
 export async function SlowStats() {
 	const t = await getTranslations("data.streaming");
 	await sleep(4000); // Simulate 4 second delay (slower than posts)
-	const allPosts = db.select().from(posts).all();
+	let allPosts: (typeof posts.$inferSelect)[] = [];
+	try {
+		allPosts = db.select().from(posts).all();
+	} catch (e) {
+		console.error("Failed to fetch stats:", e);
+	}
 	const totalPosts = allPosts.length;
 	const authors = new Set(allPosts.map((p) => p.authorName)).size;
 

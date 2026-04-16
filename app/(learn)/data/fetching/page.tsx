@@ -9,7 +9,12 @@ import { posts } from "@/lib/db/schema";
 export default async function ServerFetchPage() {
 	const t = await getTranslations("data.fetching");
 	const startTime = performance.now();
-	const allPosts = db.select().from(posts).orderBy(desc(posts.createdAt)).all();
+	let allPosts: (typeof posts.$inferSelect)[] = [];
+	try {
+		allPosts = db.select().from(posts).orderBy(desc(posts.createdAt)).all();
+	} catch (e) {
+		console.error("Failed to fetch posts:", e);
+	}
 	const fetchTime = (performance.now() - startTime).toFixed(2);
 
 	return (
