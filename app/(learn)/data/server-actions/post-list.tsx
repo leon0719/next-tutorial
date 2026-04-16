@@ -8,7 +8,12 @@ import { DeleteButton } from "./delete-button";
 
 export async function PostList() {
 	const t = await getTranslations("data.serverActions");
-	const allPosts = db.select().from(posts).orderBy(desc(posts.createdAt)).all();
+	const allPosts = db
+		.select()
+		.from(posts)
+		.orderBy(desc(posts.createdAt))
+		.limit(50)
+		.all();
 
 	return (
 		<Card>

@@ -5,10 +5,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { posts } from "@/lib/db/schema";
-
-const TITLE_MAX = 100;
-const CONTENT_MAX = 500;
-const AUTHOR_MAX = 50;
+import { AUTHOR_MAX, CONTENT_MAX, TITLE_MAX } from "./constants";
 
 const createPostSchema = z.object({
 	title: z
