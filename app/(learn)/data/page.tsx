@@ -6,41 +6,41 @@ const demos = [
 		description:
 			"Fetch data directly in async Server Components — no useEffect needed.",
 		href: "/data/fetching",
-		status: "coming-soon" as const,
+		status: "ready" as const,
 	},
 	{
 		title: "Client Fetch (TanStack Query)",
 		description:
 			"Client-side data fetching with caching, refetching, and loading states.",
 		href: "/data/client-fetch",
-		status: "coming-soon" as const,
+		status: "ready" as const,
 	},
 	{
 		title: "Caching",
 		description: "use cache directive — cache component and function results.",
 		href: "/data/caching",
-		status: "coming-soon" as const,
+		status: "ready" as const,
 	},
 	{
 		title: "Revalidation",
 		description:
 			"revalidatePath and revalidateTag — update cached data on demand.",
 		href: "/data/revalidation",
-		status: "coming-soon" as const,
+		status: "ready" as const,
 	},
 	{
 		title: "Server Actions",
 		description:
 			"Form mutations with Server Actions — CRUD operations with Drizzle ORM.",
 		href: "/data/server-actions",
-		status: "coming-soon" as const,
+		status: "ready" as const,
 	},
 	{
 		title: "Streaming",
 		description:
 			"Suspense boundaries and loading UI — progressive page rendering.",
 		href: "/data/streaming",
-		status: "coming-soon" as const,
+		status: "ready" as const,
 	},
 ];
 
