@@ -15,6 +15,18 @@
 		"config": "Config",
 		"api": "API (Hono)"
 	},
+	"error": {
+		"title": "Something went wrong",
+		"description": "An unexpected error occurred. Please try again later.",
+		"retry": "Retry",
+		"backHome": "Back to Home",
+		"errorId": "Error ID: {digest}"
+	},
+	"notFound": {
+		"title": "404",
+		"description": "The page you're looking for doesn't exist.",
+		"backHome": "Back to Home"
+	},
 	"home": {
 		"routing_desc": "File-based routing, dynamic routes, parallel routes, intercepting routes, and more.",
 		"data_desc": "Server-side fetching, client-side queries, caching, revalidation, and server actions.",

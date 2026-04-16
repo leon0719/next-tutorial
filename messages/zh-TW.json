@@ -15,6 +15,18 @@
 		"config": "設定",
 		"api": "API (Hono)"
 	},
+	"error": {
+		"title": "出了點問題",
+		"description": "發生了未預期的錯誤，請稍後再試。",
+		"retry": "重試",
+		"backHome": "回到首頁",
+		"errorId": "Error ID: {digest}"
+	},
+	"notFound": {
+		"title": "404",
+		"description": "找不到你要的頁面",
+		"backHome": "回到首頁"
+	},
 	"home": {
 		"routing_desc": "檔案式路由、動態路由、平行路由、攔截路由等。",
 		"data_desc": "伺服端資料取得、客戶端查詢、快取、重新驗證與 Server Actions。",

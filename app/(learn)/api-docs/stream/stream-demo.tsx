@@ -41,7 +41,7 @@ export function StreamDemo() {
 				</div>
 			</CardHeader>
 			<CardContent>
-				<div className="min-h-[200px] rounded bg-muted/50 p-3 font-mono text-sm">
+				<div className="min-h-50 rounded bg-muted/50 p-3 font-mono text-sm">
 					{lines.length === 0 ? (
 						<p className="text-muted-foreground">
 							Click &quot;Start Stream&quot; to begin...
