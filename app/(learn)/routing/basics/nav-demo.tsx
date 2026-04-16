@@ -24,20 +24,18 @@ export function NavDemo() {
 					<div className="space-y-2">
 						<h4 className="text-sm font-medium">Link Component</h4>
 						<div className="flex flex-wrap gap-2">
-							<Button
-								variant="outline"
-								size="sm"
-								render={<Link href="/routing" />}
+							<Link
+								href="/routing"
+								className="inline-flex h-8 items-center justify-center rounded-md border border-input bg-background px-3 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
 							>
 								← Routing Overview
-							</Button>
-							<Button
-								variant="outline"
-								size="sm"
-								render={<Link href="/routing/dynamic/hello-world" />}
+							</Link>
+							<Link
+								href="/routing/dynamic/hello-world"
+								className="inline-flex h-8 items-center justify-center rounded-md border border-input bg-background px-3 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
 							>
 								Dynamic Route →
-							</Button>
+							</Link>
 						</div>
 					</div>
 
