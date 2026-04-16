@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge";
 import {
 	Card,
 	CardContent,
@@ -19,9 +18,10 @@ interface DemoPageProps {
 export function DemoPage({ title, description, children }: DemoPageProps) {
 	return (
 		<div className="space-y-10">
-			<div className="space-y-2">
-				<h1 className="font-heading text-3xl sm:text-4xl tracking-tight">{title}</h1>
-				<p className="text-lg text-muted-foreground leading-relaxed max-w-3xl">{description}</p>
+			<div className="space-y-3">
+				<h1 className="font-heading text-3xl sm:text-4xl font-bold uppercase tracking-tight">{title}</h1>
+				<p className="text-base text-muted-foreground leading-relaxed max-w-3xl">{description}</p>
+				<div className="h-1 w-20 bg-brutal-orange" />
 			</div>
 			<div className="space-y-8">{children}</div>
 			<PageNav />
@@ -39,9 +39,9 @@ export function Section({ title, description, children }: SectionProps) {
 	return (
 		<section className="space-y-4">
 			<div className="flex items-start gap-3">
-				<div className="mt-1.5 h-5 w-1 rounded-full bg-accent-warm shrink-0" />
+				<div className="mt-1 h-6 w-1.5 shrink-0 bg-brutal-orange" />
 				<div>
-					<h2 className="text-xl font-semibold">{title}</h2>
+					<h2 className="font-heading text-lg font-bold uppercase tracking-wide">{title}</h2>
 					{description && (
 						<p className="mt-1 text-sm text-muted-foreground">{description}</p>
 					)}
@@ -65,15 +65,15 @@ export async function CodeBlock({ filename, language, children }: CodeBlockProps
 	const html = await highlight(code, language || "text");
 
 	return (
-		<div className="group relative rounded-lg border overflow-hidden">
+		<div className="group relative rounded-sm border-3 border-foreground shadow-[4px_4px_0_var(--foreground)] overflow-hidden transition-all duration-150 hover:shadow-[2px_2px_0_var(--foreground)] hover:translate-x-[2px] hover:translate-y-[2px]">
 			{filename && (
-				<div className="flex items-center justify-between border-b bg-zinc-950 dark:bg-zinc-900 px-4 py-2">
+				<div className="flex items-center justify-between border-b-3 border-foreground bg-brutal-yellow px-4 py-2">
 					<div className="flex items-center gap-2">
-						<span className="text-xs text-zinc-400">{filename}</span>
+						<span className="font-heading text-xs font-bold text-foreground">{filename}</span>
 						{language && (
-							<Badge variant="outline" className="text-[10px] text-zinc-500 border-zinc-700">
+							<span className="rounded-sm border-2 border-foreground bg-background px-1.5 py-0.5 text-[10px] font-bold text-foreground">
 								{language}
-							</Badge>
+							</span>
 						)}
 					</div>
 					<CopyButton text={code} />
@@ -99,8 +99,8 @@ interface FileTreeProps {
 
 export function FileTree({ children }: FileTreeProps) {
 	return (
-		<div className="rounded-lg border bg-muted/30 p-4 pl-5 border-l-2 border-l-accent-warm/50">
-			<pre className="text-sm leading-relaxed font-mono text-muted-foreground">{children}</pre>
+		<div className="rounded-sm border-3 border-foreground border-l-[6px] border-l-brutal-cyan bg-brutal-yellow/10 p-4 pl-5">
+			<pre className="text-sm leading-relaxed font-mono text-foreground/80">{children}</pre>
 		</div>
 	);
 }
@@ -112,10 +112,10 @@ interface DemoBoxProps {
 
 export function DemoBox({ title, children }: DemoBoxProps) {
 	return (
-		<Card className="transition-colors hover:border-accent-warm/20">
+		<Card>
 			{title && (
 				<CardHeader className="pb-3">
-					<CardTitle className="text-base">{title}</CardTitle>
+					<CardTitle className="font-heading text-sm font-bold uppercase tracking-wide">{title}</CardTitle>
 				</CardHeader>
 			)}
 			<CardContent className={title ? "" : "pt-6"}>{children}</CardContent>
