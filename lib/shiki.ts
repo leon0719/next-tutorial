@@ -33,5 +33,6 @@ export async function highlight(code: string, lang: string = "text") {
 			dark: "github-dark",
 			light: "github-light",
 		},
+		defaultColor: false,
 	});
 }
