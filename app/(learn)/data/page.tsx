@@ -41,6 +41,12 @@ export default async function DataPage() {
 			href: "/data/streaming",
 			status: "ready" as const,
 		},
+		{
+			title: t("forms"),
+			description: t("formsDesc"),
+			href: "/data/forms",
+			status: "ready" as const,
+		},
 	];
 
 	return (

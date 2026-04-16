@@ -32,7 +32,9 @@
       "serverActions": "Server Actions",
       "serverActionsDesc": "使用 Server Actions 的表單操作 — 搭配 Drizzle ORM 的 CRUD 操作。",
       "streaming": "Streaming",
-      "streamingDesc": "Suspense 邊界和 loading UI — 漸進式頁面渲染。"
+      "streamingDesc": "Suspense 邊界和 loading UI — 漸進式頁面渲染。",
+      "forms": "表單驗證",
+      "formsDesc": "react-hook-form + Zod — type-safe 表單狀態管理與驗證。"
     },
     "rendering": {
       "title": "渲染",

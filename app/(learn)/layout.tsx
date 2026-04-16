@@ -1,10 +1,6 @@
 import { AppSidebar } from "@/components/app-sidebar";
-import {
-	Breadcrumb,
-	BreadcrumbItem,
-	BreadcrumbList,
-	BreadcrumbPage,
-} from "@/components/ui/breadcrumb";
+import { DynamicBreadcrumb } from "@/components/dynamic-breadcrumb";
+import { ScrollProgress } from "@/components/scroll-progress";
 import { Separator } from "@/components/ui/separator";
 import {
 	SidebarInset,
@@ -21,16 +17,11 @@ export default function LearnLayout({
 		<SidebarProvider>
 			<AppSidebar />
 			<SidebarInset>
+				<ScrollProgress />
 				<header className="sticky top-0 z-10 flex h-14 shrink-0 items-center gap-2 border-b bg-background/80 backdrop-blur-sm px-4">
 					<SidebarTrigger className="-ml-1" />
 					<Separator orientation="vertical" className="mr-2 h-4" />
-					<Breadcrumb>
-						<BreadcrumbList>
-							<BreadcrumbItem>
-								<BreadcrumbPage>Demo</BreadcrumbPage>
-							</BreadcrumbItem>
-						</BreadcrumbList>
-					</Breadcrumb>
+					<DynamicBreadcrumb />
 				</header>
 				<main className="flex-1 p-6 sm:p-8 max-w-5xl">{children}</main>
 			</SidebarInset>

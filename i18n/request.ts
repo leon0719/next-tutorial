@@ -37,19 +37,37 @@ export default getRequestConfig(async ({ requestLocale }) => {
 	).default;
 	const api = (await import(`../messages/sections/api.${locale}.json`))
 		.default;
+	const extras = (
+		await import(`../messages/sections/extras.${locale}.json`)
+	).default;
+
+	const messages = {
+		...base,
+		...rendering,
+		...overviews,
+		...routingMessages,
+		...data,
+		...ui,
+		...config,
+		...advanced,
+		...api,
+	};
+
+	// Deep merge extras (which adds keys under existing "rendering" and "routing" namespaces)
+	for (const [key, value] of Object.entries(extras)) {
+		if (
+			key in messages &&
+			typeof messages[key] === "object" &&
+			typeof value === "object"
+		) {
+			messages[key] = { ...messages[key], ...(value as Record<string, unknown>) };
+		} else {
+			messages[key] = value;
+		}
+	}
 
 	return {
 		locale,
-		messages: {
-			...base,
-			...rendering,
-			...overviews,
-			...routingMessages,
-			...data,
-			...ui,
-			...config,
-			...advanced,
-			...api,
-		},
+		messages,
 	};
 });

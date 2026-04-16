@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { Collapsible } from "@base-ui/react/collapsible";
 import {
+	ChevronRight,
 	Database,
 	Home,
 	Layers,
@@ -133,6 +135,10 @@ const navGroups: NavGroup[] = [
 	},
 ];
 
+function isGroupActive(group: NavGroup, pathname: string): boolean {
+	return group.items.some((item) => pathname === item.href);
+}
+
 export function AppSidebar() {
 	const pathname = usePathname();
 	const t = useTranslations("nav");
@@ -154,28 +160,41 @@ export function AppSidebar() {
 			</SidebarHeader>
 
 			<SidebarContent>
-				{navGroups.map((group) => (
-					<SidebarGroup key={group.labelKey}>
-						<SidebarGroupLabel>
-							<group.icon className="mr-2 h-4 w-4" />
-							{t(group.labelKey)}
-						</SidebarGroupLabel>
-						<SidebarGroupContent>
-							<SidebarMenu>
-								{group.items.map((item) => (
-									<SidebarMenuItem key={item.href}>
-										<SidebarMenuButton
-											isActive={pathname === item.href}
-											render={<Link href={item.href} />}
-										>
-											{item.title}
-										</SidebarMenuButton>
-									</SidebarMenuItem>
-								))}
-							</SidebarMenu>
-						</SidebarGroupContent>
-					</SidebarGroup>
-				))}
+				{navGroups.map((group) => {
+					const active = isGroupActive(group, pathname);
+					return (
+						<Collapsible.Root key={group.labelKey} defaultOpen={active}>
+							<SidebarGroup>
+								<Collapsible.Trigger
+									className="group/collapsible cursor-pointer"
+									render={
+										<SidebarGroupLabel>
+											<group.icon className="mr-2 h-4 w-4" />
+											{t(group.labelKey)}
+											<ChevronRight className="ml-auto h-4 w-4 transition-transform duration-200 group-data-[panel-open]/collapsible:rotate-90" />
+										</SidebarGroupLabel>
+									}
+								/>
+								<Collapsible.Panel>
+									<SidebarGroupContent>
+										<SidebarMenu>
+											{group.items.map((item) => (
+												<SidebarMenuItem key={item.href}>
+													<SidebarMenuButton
+														isActive={pathname === item.href}
+														render={<Link href={item.href} />}
+													>
+														{item.title}
+													</SidebarMenuButton>
+												</SidebarMenuItem>
+											))}
+										</SidebarMenu>
+									</SidebarGroupContent>
+								</Collapsible.Panel>
+							</SidebarGroup>
+						</Collapsible.Root>
+					);
+				})}
 			</SidebarContent>
 
 			<SidebarFooter>

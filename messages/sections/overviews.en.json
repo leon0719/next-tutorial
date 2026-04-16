@@ -32,7 +32,9 @@
       "serverActions": "Server Actions",
       "serverActionsDesc": "Form mutations with Server Actions — CRUD operations with Drizzle ORM.",
       "streaming": "Streaming",
-      "streamingDesc": "Suspense boundaries and loading UI — progressive page rendering."
+      "streamingDesc": "Suspense boundaries and loading UI — progressive page rendering.",
+      "forms": "Form Validation",
+      "formsDesc": "react-hook-form + Zod — type-safe form state management and validation."
     },
     "rendering": {
       "title": "Rendering",

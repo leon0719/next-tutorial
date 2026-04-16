@@ -7,6 +7,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { CopyButton } from "@/components/copy-button";
+import { PageNav } from "@/components/page-nav";
 import { highlight } from "@/lib/shiki";
 
 interface DemoPageProps {
@@ -23,6 +24,7 @@ export function DemoPage({ title, description, children }: DemoPageProps) {
 				<p className="text-lg text-muted-foreground leading-relaxed max-w-3xl">{description}</p>
 			</div>
 			<div className="space-y-8">{children}</div>
+			<PageNav />
 		</div>
 	);
 }
