@@ -15,13 +15,15 @@ export default function GlobalError({
 
 	return (
 		<div className="flex min-h-screen flex-col items-center justify-center bg-background px-6 text-center">
-			<AlertTriangle className="h-16 w-16 text-destructive/60" />
-			<h1 className="mt-6 text-3xl font-bold tracking-tight">{t("title")}</h1>
+			<AlertTriangle className="h-16 w-16 text-brutal-pink" />
+			<h1 className="mt-6 font-heading text-3xl font-bold uppercase">
+				{t("title")}
+			</h1>
 			<p className="mt-3 text-sm text-muted-foreground max-w-md">
 				{error.message || t("description")}
 			</p>
 			{error.digest && (
-				<p className="mt-2 text-xs text-muted-foreground/50">
+				<p className="mt-2 text-xs text-muted-foreground">
 					{t("errorId", { digest: error.digest })}
 				</p>
 			)}
