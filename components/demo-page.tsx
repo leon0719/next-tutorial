@@ -6,6 +6,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { highlight } from "@/lib/shiki";
 
 interface DemoPageProps {
 	title: string;
@@ -51,11 +52,15 @@ interface CodeBlockProps {
 	children: string;
 }
 
-export function CodeBlock({ filename, language, children }: CodeBlockProps) {
+export async function CodeBlock({ filename, language, children }: CodeBlockProps) {
+	// shiki generates trusted HTML from hardcoded code strings (not user input)
+	// All code examples are developer-authored static content in source files
+	const html = await highlight(children.trim(), language || "text");
+
 	return (
-		<div className="rounded-lg border bg-zinc-950 text-zinc-50 dark:bg-zinc-900">
+		<div className="rounded-lg border overflow-hidden">
 			{filename && (
-				<div className="flex items-center gap-2 border-b border-zinc-800 px-4 py-2">
+				<div className="flex items-center gap-2 border-b bg-zinc-950 dark:bg-zinc-900 px-4 py-2">
 					<span className="text-xs text-zinc-400">{filename}</span>
 					{language && (
 						<Badge variant="outline" className="text-[10px] text-zinc-500 border-zinc-700">
@@ -64,9 +69,10 @@ export function CodeBlock({ filename, language, children }: CodeBlockProps) {
 					)}
 				</div>
 			)}
-			<pre className="overflow-x-auto p-4 text-sm leading-relaxed">
-				<code>{children}</code>
-			</pre>
+			<div
+				className="overflow-x-auto text-sm leading-relaxed [&_pre]:p-4 [&_pre]:m-0 [&_.shiki]:bg-transparent"
+				dangerouslySetInnerHTML={{ __html: html }}
+			/>
 		</div>
 	);
 }
