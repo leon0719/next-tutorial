@@ -11,6 +11,9 @@ const highlighterPromise = createHighlighter({
 		"bash",
 		"css",
 		"html",
+		"mdx",
+		"yaml",
+		"markdown",
 		"text",
 	],
 });
@@ -25,7 +28,9 @@ export async function highlight(code: string, lang: string = "text") {
 		sh: "bash",
 		shell: "bash",
 	};
-	const resolvedLang = langMap[lang] || lang;
+	const mapped = langMap[lang] || lang;
+	const loaded = highlighter.getLoadedLanguages();
+	const resolvedLang = loaded.includes(mapped) ? mapped : "text";
 
 	return highlighter.codeToHtml(code, {
 		lang: resolvedLang,
