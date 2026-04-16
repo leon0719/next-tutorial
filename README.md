@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js Learning Hub
+
+Interactive Next.js 16 feature showcase — 41 demos covering every major feature with live examples, syntax-highlighted code, and bilingual support (zh-TW / English).
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 16.2.4 + React 19 + TypeScript |
+| UI | shadcn/ui (base-nova) + Tailwind CSS v4 + lucide-react |
+| API | Hono + @hono/zod-validator |
+| Database | Drizzle ORM + better-sqlite3 (SQLite) |
+| State | Zustand (client) · TanStack Query (server) · nuqs (URL) |
+| i18n | next-intl (zh-TW / en, cookie-based) |
+| Code Highlighting | Shiki (dual theme) |
+| Forms | react-hook-form + zod |
+| Theme | next-themes (dark/light/system) |
+| Fonts | Playfair Display (headings) + Geist (body/mono) |
+| Animation | motion |
+| Linter/Formatter | Biome |
+| Package Manager | Bun |
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Install dependencies
+bun install
+
+# Set up database
+bun run db:migrate
+bun run db:seed
+
+# Start dev server
+bun run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Demo Categories
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Category | Demos | Features |
+|---|---|---|
+| **Routing** | 7 | Dynamic routes, catch-all, route groups, parallel routes, intercepting routes, error pages |
+| **Rendering** | 4 | Server/Client components, composition pattern, Zustand state |
+| **Data** | 6 | Server fetch, TanStack Query, caching, revalidation, server actions, streaming |
+| **UI & Assets** | 6 | CSS, images, fonts, metadata/SEO, animations, themes |
+| **Advanced** | 10 | Middleware, i18n, auth, draft mode, edge runtime, error handling, MDX, instrumentation, PWA, dates |
+| **Config** | 4 | Env variables, redirects/rewrites, headers/CSP, bundle analyzer |
+| **API (Hono)** | 4 | Hello, CRUD posts, OG image generation, streaming response |
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/
+├── page.tsx                    Home dashboard
+├── (learn)/                    Demo pages (sidebar layout)
+│   ├── routing/                7 routing demos
+│   ├── rendering/              4 rendering demos
+│   ├── data/                   6 data demos
+│   ├── ui/                     6 UI demos
+│   ├── advanced/               10 advanced demos
+│   ├── config/                 4 config demos
+│   └── api-docs/               4 API demos
+├── (api-demo)/api/[...route]/  Hono catch-all handler
+│
+lib/
+├── api/                        Hono app + routes
+├── db/                         Drizzle schema + connection + seed
+├── shiki.ts                    Code highlighting
+│
+messages/                       i18n translations (zh-TW, en)
+├── sections/                   Per-category translation files
+│
+components/
+├── demo-page.tsx               Shared demo layout components
+├── app-sidebar.tsx             Navigation sidebar
+└── ui/                         shadcn components
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Scripts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+bun run dev          # Dev server (Turbopack)
+bun run build        # Production build
+bun run format       # Biome format + fix
+bun run lint         # Biome lint
+bun run db:generate  # Generate migrations
+bun run db:migrate   # Run migrations
+bun run db:seed      # Seed sample data
+bun run db:studio    # Drizzle Studio GUI
+```
