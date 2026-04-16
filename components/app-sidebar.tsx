@@ -26,6 +26,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { LocaleSwitcher } from "@/components/locale-switcher";
 
 const navGroups = [
   {
@@ -169,7 +170,10 @@ export function AppSidebar() {
       <SidebarFooter>
         <div className="flex items-center justify-between px-2">
           <span className="text-xs text-muted-foreground">Theme</span>
-          <ThemeToggle />
+          <div className="flex items-center gap-1">
+            <LocaleSwitcher />
+            <ThemeToggle />
+          </div>
         </div>
       </SidebarFooter>
 
