@@ -166,6 +166,7 @@ export function AppSidebar() {
 						<Collapsible.Root key={group.labelKey} defaultOpen={active}>
 							<SidebarGroup>
 								<Collapsible.Trigger
+									nativeButton={false}
 									className="group/collapsible cursor-pointer"
 									render={
 										<SidebarGroupLabel>
