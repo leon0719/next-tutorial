@@ -5,7 +5,6 @@ import {
 	FileTree,
 	Section,
 } from "@/components/demo-page";
-import { Badge } from "@/components/ui/badge";
 import { TriggerDemo } from "./trigger-demo";
 
 export default function ErrorPagesDemo() {

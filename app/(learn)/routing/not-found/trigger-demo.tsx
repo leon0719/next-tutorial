@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { DemoBox } from "@/components/demo-page";
 import { Button } from "@/components/ui/button";

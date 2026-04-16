@@ -37,11 +37,14 @@ URL examples:
 					<div className="space-y-4">
 						<div className="flex items-center gap-2 flex-wrap">
 							<span className="text-sm text-muted-foreground">Segments:</span>
-							{slug.map((segment, i) => (
-								<Badge key={i} variant="secondary" className="font-mono">
-									[{i}] {segment}
-								</Badge>
-							))}
+							{slug.map((segment, i) => {
+								const key = `seg-${i}-${segment}`;
+								return (
+									<Badge key={key} variant="secondary" className="font-mono">
+										[{i}] {segment}
+									</Badge>
+								);
+							})}
 						</div>
 						<div className="flex items-center gap-2">
 							<span className="text-sm text-muted-foreground">
