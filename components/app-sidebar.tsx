@@ -152,11 +152,11 @@ export function AppSidebar() {
 			<SidebarHeader>
 				<SidebarMenu>
 					<SidebarMenuItem>
-						<SidebarMenuButton size="lg" render={<Link href="/" />}>
+						<SidebarMenuButton size="lg" render={<Link href="/" />} className="rounded-sm">
 							<Home className="h-5 w-5" />
 							<div className="flex flex-col gap-0.5 leading-none">
-								<span className="font-semibold">Next.js Learning Hub</span>
-								<span className="text-xs text-muted-foreground">v16.2.4</span>
+								<span className="font-heading font-bold uppercase tracking-wide text-sm">Next.js Learning Hub</span>
+								<span className="text-xs text-muted-foreground font-mono">v16.2.4</span>
 							</div>
 						</SidebarMenuButton>
 					</SidebarMenuItem>
@@ -173,7 +173,7 @@ export function AppSidebar() {
 									nativeButton={false}
 									className="group/collapsible cursor-pointer"
 									render={
-										<SidebarGroupLabel>
+										<SidebarGroupLabel className="font-heading uppercase tracking-wider text-xs font-bold">
 											<group.icon className="mr-2 h-4 w-4" />
 											{t(group.labelKey)}
 											<ChevronRight className="ml-auto h-4 w-4 transition-transform duration-200 group-data-[panel-open]/collapsible:rotate-90" />
@@ -188,6 +188,7 @@ export function AppSidebar() {
 													<SidebarMenuButton
 														isActive={pathname === item.href}
 														render={<Link href={item.href} />}
+														className={pathname === item.href ? "font-bold bg-brutal-orange text-white rounded-sm" : "rounded-sm hover:bg-foreground hover:text-background transition-colors duration-150"}
 													>
 														{item.title}
 													</SidebarMenuButton>
@@ -202,7 +203,7 @@ export function AppSidebar() {
 				})}
 			</SidebarContent>
 
-			<SidebarFooter>
+			<SidebarFooter className="border-t-3 border-foreground">
 				<div className="flex items-center justify-between px-2">
 					<LocaleSwitcher />
 					<ThemeToggle />
