@@ -7,7 +7,7 @@
 			"navMethods": "Navigation Methods",
 			"navMethodsDesc": "Next.js provides several ways to navigate between pages.",
 			"linkSection": "1. Link Component (Recommended)",
-			"linkDesc": "The <Link> component extends HTML <a> with prefetching and client-side navigation.",
+			"linkDesc": "The {'<'}Link{'>'} component extends HTML {'<'}a{'>'} with prefetching and client-side navigation.",
 			"routerSection": "2. useRouter Hook (Client Components)",
 			"routerDesc": "For programmatic navigation inside event handlers. Must be used in Client Components with 'use client'.",
 			"redirectSection": "3. redirect() (Server Components)",

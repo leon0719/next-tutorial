@@ -7,7 +7,7 @@
 			"navMethods": "導覽方式",
 			"navMethodsDesc": "Next.js 提供多種頁面間導覽方式。",
 			"linkSection": "1. Link Component（推薦）",
-			"linkDesc": "<Link> 元件擴展了 HTML <a>，具備預取和客戶端導覽功能。",
+			"linkDesc": "{'<'}Link{'>'} 元件擴展了 HTML {'<'}a{'>'}，具備預取和客戶端導覽功能。",
 			"routerSection": "2. useRouter Hook（Client Components）",
 			"routerDesc": "用於事件處理器中的程式化導覽。必須在含有 'use client' 的 Client Component 中使用。",
 			"redirectSection": "3. redirect()（Server Components）",

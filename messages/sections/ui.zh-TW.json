@@ -21,7 +21,7 @@
 		},
 		"images": {
 			"title": "圖片最佳化",
-			"description": "next/image 元件擴展了 HTML <img>，提供自動最佳化、延遲載入和響應式尺寸調整。",
+			"description": "next/image 元件擴展了 HTML {'<'}img{'>'}，提供自動最佳化、延遲載入和響應式尺寸調整。",
 			"liveExampleTitle": "即時範例",
 			"liveExampleDesc": "下方的 Next.js Logo 使用了 next/image 的 Image 元件。",
 			"fillModeTitle": "填滿模式",
