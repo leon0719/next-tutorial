@@ -1,65 +1,112 @@
-import Image from "next/image";
+import Link from "next/link";
+import {
+  Route,
+  Database,
+  Layers,
+  Palette,
+  Zap,
+  Settings,
+  Server,
+} from "lucide-react";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
-export default function Home() {
-	return (
-		<div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-			<main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-				<Image
-					className="dark:invert"
-					src="/next.svg"
-					alt="Next.js logo"
-					width={100}
-					height={20}
-					priority
-				/>
-				<div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-					<h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-						To get started, edit the page.tsx file.
-					</h1>
-					<p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-						Looking for a starting point or more instructions? Head over to{" "}
-						<a
-							href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-							className="font-medium text-zinc-950 dark:text-zinc-50"
-						>
-							Templates
-						</a>{" "}
-						or the{" "}
-						<a
-							href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-							className="font-medium text-zinc-950 dark:text-zinc-50"
-						>
-							Learning
-						</a>{" "}
-						center.
-					</p>
-				</div>
-				<div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-					<a
-						className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-						href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<Image
-							className="dark:invert"
-							src="/vercel.svg"
-							alt="Vercel logomark"
-							width={16}
-							height={16}
-						/>
-						Deploy Now
-					</a>
-					<a
-						className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-						href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Documentation
-					</a>
-				</div>
-			</main>
-		</div>
-	);
+const categories = [
+  {
+    title: "Routing",
+    description: "File-based routing, dynamic routes, parallel routes, intercepting routes, and more.",
+    icon: Route,
+    href: "/routing",
+    count: 7,
+    color: "text-blue-500",
+  },
+  {
+    title: "Data",
+    description: "Server-side fetching, client-side queries, caching, revalidation, and server actions.",
+    icon: Database,
+    href: "/data",
+    count: 6,
+    color: "text-green-500",
+  },
+  {
+    title: "Rendering",
+    description: "Server components, client components, composition patterns, and state management.",
+    icon: Layers,
+    href: "/rendering",
+    count: 4,
+    color: "text-purple-500",
+  },
+  {
+    title: "UI & Assets",
+    description: "CSS, images, fonts, metadata, animations, and theming.",
+    icon: Palette,
+    href: "/ui",
+    count: 6,
+    color: "text-pink-500",
+  },
+  {
+    title: "Advanced",
+    description: "Middleware, i18n, auth, draft mode, edge runtime, MDX, and more.",
+    icon: Zap,
+    href: "/advanced",
+    count: 10,
+    color: "text-orange-500",
+  },
+  {
+    title: "Config",
+    description: "Environment variables, redirects, headers, CSP, and bundle analysis.",
+    icon: Settings,
+    href: "/config",
+    count: 4,
+    color: "text-gray-500",
+  },
+  {
+    title: "API (Hono)",
+    description: "Route handlers with Hono — REST CRUD, OG image generation, and streaming.",
+    icon: Server,
+    href: "/api/hello",
+    count: 4,
+    color: "text-red-500",
+  },
+];
+
+export default function HomePage() {
+  const totalDemos = categories.reduce((sum, cat) => sum + cat.count, 0);
+
+  return (
+    <div className="min-h-screen bg-background">
+      <div className="mx-auto max-w-6xl px-6 py-16">
+        <div className="mb-12 text-center">
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+            Next.js Learning Hub
+          </h1>
+          <p className="mt-4 text-lg text-muted-foreground">
+            Interactive feature showcase — {totalDemos} demos covering every Next.js 16 feature
+          </p>
+        </div>
+
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {categories.map((category) => (
+            <Link key={category.title} href={category.href}>
+              <Card className="h-full transition-colors hover:border-foreground/20">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <category.icon className={`h-8 w-8 ${category.color}`} />
+                    <Badge variant="secondary">{category.count} demos</Badge>
+                  </div>
+                  <CardTitle className="mt-4">{category.title}</CardTitle>
+                  <CardDescription>{category.description}</CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 }
