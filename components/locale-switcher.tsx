@@ -1,9 +1,8 @@
 "use client";
 
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Languages } from "lucide-react";
 
 const COOKIE_NAME = "NEXT_LOCALE";
 
@@ -30,17 +29,14 @@ export function LocaleSwitcher() {
 		router.refresh();
 	}, [locale, router]);
 
-	const nextLabel = locale === "zh-TW" ? "EN" : "中文";
-
 	return (
 		<Button
 			variant="ghost"
-			size="icon"
+			size="sm"
+			className="h-8 px-2 text-xs font-medium"
 			onClick={switchLocale}
-			title={`Switch to ${nextLabel}`}
 		>
-			<Languages className="h-4 w-4" />
-			<span className="sr-only">Switch to {nextLabel}</span>
+			{locale === "zh-TW" ? "中文" : "EN"}
 		</Button>
 	);
 }

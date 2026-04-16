@@ -8,6 +8,7 @@ import {
 	Zap,
 } from "lucide-react";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { Badge } from "@/components/ui/badge";
 import {
 	Card,
@@ -18,62 +19,56 @@ import {
 
 const categories = [
 	{
-		title: "Routing",
-		description:
-			"File-based routing, dynamic routes, parallel routes, intercepting routes, and more.",
+		titleKey: "routing" as const,
+		descKey: "routing_desc" as const,
 		icon: Route,
 		href: "/routing",
 		count: 7,
 		color: "text-blue-500",
 	},
 	{
-		title: "Data",
-		description:
-			"Server-side fetching, client-side queries, caching, revalidation, and server actions.",
+		titleKey: "data" as const,
+		descKey: "data_desc" as const,
 		icon: Database,
 		href: "/data",
 		count: 6,
 		color: "text-green-500",
 	},
 	{
-		title: "Rendering",
-		description:
-			"Server components, client components, composition patterns, and state management.",
+		titleKey: "rendering" as const,
+		descKey: "rendering_desc" as const,
 		icon: Layers,
 		href: "/rendering",
 		count: 4,
 		color: "text-purple-500",
 	},
 	{
-		title: "UI & Assets",
-		description: "CSS, images, fonts, metadata, animations, and theming.",
+		titleKey: "ui" as const,
+		descKey: "ui_desc" as const,
 		icon: Palette,
 		href: "/ui",
 		count: 6,
 		color: "text-pink-500",
 	},
 	{
-		title: "Advanced",
-		description:
-			"Middleware, i18n, auth, draft mode, edge runtime, MDX, and more.",
+		titleKey: "advanced" as const,
+		descKey: "advanced_desc" as const,
 		icon: Zap,
 		href: "/advanced",
 		count: 10,
 		color: "text-orange-500",
 	},
 	{
-		title: "Config",
-		description:
-			"Environment variables, redirects, headers, CSP, and bundle analysis.",
+		titleKey: "config" as const,
+		descKey: "config_desc" as const,
 		icon: Settings,
 		href: "/config",
 		count: 4,
 		color: "text-gray-500",
 	},
 	{
-		title: "API (Hono)",
-		description:
-			"Route handlers with Hono — REST CRUD, OG image generation, and streaming.",
+		titleKey: "api" as const,
+		descKey: "api_desc" as const,
 		icon: Server,
 		href: "/api/hello",
 		count: 4,
@@ -81,7 +76,10 @@ const categories = [
 	},
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+	const tCommon = await getTranslations("common");
+	const tNav = await getTranslations("nav");
+	const tHome = await getTranslations("home");
 	const totalDemos = categories.reduce((sum, cat) => sum + cat.count, 0);
 
 	return (
@@ -89,25 +87,28 @@ export default function HomePage() {
 			<div className="mx-auto max-w-6xl px-6 py-16">
 				<div className="mb-12 text-center">
 					<h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-						Next.js Learning Hub
+						{tCommon("title")}
 					</h1>
 					<p className="mt-4 text-lg text-muted-foreground">
-						Interactive feature showcase — {totalDemos} demos covering every
-						Next.js 16 feature
+						{tCommon("description", { count: totalDemos })}
 					</p>
 				</div>
 
 				<div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 					{categories.map((category) => (
-						<Link key={category.title} href={category.href}>
+						<Link key={category.titleKey} href={category.href}>
 							<Card className="h-full transition-colors hover:border-foreground/20">
 								<CardHeader>
 									<div className="flex items-center justify-between">
 										<category.icon className={`h-8 w-8 ${category.color}`} />
-										<Badge variant="secondary">{category.count} demos</Badge>
+										<Badge variant="secondary">
+											{tHome("demos", { count: category.count })}
+										</Badge>
 									</div>
-									<CardTitle className="mt-4">{category.title}</CardTitle>
-									<CardDescription>{category.description}</CardDescription>
+									<CardTitle className="mt-4">
+										{tNav(category.titleKey)}
+									</CardTitle>
+									<CardDescription>{tHome(category.descKey)}</CardDescription>
 								</CardHeader>
 							</Card>
 						</Link>
