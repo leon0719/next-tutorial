@@ -47,6 +47,12 @@ export default async function RoutingPage() {
 			href: "/routing/not-found",
 			status: "ready" as const,
 		},
+		{
+			title: t("searchParams"),
+			description: t("searchParamsDesc"),
+			href: "/routing/search-params",
+			status: "ready" as const,
+		},
 	];
 
 	return (

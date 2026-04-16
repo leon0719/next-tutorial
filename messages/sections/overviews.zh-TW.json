@@ -16,7 +16,9 @@
       "intercepting": "Intercepting Routes",
       "interceptingDesc": "(.) 語法 — 攔截路由以顯示 modal 覆蓋層。",
       "notFound": "錯誤頁面",
-      "notFoundDesc": "自訂 404、403、401 — 優雅地處理錯誤。"
+      "notFoundDesc": "自訂 404、403、401 — 優雅地處理錯誤。",
+      "searchParams": "Search Params",
+      "searchParamsDesc": "Next.js 16 的 Promise-based searchParams — URL 查詢參數處理。"
     },
     "data": {
       "title": "資料處理",
@@ -46,7 +48,11 @@
       "composition": "組合模式",
       "compositionDesc": "Server 包裹 Client 模式 — 兩全其美。",
       "state": "State (Zustand)",
-      "stateDesc": "使用 Zustand 在 Next.js 應用中進行跨元件狀態管理。"
+      "stateDesc": "使用 Zustand 在 Next.js 應用中進行跨元件狀態管理。",
+      "urlState": "URL State (nuqs)",
+      "urlStateDesc": "使用 nuqs 進行 type-safe URL 搜尋參數狀態管理。",
+      "lazyLoading": "Lazy Loading",
+      "lazyLoadingDesc": "使用 next/dynamic 動態載入元件 — code splitting 和效能最佳化。"
     },
     "ui": {
       "title": "UI 與資源",

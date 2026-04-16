@@ -29,6 +29,18 @@ export default async function RenderingPage() {
 			href: "/rendering/state",
 			status: "ready" as const,
 		},
+		{
+			title: t("urlState"),
+			description: t("urlStateDesc"),
+			href: "/rendering/url-state",
+			status: "ready" as const,
+		},
+		{
+			title: t("lazyLoading"),
+			description: t("lazyLoadingDesc"),
+			href: "/rendering/lazy-loading",
+			status: "ready" as const,
+		},
 	];
 
 	return (

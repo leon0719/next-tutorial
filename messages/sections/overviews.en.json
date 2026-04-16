@@ -16,7 +16,9 @@
       "intercepting": "Intercepting Routes",
       "interceptingDesc": "(.) syntax — intercept routes to show modal overlays.",
       "notFound": "Error Pages",
-      "notFoundDesc": "Custom 404, 403, 401 — handle errors gracefully."
+      "notFoundDesc": "Custom 404, 403, 401 — handle errors gracefully.",
+      "searchParams": "Search Params",
+      "searchParamsDesc": "Next.js 16 Promise-based searchParams — URL query parameter handling."
     },
     "data": {
       "title": "Data",
@@ -46,7 +48,11 @@
       "composition": "Composition",
       "compositionDesc": "Server wrapping Client pattern — the best of both worlds.",
       "state": "State (Zustand)",
-      "stateDesc": "Cross-component state management with Zustand in a Next.js app."
+      "stateDesc": "Cross-component state management with Zustand in a Next.js app.",
+      "urlState": "URL State (nuqs)",
+      "urlStateDesc": "Type-safe URL search params state management with nuqs.",
+      "lazyLoading": "Lazy Loading",
+      "lazyLoadingDesc": "Dynamic imports with next/dynamic — code splitting and performance optimization."
     },
     "ui": {
       "title": "UI & Assets",

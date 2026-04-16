@@ -56,6 +56,7 @@ const navGroups: NavGroup[] = [
 			{ title: "Parallel Routes", href: "/routing/parallel" },
 			{ title: "Intercepting", href: "/routing/intercepting" },
 			{ title: "Error Pages", href: "/routing/not-found" },
+			{ title: "Search Params", href: "/routing/search-params" },
 		],
 	},
 	{
@@ -69,6 +70,7 @@ const navGroups: NavGroup[] = [
 			{ title: "Revalidation", href: "/data/revalidation" },
 			{ title: "Server Actions", href: "/data/server-actions" },
 			{ title: "Streaming", href: "/data/streaming" },
+			{ title: "Forms", href: "/data/forms" },
 		],
 	},
 	{
@@ -80,6 +82,8 @@ const navGroups: NavGroup[] = [
 			{ title: "Client Components", href: "/rendering/client-components" },
 			{ title: "Composition", href: "/rendering/composition" },
 			{ title: "State (Zustand)", href: "/rendering/state" },
+			{ title: "URL State (nuqs)", href: "/rendering/url-state" },
+			{ title: "Lazy Loading", href: "/rendering/lazy-loading" },
 		],
 	},
 	{
