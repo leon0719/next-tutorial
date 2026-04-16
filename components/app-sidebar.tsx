@@ -127,14 +127,15 @@ export function AppSidebar() {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild>
-              <Link href="/">
-                <Home className="h-5 w-5" />
-                <div className="flex flex-col gap-0.5 leading-none">
-                  <span className="font-semibold">Next.js Learning Hub</span>
-                  <span className="text-xs text-muted-foreground">v16.2.4</span>
-                </div>
-              </Link>
+            <SidebarMenuButton
+              size="lg"
+              render={<Link href="/" />}
+            >
+              <Home className="h-5 w-5" />
+              <div className="flex flex-col gap-0.5 leading-none">
+                <span className="font-semibold">Next.js Learning Hub</span>
+                <span className="text-xs text-muted-foreground">v16.2.4</span>
+              </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -151,8 +152,11 @@ export function AppSidebar() {
               <SidebarMenu>
                 {group.items.map((item) => (
                   <SidebarMenuItem key={item.href}>
-                    <SidebarMenuButton asChild isActive={pathname === item.href}>
-                      <Link href={item.href}>{item.title}</Link>
+                    <SidebarMenuButton
+                      isActive={pathname === item.href}
+                      render={<Link href={item.href} />}
+                    >
+                      {item.title}
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
