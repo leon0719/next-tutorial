@@ -76,16 +76,18 @@ export function PageNav() {
     currentIndex < allPages.length - 1 ? allPages[currentIndex + 1] : null;
 
   return (
-    <nav className="flex items-center justify-between border-t pt-6 mt-10">
+    <nav className="flex items-center justify-between border-t-3 border-foreground pt-6 mt-10">
       {prev ? (
         <Link
           href={prev.href}
-          className="group flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          className="group flex items-center gap-3 rounded-sm border-3 border-foreground bg-background px-4 py-3 shadow-[3px_3px_0_var(--foreground)] transition-all duration-150 hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
         >
-          <ChevronLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
+          <ChevronLeft className="h-4 w-4" />
           <div>
-            <div className="text-xs text-muted-foreground">Previous</div>
-            <div className="font-medium">{prev.label}</div>
+            <div className="font-heading text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+              Previous
+            </div>
+            <div className="font-heading text-sm font-bold">{prev.label}</div>
           </div>
         </Link>
       ) : (
@@ -94,13 +96,15 @@ export function PageNav() {
       {next ? (
         <Link
           href={next.href}
-          className="group flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors text-right"
+          className="group flex items-center gap-3 rounded-sm border-3 border-foreground bg-background px-4 py-3 shadow-[3px_3px_0_var(--foreground)] transition-all duration-150 hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] text-right"
         >
           <div>
-            <div className="text-xs text-muted-foreground">Next</div>
-            <div className="font-medium">{next.label}</div>
+            <div className="font-heading text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+              Next
+            </div>
+            <div className="font-heading text-sm font-bold">{next.label}</div>
           </div>
-          <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          <ChevronRight className="h-4 w-4" />
         </Link>
       ) : (
         <div />

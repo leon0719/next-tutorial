@@ -93,7 +93,7 @@ export function DynamicBreadcrumb() {
           <Fragment key={item.href}>
             <BreadcrumbItem>
               {item.isLast ? (
-                <BreadcrumbPage>{item.label}</BreadcrumbPage>
+                <BreadcrumbPage className="font-bold">{item.label}</BreadcrumbPage>
               ) : (
                 <BreadcrumbLink render={<Link href={item.href} />}>
                   {item.label}
