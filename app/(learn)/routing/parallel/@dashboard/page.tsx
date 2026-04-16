@@ -1,16 +1,19 @@
+import { getTranslations } from "next-intl/server";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-export default function DashboardSlot() {
+export default async function DashboardSlot() {
+	const t = await getTranslations("routing.parallel");
+
 	const stats = [
-		{ label: "Total Users", value: "2,847" },
-		{ label: "Active Now", value: "142" },
-		{ label: "Revenue", value: "$12,450" },
+		{ label: t("totalUsers"), value: "2,847" },
+		{ label: t("activeNow"), value: "142" },
+		{ label: t("revenue"), value: "$12,450" },
 	];
 
 	return (
 		<Card>
 			<CardHeader className="pb-2">
-				<CardTitle className="text-base">Dashboard</CardTitle>
+				<CardTitle className="text-base">{t("dashboard")}</CardTitle>
 			</CardHeader>
 			<CardContent>
 				<div className="grid grid-cols-3 gap-2">

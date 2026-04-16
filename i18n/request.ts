@@ -15,8 +15,38 @@ export default getRequestConfig(async ({ requestLocale }) => {
 		locale = routing.defaultLocale;
 	}
 
+	const base = (await import(`../messages/${locale}.json`)).default;
+	const rendering = (
+		await import(`../messages/sections/rendering.${locale}.json`)
+	).default;
+	const overviews = (
+		await import(`../messages/sections/overviews.${locale}.json`)
+	).default;
+	const routingMessages = (
+		await import(`../messages/sections/routing.${locale}.json`)
+	).default;
+	const data = (
+		await import(`../messages/sections/data.${locale}.json`)
+	).default;
+	const ui = (await import(`../messages/sections/ui.${locale}.json`)).default;
+	const config = (
+		await import(`../messages/sections/config.${locale}.json`)
+	).default;
+	const advanced = (
+		await import(`../messages/sections/advanced.${locale}.json`)
+	).default;
+
 	return {
 		locale,
-		messages: (await import(`../messages/${locale}.json`)).default,
+		messages: {
+			...base,
+			...rendering,
+			...overviews,
+			...routingMessages,
+			...data,
+			...ui,
+			...config,
+			...advanced,
+		},
 	};
 });

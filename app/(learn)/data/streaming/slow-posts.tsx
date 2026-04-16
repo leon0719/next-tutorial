@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { db } from "@/lib/db";
@@ -9,6 +10,7 @@ async function sleep(ms: number) {
 }
 
 export async function SlowPosts() {
+	const t = await getTranslations("data.streaming");
 	await sleep(2000); // Simulate 2 second delay
 	const allPosts = db.select().from(posts).limit(3).all();
 
@@ -16,9 +18,9 @@ export async function SlowPosts() {
 		<Card>
 			<CardHeader className="pb-2">
 				<div className="flex items-center justify-between">
-					<CardTitle className="text-base">Recent Posts</CardTitle>
+					<CardTitle className="text-base">{t("recentPosts")}</CardTitle>
 					<Badge variant="secondary" className="text-xs">
-						Loaded after 2s
+						{t("loadedAfter2s")}
 					</Badge>
 				</div>
 			</CardHeader>

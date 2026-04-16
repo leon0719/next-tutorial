@@ -1,20 +1,16 @@
+import { getTranslations } from "next-intl/server";
 import { CodeBlock, DemoBox, DemoPage, Section } from "@/components/demo-page";
 import { AnimationDemo } from "./animation-demo";
 
-export default function AnimationsPage() {
+export default async function AnimationsPage() {
+	const t = await getTranslations("ui.animations");
 	return (
-		<DemoPage
-			title="Animations"
-			description="CSS transitions and keyframe animations work great with Next.js. The motion library is also available for more complex animations."
-		>
-			<Section
-				title="Live Demos"
-				description="Hover and observe these CSS-powered animations."
-			>
+		<DemoPage title={t("title")} description={t("description")}>
+			<Section title={t("liveDemosTitle")} description={t("liveDemosDesc")}>
 				<AnimationDemo />
 			</Section>
 
-			<Section title="CSS Transitions">
+			<Section title={t("cssTransitionsTitle")}>
 				<CodeBlock
 					filename="component.tsx"
 					language="tsx"
@@ -29,7 +25,7 @@ export default function AnimationsPage() {
 </button>`}</CodeBlock>
 			</Section>
 
-			<Section title="CSS Keyframe Animations">
+			<Section title={t("cssKeyframeTitle")}>
 				<CodeBlock filename="globals.css" language="css">{`@keyframes fade-in {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
@@ -43,10 +39,9 @@ export default function AnimationsPage() {
 </div>`}</CodeBlock>
 			</Section>
 
-			<Section title="Motion Library">
+			<Section title={t("motionLibraryTitle")}>
 				<p className="text-sm text-muted-foreground mb-3">
-					The motion library (installed in this project) provides a declarative
-					API for complex animations. It must be used in Client Components.
+					{t("motionLibraryText")}
 				</p>
 				<CodeBlock
 					filename="components/animated.tsx"
@@ -68,30 +63,24 @@ export function AnimatedCard() {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Key Points">
+			<Section title={t("keyPointsTitle")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="CSS First">
+					<DemoBox title={t("cssFirstTitle")}>
+						<p className="text-sm text-muted-foreground">{t("cssFirstText")}</p>
+					</DemoBox>
+					<DemoBox title={t("clientComponentsTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Prefer CSS transitions and keyframes for simple animations. They
-							work in Server Components and have zero JS overhead.
+							{t("clientComponentsText")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Client Components">
+					<DemoBox title={t("reduceMotionTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Animation libraries like motion require &quot;use client&quot;
-							since they use React state and effects internally.
+							{t("reduceMotionText")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Reduce Motion">
+					<DemoBox title={t("layoutAnimationsTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Always respect prefers-reduced-motion. Use Tailwind&apos;s
-							motion-safe: and motion-reduce: variants.
-						</p>
-					</DemoBox>
-					<DemoBox title="Layout Animations">
-						<p className="text-sm text-muted-foreground">
-							For route transition animations, use CSS view transitions or the
-							motion library with layout animations.
+							{t("layoutAnimationsText")}
 						</p>
 					</DemoBox>
 				</div>

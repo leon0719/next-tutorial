@@ -1,40 +1,40 @@
+import { getTranslations } from "next-intl/server";
 import { CategoryOverview } from "@/components/category-overview";
 
-const demos = [
-	{
-		title: "Server Components",
-		description:
-			"React Server Components — render on the server, zero client JS.",
-		href: "/rendering/server-components",
-		status: "ready" as const,
-	},
-	{
-		title: "Client Components",
-		description:
-			"'use client' directive — interactive components with hooks and events.",
-		href: "/rendering/client-components",
-		status: "ready" as const,
-	},
-	{
-		title: "Composition",
-		description: "Server wrapping Client pattern — the best of both worlds.",
-		href: "/rendering/composition",
-		status: "ready" as const,
-	},
-	{
-		title: "State (Zustand)",
-		description:
-			"Cross-component state management with Zustand in a Next.js app.",
-		href: "/rendering/state",
-		status: "ready" as const,
-	},
-];
+export default async function RenderingPage() {
+	const t = await getTranslations("overviews.rendering");
 
-export default function RenderingPage() {
+	const demos = [
+		{
+			title: t("serverComponents"),
+			description: t("serverComponentsDesc"),
+			href: "/rendering/server-components",
+			status: "ready" as const,
+		},
+		{
+			title: t("clientComponents"),
+			description: t("clientComponentsDesc"),
+			href: "/rendering/client-components",
+			status: "ready" as const,
+		},
+		{
+			title: t("composition"),
+			description: t("compositionDesc"),
+			href: "/rendering/composition",
+			status: "ready" as const,
+		},
+		{
+			title: t("state"),
+			description: t("stateDesc"),
+			href: "/rendering/state",
+			status: "ready" as const,
+		},
+	];
+
 	return (
 		<CategoryOverview
-			title="Rendering"
-			description="Next.js supports Server Components (default) and Client Components. Understanding when to use each is key to building performant apps."
+			title={t("title")}
+			description={t("description")}
 			demos={demos}
 		/>
 	);

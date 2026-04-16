@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import {
 	CodeBlock,
@@ -48,16 +49,12 @@ function StatsSkeleton() {
 	);
 }
 
-export default function StreamingPage() {
+export default async function StreamingPage() {
+	const t = await getTranslations("data.streaming");
+
 	return (
-		<DemoPage
-			title="Streaming"
-			description="Streaming lets you progressively render UI. Wrap slow components in <Suspense> to show a fallback instantly while the content loads."
-		>
-			<Section
-				title="Live Demo — Watch Components Stream In"
-				description="Posts load after ~2s, Stats after ~4s. The rest of the page is instant. Refresh to see it again!"
-			>
+		<DemoPage title={t("title")} description={t("description")}>
+			<Section title={t("liveDemo")} description={t("liveDemoDescription")}>
 				<div className="grid gap-4 md:grid-cols-2">
 					<Suspense fallback={<PostsSkeleton />}>
 						<SlowPosts />
@@ -68,7 +65,7 @@ export default function StreamingPage() {
 				</div>
 			</Section>
 
-			<Section title="How It Works">
+			<Section title={t("howItWorks")}>
 				<FileTree>{`Request Flow:
 
 1. Browser requests /data/streaming
@@ -84,7 +81,7 @@ With Suspense:
   Each piece arrives independently!`}</FileTree>
 			</Section>
 
-			<Section title="Suspense Boundaries">
+			<Section title={t("suspenseBoundaries")}>
 				<CodeBlock
 					filename="app/dashboard/page.tsx"
 					language="tsx"
@@ -111,10 +108,9 @@ export default function Dashboard() {
 // Fallback shows instantly, content replaces it`}</CodeBlock>
 			</Section>
 
-			<Section title="loading.tsx — Automatic Suspense">
+			<Section title={t("loadingTsx")}>
 				<p className="text-sm text-muted-foreground mb-3">
-					Create a loading.tsx file and Next.js automatically wraps the page in
-					a Suspense boundary.
+					{t("loadingTsxDescription")}
 				</p>
 				<CodeBlock
 					filename="app/posts/loading.tsx"
@@ -140,32 +136,26 @@ export default function Loading() {
 // </Suspense>`}</CodeBlock>
 			</Section>
 
-			<Section title="Key Points">
+			<Section title={t("keyPoints")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="Granular Boundaries">
+					<DemoBox title={t("granularBoundaries")}>
 						<p className="text-sm text-muted-foreground">
-							Each Suspense boundary streams independently. Wrap individual slow
-							components, not the entire page — this maximizes perceived
-							performance.
+							{t("granularBoundariesDescription")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Nested Suspense">
+					<DemoBox title={t("nestedSuspense")}>
 						<p className="text-sm text-muted-foreground">
-							Suspense boundaries can be nested. Outer shows first, then inner
-							boundaries resolve progressively. Great for complex layouts.
+							{t("nestedSuspenseDescription")}
 						</p>
 					</DemoBox>
-					<DemoBox title="No Client JS Needed">
+					<DemoBox title={t("noClientJs")}>
 						<p className="text-sm text-muted-foreground">
-							Streaming works with Server Components only. The server sends HTML
-							chunks as they become ready — no JavaScript framework needed on
-							the client.
+							{t("noClientJsDescription")}
 						</p>
 					</DemoBox>
-					<DemoBox title="loading.tsx = Page Suspense">
+					<DemoBox title={t("loadingPageSuspense")}>
 						<p className="text-sm text-muted-foreground">
-							loading.tsx automatically wraps the page in Suspense. It shows
-							during navigation before the page component renders.
+							{t("loadingPageSuspenseDescription")}
 						</p>
 					</DemoBox>
 				</div>

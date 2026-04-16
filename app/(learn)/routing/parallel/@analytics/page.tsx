@@ -1,6 +1,9 @@
+import { getTranslations } from "next-intl/server";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-export default function AnalyticsSlot() {
+export default async function AnalyticsSlot() {
+	const t = await getTranslations("routing.parallel");
+
 	const data = [
 		{ page: "/", views: 1240 },
 		{ page: "/routing", views: 890 },
@@ -11,7 +14,7 @@ export default function AnalyticsSlot() {
 	return (
 		<Card>
 			<CardHeader className="pb-2">
-				<CardTitle className="text-base">Analytics</CardTitle>
+				<CardTitle className="text-base">{t("analytics")}</CardTitle>
 			</CardHeader>
 			<CardContent>
 				<div className="space-y-2">
@@ -19,7 +22,7 @@ export default function AnalyticsSlot() {
 						<div key={item.page} className="flex justify-between text-sm">
 							<code className="text-muted-foreground">{item.page}</code>
 							<span className="font-medium">
-								{item.views.toLocaleString()} views
+								{item.views.toLocaleString()} {t("views")}
 							</span>
 						</div>
 					))}

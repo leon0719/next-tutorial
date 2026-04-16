@@ -1,40 +1,40 @@
+import { getTranslations } from "next-intl/server";
 import { CategoryOverview } from "@/components/category-overview";
 
-const demos = [
-	{
-		title: "Environment Variables",
-		description:
-			"NEXT_PUBLIC_ prefix, .env files, runtime vs build-time variables.",
-		href: "/config/env",
-		status: "ready" as const,
-	},
-	{
-		title: "Redirects & Rewrites",
-		description:
-			"URL redirects and rewrites in next.config.ts — routing without code.",
-		href: "/config/redirects",
-		status: "ready" as const,
-	},
-	{
-		title: "Headers & CSP",
-		description:
-			"Custom HTTP headers and Content Security Policy configuration.",
-		href: "/config/headers",
-		status: "ready" as const,
-	},
-	{
-		title: "Bundle Analyzer",
-		description: "Visualize your JavaScript bundle — find and fix bloat.",
-		href: "/config/bundle",
-		status: "ready" as const,
-	},
-];
+export default async function ConfigPage() {
+	const t = await getTranslations("overviews.config");
 
-export default function ConfigPage() {
+	const demos = [
+		{
+			title: t("env"),
+			description: t("envDesc"),
+			href: "/config/env",
+			status: "ready" as const,
+		},
+		{
+			title: t("redirects"),
+			description: t("redirectsDesc"),
+			href: "/config/redirects",
+			status: "ready" as const,
+		},
+		{
+			title: t("headers"),
+			description: t("headersDesc"),
+			href: "/config/headers",
+			status: "ready" as const,
+		},
+		{
+			title: t("bundle"),
+			description: t("bundleDesc"),
+			href: "/config/bundle",
+			status: "ready" as const,
+		},
+	];
+
 	return (
 		<CategoryOverview
-			title="Config"
-			description="next.config.ts is the control center for your Next.js app. Learn how to configure environment variables, redirects, headers, and analyze your bundle."
+			title={t("title")}
+			description={t("description")}
 			demos={demos}
 		/>
 	);

@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import {
 	CodeBlock,
 	DemoBox,
@@ -7,13 +8,12 @@ import {
 } from "@/components/demo-page";
 import { TriggerDemo } from "./trigger-demo";
 
-export default function ErrorPagesDemo() {
+export default async function ErrorPagesDemo() {
+	const t = await getTranslations("routing.notFound");
+
 	return (
-		<DemoPage
-			title="Error Pages"
-			description="Next.js provides file conventions for handling errors gracefully — not-found.tsx, error.tsx, forbidden.tsx, and unauthorized.tsx."
-		>
-			<Section title="File Conventions">
+		<DemoPage title={t("title")} description={t("description")}>
+			<Section title={t("fileConventions")}>
 				<FileTree>{`app/
 ├── not-found.tsx        ← Global 404 page
 ├── global-error.tsx     ← Root error boundary (must include <html>)
@@ -35,15 +35,15 @@ export default function ErrorPagesDemo() {
 			</Section>
 
 			<Section
-				title="Interactive Demo"
-				description="Click the buttons to trigger different error types. Each is handled by its own file convention."
+				title={t("interactiveDemo")}
+				description={t("interactiveDemoDesc")}
 			>
 				<TriggerDemo />
 			</Section>
 
-			<Section title="1. not-found.tsx (404)">
+			<Section title={t("notFoundSection")}>
 				<p className="text-sm text-muted-foreground mb-3">
-					Rendered when notFound() is called or when no route matches.
+					{t("notFoundDesc")}
 				</p>
 				<CodeBlock
 					filename="app/not-found.tsx"
@@ -70,11 +70,8 @@ export default async function UserPage({ params }) {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="2. error.tsx (Error Boundary)">
-				<p className="text-sm text-muted-foreground mb-3">
-					Must be a Client Component. Catches runtime errors and shows a
-					recovery UI.
-				</p>
+			<Section title={t("errorSection")}>
+				<p className="text-sm text-muted-foreground mb-3">{t("errorDesc")}</p>
 				<CodeBlock
 					filename="app/dashboard/error.tsx"
 					language="tsx"
@@ -103,10 +100,9 @@ export default function Error({
 // For root layout errors, use global-error.tsx.`}</CodeBlock>
 			</Section>
 
-			<Section title="3. forbidden.tsx & unauthorized.tsx">
+			<Section title={t("forbiddenSection")}>
 				<p className="text-sm text-muted-foreground mb-3">
-					Handle 403 and 401 responses. Requires enabling authInterrupts in
-					next.config.ts.
+					{t("forbiddenDesc")}
 				</p>
 				<CodeBlock
 					filename="next.config.ts"
@@ -128,30 +124,26 @@ export default async function AdminPage() {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Key Points">
+			<Section title={t("keyPoints")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="error.tsx Must Be Client">
+					<DemoBox title={t("errorMustBeClient")}>
 						<p className="text-sm text-muted-foreground">
-							error.tsx requires "use client" because it uses React's Error
-							Boundary mechanism, which only works on the client.
+							{t("errorMustBeClientDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Nesting Matters">
+					<DemoBox title={t("nestingMatters")}>
 						<p className="text-sm text-muted-foreground">
-							error.tsx catches errors from its child page.tsx, NOT from its
-							sibling layout.tsx. Use global-error.tsx for root layout errors.
+							{t("nestingMattersDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="loading.tsx">
+					<DemoBox title={t("loadingTsx")}>
 						<p className="text-sm text-muted-foreground">
-							loading.tsx creates a Suspense boundary around page.tsx. It shows
-							instantly on navigation while the page loads.
+							{t("loadingTsxDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Error Digest">
+					<DemoBox title={t("errorDigest")}>
 						<p className="text-sm text-muted-foreground">
-							In production, error.digest is a hash of the error (not the full
-							message) to avoid leaking sensitive info to the client.
+							{t("errorDigestDesc")}
 						</p>
 					</DemoBox>
 				</div>

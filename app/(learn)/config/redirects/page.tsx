@@ -1,15 +1,16 @@
+import { getTranslations } from "next-intl/server";
 import { CodeBlock, DemoBox, DemoPage, Section } from "@/components/demo-page";
 
+const richComponents = {
+	code: (chunks: React.ReactNode) => <code>{chunks}</code>,
+	strong: (chunks: React.ReactNode) => <strong>{chunks}</strong>,
+};
+
 export default async function RedirectsRewritesPage() {
+	const t = await getTranslations("config.redirects");
 	return (
-		<DemoPage
-			title="Redirects & Rewrites"
-			description="Configure URL redirects and rewrites in next.config.ts to control routing without writing application code."
-		>
-			<Section
-				title="Redirects"
-				description="Redirects send the user to a different URL. They return a 307 (temporary) or 308 (permanent) status code."
-			>
+		<DemoPage title={t("title")} description={t("description")}>
+			<Section title={t("redirectsTitle")} description={t("redirectsDesc")}>
 				<CodeBlock
 					filename="next.config.ts"
 					language="typescript"
@@ -42,27 +43,20 @@ const nextConfig: NextConfig = {
 
 export default nextConfig;`}</CodeBlock>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="Permanent (308)">
+					<DemoBox title={t("permanentTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Use <code>permanent: true</code> when a URL has moved forever.
-							Browsers and search engines cache this redirect. The old URL
-							transfers its SEO value to the new one.
+							{t.rich("permanentText", richComponents)}
 						</p>
 					</DemoBox>
-					<DemoBox title="Temporary (307)">
+					<DemoBox title={t("temporaryTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Use <code>permanent: false</code> for temporary redirects.
-							Browsers do not cache this, so the original URL remains the
-							canonical source.
+							{t.rich("temporaryText", richComponents)}
 						</p>
 					</DemoBox>
 				</div>
 			</Section>
 
-			<Section
-				title="Rewrites"
-				description="Rewrites map a URL to a different destination without changing the browser's address bar. The user sees the original URL."
-			>
+			<Section title={t("rewritesTitle")} description={t("rewritesDesc")}>
 				<CodeBlock
 					filename="next.config.ts"
 					language="typescript"
@@ -97,27 +91,18 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;`}</CodeBlock>
-				<DemoBox title="Rewrite Phases">
+				<DemoBox title={t("rewritePhasesTitle")}>
 					<div className="space-y-2 text-sm text-muted-foreground">
-						<p>
-							<strong>beforeFiles</strong> — Runs before any page or static file
-							is matched. Useful for proxying API calls to an external backend.
-						</p>
-						<p>
-							<strong>afterFiles</strong> — Runs after pages are checked but
-							before public files. Useful for internal URL aliases.
-						</p>
-						<p>
-							<strong>fallback</strong> — Runs last, only if no page or file
-							matched. Useful for proxying to a legacy app.
-						</p>
+						<p>{t.rich("beforeFilesText", richComponents)}</p>
+						<p>{t.rich("afterFilesText", richComponents)}</p>
+						<p>{t.rich("fallbackText", richComponents)}</p>
 					</div>
 				</DemoBox>
 			</Section>
 
 			<Section
-				title="Pattern Matching"
-				description="Both redirects and rewrites support dynamic segments and wildcards."
+				title={t("patternMatchingTitle")}
+				description={t("patternMatchingDesc")}
 			>
 				<CodeBlock
 					filename="patterns.ts"
@@ -144,32 +129,26 @@ export default nextConfig;`}</CodeBlock>
 // /search?q=nextjs → /results?q=nextjs`}</CodeBlock>
 			</Section>
 
-			<Section title="Common Use Cases">
+			<Section title={t("commonUseCasesTitle")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="Domain Migration">
+					<DemoBox title={t("domainMigrationTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Redirect all old URLs to new ones with{" "}
-							<code>permanent: true</code> to preserve SEO when restructuring
-							your site.
+							{t.rich("domainMigrationText", richComponents)}
 						</p>
 					</DemoBox>
-					<DemoBox title="API Proxy">
+					<DemoBox title={t("apiProxyTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Use <code>beforeFiles</code> rewrites to proxy <code>/api/*</code>{" "}
-							to an external API server, avoiding CORS issues entirely.
+							{t.rich("apiProxyText", richComponents)}
 						</p>
 					</DemoBox>
-					<DemoBox title="Vanity URLs">
+					<DemoBox title={t("vanityUrlsTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Rewrite <code>/pricing</code> to{" "}
-							<code>/marketing/pricing-page</code> for clean public URLs while
-							keeping your internal structure organized.
+							{t.rich("vanityUrlsText", richComponents)}
 						</p>
 					</DemoBox>
-					<DemoBox title="Incremental Migration">
+					<DemoBox title={t("incrementalMigrationTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Use <code>fallback</code> rewrites to send unmatched routes to a
-							legacy application while migrating pages one by one.
+							{t.rich("incrementalMigrationText", richComponents)}
 						</p>
 					</DemoBox>
 				</div>

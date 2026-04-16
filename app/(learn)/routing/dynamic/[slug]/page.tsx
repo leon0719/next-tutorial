@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import {
 	CodeBlock,
 	DemoBox,
@@ -14,13 +15,11 @@ export default async function DynamicRoutePage({
 	params: Promise<{ slug: string }>;
 }) {
 	const { slug } = await params;
+	const t = await getTranslations("routing.dynamic");
 
 	return (
-		<DemoPage
-			title="Dynamic Routes"
-			description="Dynamic segments let you create pages from dynamic data. The [slug] folder name becomes a route parameter."
-		>
-			<Section title="File Structure">
+		<DemoPage title={t("title")} description={t("description")}>
+			<Section title={t("fileStructure")}>
 				<FileTree>{`app/(learn)/routing/dynamic/
 └── [slug]/
     └── page.tsx    ← This file!
@@ -31,12 +30,12 @@ URL examples:
   /routing/dynamic/123          → slug = "123"`}</FileTree>
 			</Section>
 
-			<Section title="Current Route Parameter">
+			<Section title={t("currentParam")}>
 				<DemoBox title="Live Demo">
 					<div className="space-y-3">
 						<div className="flex items-center gap-2">
 							<span className="text-sm text-muted-foreground">
-								Current slug:
+								{t("currentSlug")}
 							</span>
 							<Badge
 								variant="secondary"
@@ -45,9 +44,7 @@ URL examples:
 								{slug}
 							</Badge>
 						</div>
-						<p className="text-sm text-muted-foreground">
-							Try changing the URL! Replace the last segment with anything.
-						</p>
+						<p className="text-sm text-muted-foreground">{t("tryChanging")}</p>
 						<div className="flex flex-wrap gap-2">
 							<Link
 								href="/routing/dynamic/hello-world"
@@ -72,10 +69,9 @@ URL examples:
 				</DemoBox>
 			</Section>
 
-			<Section title="How It Works">
+			<Section title={t("howItWorks")}>
 				<p className="text-sm text-muted-foreground mb-3">
-					In Next.js 16, params is a Promise and must be awaited. This is a
-					breaking change from earlier versions.
+					{t("howItWorksDesc")}
 				</p>
 				<CodeBlock
 					filename="app/blog/[slug]/page.tsx"
@@ -101,7 +97,7 @@ export function generateStaticParams() {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Multiple Dynamic Segments">
+			<Section title={t("multipleSegments")}>
 				<CodeBlock
 					filename="app/shop/[category]/[product]/page.tsx"
 					language="tsx"
@@ -123,18 +119,16 @@ export function generateStaticParams() {
 // /shop/electronics/iphone → category="electronics", product="iphone"`}</CodeBlock>
 			</Section>
 
-			<Section title="Key Points">
+			<Section title={t("keyPoints")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="params is a Promise">
+					<DemoBox title={t("paramsPromise")}>
 						<p className="text-sm text-muted-foreground">
-							In Next.js 16, params must be awaited in Server Components. In
-							Client Components, use React.use(params) instead.
+							{t("paramsPromiseDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="generateStaticParams">
+					<DemoBox title={t("generateStatic")}>
 						<p className="text-sm text-muted-foreground">
-							Use generateStaticParams() to pre-render dynamic routes at build
-							time (SSG). Unknown slugs are rendered on-demand (SSR) by default.
+							{t("generateStaticDesc")}
 						</p>
 					</DemoBox>
 				</div>

@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import {
 	CodeBlock,
 	DemoBox,
@@ -6,35 +7,29 @@ import {
 	Section,
 } from "@/components/demo-page";
 
-export default function I18nPage() {
+export default async function I18nPage() {
+	const t = await getTranslations("advanced.i18n");
 	return (
-		<DemoPage
-			title="Internationalization (i18n)"
-			description="This project uses next-intl for internationalization with a cookie-based locale strategy. Switch languages using the locale switcher in the sidebar footer."
-		>
+		<DemoPage title={t("title")} description={t("description")}>
 			<Section
-				title="Routing Strategies"
-				description="next-intl supports multiple strategies for determining the active locale."
+				title={t("routingStrategiesTitle")}
+				description={t("routingStrategiesDescription")}
 			>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="[locale] Prefix (Common)">
+					<DemoBox title={t("localePrefixTitle")}>
 						<p className="text-sm text-muted-foreground">
-							URLs include the locale: /en/about, /zh-TW/about. Requires a
-							[locale] dynamic segment wrapping your routes. Best for SEO and
-							shareable localized URLs.
+							{t("localePrefixDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Cookie-Based (This Project)">
+					<DemoBox title={t("cookieBasedTitle")}>
 						<p className="text-sm text-muted-foreground">
-							The locale is stored in a cookie. URLs stay clean (/about) and the
-							server reads the cookie to determine which translations to load.
-							Simpler routing, no URL prefixes needed.
+							{t("cookieBasedDesc")}
 						</p>
 					</DemoBox>
 				</div>
 			</Section>
 
-			<Section title="Translation Files">
+			<Section title={t("translationFilesTitle")}>
 				<FileTree>{`messages/
   en.json          # English translations
   zh-TW.json       # Traditional Chinese translations`}</FileTree>
@@ -51,10 +46,9 @@ export default function I18nPage() {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Server Components: getTranslations">
+			<Section title={t("serverComponentsTitle")}>
 				<p className="text-sm text-muted-foreground mb-3">
-					In Server Components, use the async getTranslations function to access
-					translations without client-side JavaScript.
+					{t("serverComponentsDesc")}
 				</p>
 				<CodeBlock
 					filename="app/page.tsx"
@@ -73,10 +67,9 @@ export default async function HomePage() {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Client Components: useTranslations">
+			<Section title={t("clientComponentsTitle")}>
 				<p className="text-sm text-muted-foreground mb-3">
-					In Client Components, use the useTranslations hook. The component must
-					be wrapped by NextIntlClientProvider (set up in providers).
+					{t("clientComponentsDesc")}
 				</p>
 				<CodeBlock filename="components/nav.tsx" language="tsx">{`'use client'
 
@@ -95,10 +88,9 @@ export function Nav() {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Provider Setup">
+			<Section title={t("providerSetupTitle")}>
 				<p className="text-sm text-muted-foreground mb-3">
-					The NextIntlClientProvider in the root layout passes messages and
-					locale to all client components.
+					{t("providerSetupDesc")}
 				</p>
 				<CodeBlock
 					filename="app/layout.tsx"
@@ -122,19 +114,14 @@ export default async function RootLayout({ children }) {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Key Points">
+			<Section title={t("keyPointsTitle")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="Try It Now">
-						<p className="text-sm text-muted-foreground">
-							Use the locale switcher in the sidebar footer to toggle between
-							English and Traditional Chinese. Watch the UI update instantly.
-						</p>
+					<DemoBox title={t("tryItNowTitle")}>
+						<p className="text-sm text-muted-foreground">{t("tryItNowDesc")}</p>
 					</DemoBox>
-					<DemoBox title="Type Safety">
+					<DemoBox title={t("typeSafetyTitle")}>
 						<p className="text-sm text-muted-foreground">
-							next-intl supports TypeScript autocompletion for translation keys.
-							Define your message types to catch missing translations at build
-							time.
+							{t("typeSafetyDesc")}
 						</p>
 					</DemoBox>
 				</div>

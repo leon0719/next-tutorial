@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { RefreshCw } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,6 +17,7 @@ interface Post {
 }
 
 export function PostsQuery() {
+	const t = useTranslations("data.clientFetch");
 	const {
 		data,
 		isLoading,
@@ -37,11 +39,11 @@ export function PostsQuery() {
 		<Card>
 			<CardHeader className="pb-2">
 				<div className="flex items-center justify-between">
-					<CardTitle className="text-base">Posts from API</CardTitle>
+					<CardTitle className="text-base">{t("postsFromApi")}</CardTitle>
 					<div className="flex items-center gap-2">
 						{isFetching && (
 							<Badge variant="secondary" className="text-xs">
-								Fetching...
+								{t("fetching")}
 							</Badge>
 						)}
 						<Button
@@ -53,7 +55,7 @@ export function PostsQuery() {
 							<RefreshCw
 								className={`h-3 w-3 mr-1 ${isFetching ? "animate-spin" : ""}`}
 							/>
-							Refetch
+							{t("refetch")}
 						</Button>
 					</div>
 				</div>
@@ -71,7 +73,9 @@ export function PostsQuery() {
 				)}
 
 				{isError && (
-					<div className="text-sm text-destructive">Error: {error.message}</div>
+					<div className="text-sm text-destructive">
+						{t("error", { message: error.message })}
+					</div>
 				)}
 
 				{data && (
@@ -95,10 +99,11 @@ export function PostsQuery() {
 							))}
 						</div>
 						<p className="text-xs text-muted-foreground">
-							Last updated:{" "}
-							{dataUpdatedAt
-								? new Date(dataUpdatedAt).toLocaleTimeString()
-								: "—"}
+							{t("lastUpdated", {
+								time: dataUpdatedAt
+									? new Date(dataUpdatedAt).toLocaleTimeString()
+									: "—",
+							})}
 						</p>
 					</div>
 				)}

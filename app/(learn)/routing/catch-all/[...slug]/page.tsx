@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import {
 	CodeBlock,
 	DemoBox,
@@ -14,13 +15,11 @@ export default async function CatchAllPage({
 	params: Promise<{ slug: string[] }>;
 }) {
 	const { slug } = await params;
+	const t = await getTranslations("routing.catchAll");
 
 	return (
-		<DemoPage
-			title="Catch-all Segments"
-			description="[...slug] matches any number of URL segments. The parameter becomes a string array."
-		>
-			<Section title="File Structure">
+		<DemoPage title={t("title")} description={t("description")}>
+			<Section title={t("fileStructure")}>
 				<FileTree>{`app/(learn)/routing/catch-all/
 └── [...slug]/
     └── page.tsx    ← This file!
@@ -32,11 +31,13 @@ URL examples:
   /routing/catch-all/x/y/z/w   → slug = ["x", "y", "z", "w"]`}</FileTree>
 			</Section>
 
-			<Section title="Current Route Segments">
+			<Section title={t("currentSegments")}>
 				<DemoBox title="Live Demo">
 					<div className="space-y-4">
 						<div className="flex items-center gap-2 flex-wrap">
-							<span className="text-sm text-muted-foreground">Segments:</span>
+							<span className="text-sm text-muted-foreground">
+								{t("segments")}
+							</span>
 							{slug.map((segment, i) => {
 								const key = `seg-${i}-${segment}`;
 								return (
@@ -48,13 +49,13 @@ URL examples:
 						</div>
 						<div className="flex items-center gap-2">
 							<span className="text-sm text-muted-foreground">
-								Total segments:
+								{t("totalSegments")}
 							</span>
 							<Badge variant="outline">{slug.length}</Badge>
 						</div>
 						<div className="flex items-center gap-2">
 							<span className="text-sm text-muted-foreground">
-								Joined path:
+								{t("joinedPath")}
 							</span>
 							<code className="text-sm bg-muted px-2 py-1 rounded">
 								/{slug.join("/")}
@@ -63,7 +64,7 @@ URL examples:
 
 						<div className="border-t pt-3">
 							<p className="text-sm text-muted-foreground mb-2">
-								Try different paths:
+								{t("tryPaths")}
 							</p>
 							<div className="flex flex-wrap gap-2">
 								<Link
@@ -90,7 +91,7 @@ URL examples:
 				</DemoBox>
 			</Section>
 
-			<Section title="Catch-all vs Optional Catch-all">
+			<Section title={t("vsOptional")}>
 				<CodeBlock
 					filename="comparison"
 					language="tsx"
@@ -105,7 +106,7 @@ URL examples:
 // /shop          ✅ slug = undefined`}</CodeBlock>
 			</Section>
 
-			<Section title="Code Example">
+			<Section title={t("codeExample")}>
 				<CodeBlock
 					filename="app/docs/[...slug]/page.tsx"
 					language="tsx"
@@ -134,18 +135,14 @@ URL examples:
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Use Cases">
+			<Section title={t("useCases")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="Documentation Sites">
-						<p className="text-sm text-muted-foreground">
-							/docs/getting-started/installation — nested doc pages with dynamic
-							depth.
-						</p>
+					<DemoBox title={t("docSites")}>
+						<p className="text-sm text-muted-foreground">{t("docSitesDesc")}</p>
 					</DemoBox>
-					<DemoBox title="Blog with Dates">
+					<DemoBox title={t("blogDates")}>
 						<p className="text-sm text-muted-foreground">
-							/blog/2024/04/16/my-post — date-based URL structure parsed from
-							segments.
+							{t("blogDatesDesc")}
 						</p>
 					</DemoBox>
 				</div>

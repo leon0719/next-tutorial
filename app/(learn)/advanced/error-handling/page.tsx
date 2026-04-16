@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import {
 	CodeBlock,
 	DemoBox,
@@ -8,15 +9,13 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { ErrorTrigger } from "./error-trigger";
 
-export default function ErrorHandlingPage() {
+export default async function ErrorHandlingPage() {
+	const t = await getTranslations("advanced.errorHandling");
 	return (
-		<DemoPage
-			title="Error Handling"
-			description="Gracefully handle runtime errors with error.tsx boundaries — catch, display, and recover from errors without crashing your entire app."
-		>
+		<DemoPage title={t("title")} description={t("description")}>
 			<Section
-				title="error.tsx Convention"
-				description="Next.js uses React Error Boundaries under the hood. An error.tsx file automatically wraps a route segment and its children."
+				title={t("errorTsxConventionTitle")}
+				description={t("errorTsxConventionDescription")}
 			>
 				<FileTree>{`app/
 ├── layout.tsx
@@ -31,15 +30,13 @@ export default function ErrorHandlingPage() {
 							Important
 						</Badge>
 						<p className="text-sm text-muted-foreground">
-							error.tsx must be a Client Component (&quot;use client&quot;).
-							Error boundaries use React&apos;s class component lifecycle which
-							only works on the client.
+							{t("importantNote")}
 						</p>
 					</div>
 				</DemoBox>
 			</Section>
 
-			<Section title="Basic error.tsx">
+			<Section title={t("basicErrorTitle")}>
 				<CodeBlock
 					filename="app/dashboard/error.tsx"
 					language="tsx"
@@ -65,8 +62,8 @@ export default function ErrorBoundary({
 			</Section>
 
 			<Section
-				title="global-error.tsx"
-				description="Catches errors in the root layout itself. It must render its own <html> and <body> tags since it replaces the root layout when active."
+				title={t("globalErrorTitle")}
+				description={t("globalErrorDescription")}
 			>
 				<CodeBlock
 					filename="app/global-error.tsx"
@@ -91,54 +88,39 @@ export default function GlobalError({
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Error Recovery with reset()">
-				<DemoBox title="How reset() works">
+			<Section title={t("errorRecoveryTitle")}>
+				<DemoBox title={t("howResetWorksTitle")}>
 					<div className="space-y-2 text-sm text-muted-foreground">
-						<p>
-							The <code className="text-foreground">reset()</code> function
-							attempts to re-render the error boundary&apos;s children. If the
-							error was transient (e.g., a network hiccup), the re-render may
-							succeed without the error recurring.
-						</p>
-						<p>
-							In production,{" "}
-							<code className="text-foreground">error.digest</code> provides a
-							hash of the error for server-side log correlation without exposing
-							sensitive details to the client.
-						</p>
+						<p>{t("howResetWorksDesc1")}</p>
+						<p>{t("howResetWorksDesc2")}</p>
 					</div>
 				</DemoBox>
 			</Section>
 
-			<Section title="Live Demo">
+			<Section title={t("liveDemoTitle")}>
 				<ErrorTrigger />
 			</Section>
 
-			<Section title="Key Points">
+			<Section title={t("keyPointsTitle")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="Client Component Required">
+					<DemoBox title={t("clientComponentRequiredTitle")}>
 						<p className="text-sm text-muted-foreground">
-							error.tsx must start with &quot;use client&quot; — React error
-							boundaries only work as client components.
+							{t("clientComponentRequiredDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Nested Boundaries">
+					<DemoBox title={t("nestedBoundariesTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Errors bubble up to the nearest error boundary. More specific
-							boundaries prevent the entire page from being replaced.
+							{t("nestedBoundariesDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Layout Errors">
+					<DemoBox title={t("layoutErrorsTitle")}>
 						<p className="text-sm text-muted-foreground">
-							error.tsx does NOT catch errors in the same segment&apos;s
-							layout.tsx. Use the parent segment&apos;s error.tsx or
-							global-error.tsx instead.
+							{t("layoutErrorsDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Production Digest">
+					<DemoBox title={t("productionDigestTitle")}>
 						<p className="text-sm text-muted-foreground">
-							In production, error.digest gives a hashed identifier for
-							server-side log matching without leaking error details.
+							{t("productionDigestDesc")}
 						</p>
 					</DemoBox>
 				</div>

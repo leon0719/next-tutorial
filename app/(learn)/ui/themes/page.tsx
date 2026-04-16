@@ -1,20 +1,19 @@
+import { getTranslations } from "next-intl/server";
 import { CodeBlock, DemoBox, DemoPage, Section } from "@/components/demo-page";
 import { ThemeDemo } from "./theme-demo";
 
-export default function ThemesPage() {
+export default async function ThemesPage() {
+	const t = await getTranslations("ui.themes");
 	return (
-		<DemoPage
-			title="Theming"
-			description="This project uses next-themes for dark mode support with CSS variables for color tokens."
-		>
+		<DemoPage title={t("title")} description={t("description")}>
 			<Section
-				title="Live Theme Switcher"
-				description="Toggle between themes and see CSS variables update in real time."
+				title={t("liveSwitcherTitle")}
+				description={t("liveSwitcherDesc")}
 			>
 				<ThemeDemo />
 			</Section>
 
-			<Section title="Setting Up next-themes">
+			<Section title={t("settingUpTitle")}>
 				<CodeBlock filename="app/providers.tsx" language="tsx">{`"use client";
 import { ThemeProvider } from "next-themes";
 
@@ -46,7 +45,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 // from the theme script that runs before hydration`}</CodeBlock>
 			</Section>
 
-			<Section title="CSS Variables for Themes">
+			<Section title={t("cssVariablesTitle")}>
 				<CodeBlock filename="app/globals.css" language="css">{`:root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -64,7 +63,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Using useTheme">
+			<Section title={t("useThemeTitle")}>
 				<CodeBlock
 					filename="components/theme-toggle.tsx"
 					language="tsx"
@@ -84,30 +83,24 @@ export function ThemeToggle() {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Key Points">
+			<Section title={t("keyPointsTitle")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="No Flash of Wrong Theme">
+					<DemoBox title={t("noFlashTitle")}>
+						<p className="text-sm text-muted-foreground">{t("noFlashText")}</p>
+					</DemoBox>
+					<DemoBox title={t("systemPreferenceTitle")}>
 						<p className="text-sm text-muted-foreground">
-							next-themes injects a script before hydration to set the correct
-							class, preventing a flash of the wrong theme.
+							{t("systemPreferenceText")}
 						</p>
 					</DemoBox>
-					<DemoBox title="System Preference">
+					<DemoBox title={t("cssVariablesStrategyTitle")}>
 						<p className="text-sm text-muted-foreground">
-							With enableSystem, the theme automatically follows the OS
-							preference. resolvedTheme gives the actual active theme.
+							{t("cssVariablesStrategyText")}
 						</p>
 					</DemoBox>
-					<DemoBox title="CSS Variables Strategy">
+					<DemoBox title={t("serverComponentsTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Define colors as CSS variables in :root and .dark. Components
-							reference variables, making theme changes instant.
-						</p>
-					</DemoBox>
-					<DemoBox title="Server Components">
-						<p className="text-sm text-muted-foreground">
-							useTheme only works in Client Components. Server Components render
-							with CSS variables that resolve at paint time.
+							{t("serverComponentsText")}
 						</p>
 					</DemoBox>
 				</div>

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { DemoBox } from "@/components/demo-page";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -9,12 +10,15 @@ import { Button } from "@/components/ui/button";
 export function NavDemo() {
 	const router = useRouter();
 	const pathname = usePathname();
+	const t = useTranslations("routing.basics");
 
 	return (
 		<DemoBox title="Interactive Navigation Demo">
 			<div className="space-y-4">
 				<div className="flex items-center gap-2">
-					<span className="text-sm text-muted-foreground">Current path:</span>
+					<span className="text-sm text-muted-foreground">
+						{t("currentPath")}
+					</span>
 					<Badge variant="outline" className="font-mono">
 						{pathname}
 					</Badge>
@@ -22,46 +26,46 @@ export function NavDemo() {
 
 				<div className="grid gap-3 sm:grid-cols-2">
 					<div className="space-y-2">
-						<h4 className="text-sm font-medium">Link Component</h4>
+						<h4 className="text-sm font-medium">{t("linkComponent")}</h4>
 						<div className="flex flex-wrap gap-2">
 							<Link
 								href="/routing"
 								className="inline-flex h-8 items-center justify-center rounded-md border border-input bg-background px-3 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
 							>
-								← Routing Overview
+								{t("routingOverview")}
 							</Link>
 							<Link
 								href="/routing/dynamic/hello-world"
 								className="inline-flex h-8 items-center justify-center rounded-md border border-input bg-background px-3 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
 							>
-								Dynamic Route →
+								{t("dynamicRoute")}
 							</Link>
 						</div>
 					</div>
 
 					<div className="space-y-2">
-						<h4 className="text-sm font-medium">useRouter Methods</h4>
+						<h4 className="text-sm font-medium">{t("routerMethods")}</h4>
 						<div className="flex flex-wrap gap-2">
 							<Button
 								variant="secondary"
 								size="sm"
 								onClick={() => router.push("/routing/basics")}
 							>
-								push() (same page)
+								{t("pushSame")}
 							</Button>
 							<Button
 								variant="secondary"
 								size="sm"
 								onClick={() => router.back()}
 							>
-								back()
+								{t("back")}
 							</Button>
 							<Button
 								variant="secondary"
 								size="sm"
 								onClick={() => router.refresh()}
 							>
-								refresh()
+								{t("refresh")}
 							</Button>
 						</div>
 					</div>

@@ -1,14 +1,13 @@
+import { getTranslations } from "next-intl/server";
 import { CodeBlock, DemoBox, DemoPage, Section } from "@/components/demo-page";
 
-export default function DraftModePage() {
+export default async function DraftModePage() {
+	const t = await getTranslations("advanced.draftMode");
 	return (
-		<DemoPage
-			title="Draft Mode"
-			description="Draft Mode lets you bypass static rendering to preview unpublished content from your CMS. When enabled, pages are rendered dynamically on each request."
-		>
+		<DemoPage title={t("title")} description={t("description")}>
 			<Section
-				title="How It Works"
-				description="Draft Mode sets a special cookie that tells Next.js to render pages dynamically instead of serving the static version. This is perfect for CMS preview workflows."
+				title={t("howItWorksTitle")}
+				description={t("howItWorksDescription")}
 			>
 				<CodeBlock
 					filename="app/api/draft/route.ts"
@@ -36,7 +35,7 @@ export async function GET(request: Request) {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Disabling Draft Mode">
+			<Section title={t("disablingTitle")}>
 				<CodeBlock
 					filename="app/api/draft/disable/route.ts"
 					language="tsx"
@@ -50,11 +49,8 @@ export async function GET() {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Reading Draft Mode in Pages">
-				<p className="text-sm text-muted-foreground mb-3">
-					Check whether draft mode is active in any Server Component to
-					conditionally fetch published or draft content.
-				</p>
+			<Section title={t("readingTitle")}>
+				<p className="text-sm text-muted-foreground mb-3">{t("readingDesc")}</p>
 				<CodeBlock
 					filename="app/blog/[slug]/page.tsx"
 					language="tsx"
@@ -83,58 +79,35 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="CMS Preview Workflow">
-				<DemoBox title="Typical Setup">
+			<Section title={t("cmsWorkflowTitle")}>
+				<DemoBox title={t("typicalSetupTitle")}>
 					<ol className="text-sm text-muted-foreground space-y-2 list-decimal list-inside">
-						<li>
-							Configure your CMS to generate a preview URL:
-							<code className="text-xs bg-muted px-1 py-0.5 rounded ml-1">
-								/api/draft?secret=MY_SECRET&slug=/blog/my-post
-							</code>
-						</li>
-						<li>
-							The API route validates the secret, calls draftMode().enable(),
-							and redirects to the target page.
-						</li>
-						<li>
-							The page detects draft mode and fetches unpublished content from
-							the CMS.
-						</li>
-						<li>
-							The editor reviews the preview and can exit by hitting the disable
-							endpoint.
-						</li>
+						<li>{t("step1")}</li>
+						<li>{t("step2")}</li>
+						<li>{t("step3")}</li>
+						<li>{t("step4")}</li>
 					</ol>
 				</DemoBox>
 			</Section>
 
-			<Section title="Key Points">
+			<Section title={t("keyPointsTitle")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="Cookie-Based">
+					<DemoBox title={t("cookieBasedTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Draft mode uses a special __prerender_bypass cookie. It persists
-							across page navigations until explicitly disabled or the cookie
-							expires.
+							{t("cookieBasedDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Security">
+					<DemoBox title={t("securityTitle")}>
+						<p className="text-sm text-muted-foreground">{t("securityDesc")}</p>
+					</DemoBox>
+					<DemoBox title={t("dynamicRenderingTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Always validate a secret token before enabling draft mode. Without
-							it, anyone could access unpublished content by hitting your API
-							route directly.
+							{t("dynamicRenderingDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Dynamic Rendering">
+					<DemoBox title={t("worksWithAnyCmsTitle")}>
 						<p className="text-sm text-muted-foreground">
-							When draft mode is enabled, the page is rendered dynamically on
-							every request. Static caching is bypassed completely for that
-							user.
-						</p>
-					</DemoBox>
-					<DemoBox title="Works with Any CMS">
-						<p className="text-sm text-muted-foreground">
-							Contentful, Sanity, Strapi, WordPress, or any headless CMS that
-							supports preview URLs can integrate with Next.js draft mode.
+							{t("worksWithAnyCmsDesc")}
 						</p>
 					</DemoBox>
 				</div>

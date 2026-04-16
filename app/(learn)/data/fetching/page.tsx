@@ -1,4 +1,5 @@
 import { desc } from "drizzle-orm";
+import { getTranslations } from "next-intl/server";
 import { CodeBlock, DemoBox, DemoPage, Section } from "@/components/demo-page";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,21 +7,23 @@ import { db } from "@/lib/db";
 import { posts } from "@/lib/db/schema";
 
 export default async function ServerFetchPage() {
+	const t = await getTranslations("data.fetching");
 	const startTime = performance.now();
 	const allPosts = db.select().from(posts).orderBy(desc(posts.createdAt)).all();
 	const fetchTime = (performance.now() - startTime).toFixed(2);
 
 	return (
-		<DemoPage
-			title="Server Fetch"
-			description="Server Components can fetch data directly — no API routes, no useEffect, no loading spinners. Data is available before the page renders."
-		>
-			<Section title="Live Demo — Direct Database Query">
-				<DemoBox title={`Fetched ${allPosts.length} posts in ${fetchTime}ms`}>
+		<DemoPage title={t("title")} description={t("description")}>
+			<Section title={t("liveDemo")}>
+				<DemoBox
+					title={t("liveDemoTitle", {
+						count: allPosts.length,
+						time: fetchTime,
+					})}
+				>
 					<div className="space-y-3">
 						<p className="text-sm text-muted-foreground">
-							This data was queried from SQLite using Drizzle ORM directly in
-							the Server Component. No API call, no client-side fetching.
+							{t("liveDemoDescription")}
 						</p>
 						<div className="space-y-2">
 							{allPosts.map((post) => (
@@ -41,14 +44,16 @@ export default async function ServerFetchPage() {
 							))}
 						</div>
 						<div className="border-t pt-2 flex items-center gap-4 text-xs text-muted-foreground">
-							<span>Rendered: {new Date().toLocaleTimeString()}</span>
-							<span>Query time: {fetchTime}ms</span>
+							<span>
+								{t("rendered", { time: new Date().toLocaleTimeString() })}
+							</span>
+							<span>{t("queryTime", { time: fetchTime })}</span>
 						</div>
 					</div>
 				</DemoBox>
 			</Section>
 
-			<Section title="Pattern 1: Database Query">
+			<Section title={t("pattern1")}>
 				<CodeBlock
 					filename="app/posts/page.tsx"
 					language="tsx"
@@ -74,7 +79,7 @@ export default async function PostsPage() {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Pattern 2: Fetch API">
+			<Section title={t("pattern2")}>
 				<CodeBlock
 					filename="app/users/page.tsx"
 					language="tsx"
@@ -96,9 +101,9 @@ export default async function PostsPage() {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Pattern 3: Parallel Fetching">
+			<Section title={t("pattern3")}>
 				<p className="text-sm text-muted-foreground mb-3">
-					Avoid waterfalls by fetching data in parallel with Promise.all.
+					{t("pattern3Description")}
 				</p>
 				<CodeBlock
 					filename="app/dashboard/page.tsx"
@@ -119,55 +124,51 @@ export default async function PostsPage() {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Server Fetch vs Client Fetch">
+			<Section title={t("comparison")}>
 				<div className="grid gap-4 md:grid-cols-2">
 					<Card>
 						<CardHeader className="pb-2">
 							<CardTitle className="text-sm text-green-600 dark:text-green-400">
-								Server Fetch (this demo)
+								{t("serverFetchLabel")}
 							</CardTitle>
 						</CardHeader>
 						<CardContent className="text-sm text-muted-foreground space-y-1">
-							<p>✅ No loading state — data ready at render</p>
-							<p>✅ No client JS for data fetching</p>
-							<p>✅ Direct DB/API access with secrets</p>
-							<p>✅ No CORS issues</p>
-							<p>❌ No real-time updates</p>
-							<p>❌ No refetch on user action</p>
+							<p>✅ {t("serverFetchPro1")}</p>
+							<p>✅ {t("serverFetchPro2")}</p>
+							<p>✅ {t("serverFetchPro3")}</p>
+							<p>✅ {t("serverFetchPro4")}</p>
+							<p>❌ {t("serverFetchCon1")}</p>
+							<p>❌ {t("serverFetchCon2")}</p>
 						</CardContent>
 					</Card>
 					<Card>
 						<CardHeader className="pb-2">
 							<CardTitle className="text-sm text-blue-600 dark:text-blue-400">
-								Client Fetch (next demo)
+								{t("clientFetchLabel")}
 							</CardTitle>
 						</CardHeader>
 						<CardContent className="text-sm text-muted-foreground space-y-1">
-							<p>✅ Real-time updates / polling</p>
-							<p>✅ Refetch on user interaction</p>
-							<p>✅ Optimistic updates</p>
-							<p>✅ Infinite scroll / pagination</p>
-							<p>❌ Needs loading/error states</p>
-							<p>❌ More client JS</p>
+							<p>✅ {t("clientFetchPro1")}</p>
+							<p>✅ {t("clientFetchPro2")}</p>
+							<p>✅ {t("clientFetchPro3")}</p>
+							<p>✅ {t("clientFetchPro4")}</p>
+							<p>❌ {t("clientFetchCon1")}</p>
+							<p>❌ {t("clientFetchCon2")}</p>
 						</CardContent>
 					</Card>
 				</div>
 			</Section>
 
-			<Section title="Key Points">
+			<Section title={t("keyPoints")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="No Default Cache">
+					<DemoBox title={t("noDefaultCache")}>
 						<p className="text-sm text-muted-foreground">
-							In Next.js 16, fetch() has no default caching. Data is fresh on
-							every request. Use &apos;use cache&apos; directive to opt into
-							caching.
+							{t("noDefaultCacheDescription")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Automatic Deduplication">
+					<DemoBox title={t("autoDedup")}>
 						<p className="text-sm text-muted-foreground">
-							Identical fetch() calls in the same render are automatically
-							deduplicated. Multiple components fetching the same URL only make
-							one request.
+							{t("autoDedupDescription")}
 						</p>
 					</DemoBox>
 				</div>

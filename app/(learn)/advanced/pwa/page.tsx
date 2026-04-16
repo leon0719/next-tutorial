@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import {
 	CodeBlock,
 	DemoBox,
@@ -7,42 +8,34 @@ import {
 } from "@/components/demo-page";
 import { Badge } from "@/components/ui/badge";
 
-export default function PwaPage() {
+export default async function PwaPage() {
+	const t = await getTranslations("advanced.pwa");
 	return (
-		<DemoPage
-			title="Progressive Web App (PWA)"
-			description="Make your Next.js app installable and offline-capable with web manifests, service workers, and PWA libraries like @serwist/next."
-		>
+		<DemoPage title={t("title")} description={t("description")}>
 			<Section
-				title="What Makes a PWA?"
-				description="A Progressive Web App needs three things: a web manifest for installability, a service worker for offline support, and HTTPS."
+				title={t("whatMakesPwaTitle")}
+				description={t("whatMakesPwaDescription")}
 			>
 				<div className="grid gap-3 sm:grid-cols-3">
-					<DemoBox title="Web Manifest">
+					<DemoBox title={t("webManifestTitle")}>
 						<p className="text-sm text-muted-foreground">
-							JSON file declaring app name, icons, theme color, and display mode
-							so the browser can install it.
+							{t("webManifestBoxDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Service Worker">
+					<DemoBox title={t("serviceWorkerTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Background script that intercepts network requests, enabling
-							offline access and caching strategies.
+							{t("serviceWorkerBoxDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="HTTPS">
-						<p className="text-sm text-muted-foreground">
-							Required for service workers and secure context APIs. Vercel and
-							most hosts provide this automatically.
-						</p>
+					<DemoBox title={t("httpsTitle")}>
+						<p className="text-sm text-muted-foreground">{t("httpsBoxDesc")}</p>
 					</DemoBox>
 				</div>
 			</Section>
 
-			<Section title="Web Manifest">
+			<Section title={t("webManifestSectionTitle")}>
 				<p className="text-sm text-muted-foreground mb-3">
-					In the App Router, you can generate a manifest using a manifest.ts
-					file or place a static manifest.json in the app directory.
+					{t("webManifestSectionDesc")}
 				</p>
 				<CodeBlock
 					filename="app/manifest.ts"
@@ -74,10 +67,9 @@ export default function manifest(): MetadataRoute.Manifest {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="@serwist/next Setup">
+			<Section title={t("serwistSetupTitle")}>
 				<p className="text-sm text-muted-foreground mb-3">
-					@serwist/next (successor to next-pwa) provides automatic service
-					worker generation with Workbox under the hood.
+					{t("serwistSetupDesc")}
 				</p>
 				<CodeBlock
 					filename="next.config.ts"
@@ -118,41 +110,38 @@ const serwist = new Serwist({
 serwist.addEventListeners()`}</CodeBlock>
 			</Section>
 
-			<Section title="Caching Strategies">
+			<Section title={t("cachingStrategiesTitle")}>
 				<DemoBox>
 					<div className="space-y-3">
 						<div className="flex items-start gap-3">
 							<Badge variant="secondary" className="mt-0.5 shrink-0">
-								Cache First
+								{t("cacheFirstBadge")}
 							</Badge>
 							<p className="text-sm text-muted-foreground">
-								Serve from cache, fall back to network. Best for static assets
-								like images, fonts, and CSS.
+								{t("cacheFirstDesc")}
 							</p>
 						</div>
 						<div className="flex items-start gap-3">
 							<Badge variant="secondary" className="mt-0.5 shrink-0">
-								Network First
+								{t("networkFirstBadge")}
 							</Badge>
 							<p className="text-sm text-muted-foreground">
-								Try network first, fall back to cache. Best for API responses
-								and pages that need fresh data.
+								{t("networkFirstDesc")}
 							</p>
 						</div>
 						<div className="flex items-start gap-3">
 							<Badge variant="secondary" className="mt-0.5 shrink-0">
-								Stale While Revalidate
+								{t("staleWhileRevalidateBadge")}
 							</Badge>
 							<p className="text-sm text-muted-foreground">
-								Serve from cache immediately while fetching an update in the
-								background. Balances speed and freshness.
+								{t("staleWhileRevalidateDesc")}
 							</p>
 						</div>
 					</div>
 				</DemoBox>
 			</Section>
 
-			<Section title="File Structure">
+			<Section title={t("fileStructureTitle")}>
 				<FileTree>{`project-root/
 ├── app/
 │   ├── manifest.ts        ← web manifest (installability)
@@ -165,30 +154,24 @@ serwist.addEventListeners()`}</CodeBlock>
 └── next.config.ts         ← @serwist/next plugin`}</FileTree>
 			</Section>
 
-			<Section title="Key Points">
+			<Section title={t("keyPointsTitle")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="Dev vs Production">
+					<DemoBox title={t("devVsProdTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Service workers are typically disabled in development. Test PWA
-							features with a production build using next build && next start.
+							{t("devVsProdDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="App Shell Pattern">
+					<DemoBox title={t("appShellTitle")}>
+						<p className="text-sm text-muted-foreground">{t("appShellDesc")}</p>
+					</DemoBox>
+					<DemoBox title={t("updateFlowTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Pre-cache the app shell (layout, navigation) so the app loads
-							instantly even offline, then fetch dynamic content.
+							{t("updateFlowDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Update Flow">
+					<DemoBox title={t("lighthouseTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Service workers update in the background. Use skipWaiting and
-							clientsClaim for immediate activation, or prompt users to refresh.
-						</p>
-					</DemoBox>
-					<DemoBox title="Lighthouse Audit">
-						<p className="text-sm text-muted-foreground">
-							Use Chrome DevTools Lighthouse to audit your PWA score. It checks
-							manifest, service worker, HTTPS, and offline capability.
+							{t("lighthouseDesc")}
 						</p>
 					</DemoBox>
 				</div>

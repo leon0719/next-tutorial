@@ -1,11 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { DemoBox } from "@/components/demo-page";
 import { Button } from "@/components/ui/button";
 
 export function TriggerDemo() {
 	const router = useRouter();
+	const t = useTranslations("routing.notFound");
 
 	return (
 		<DemoBox title="Trigger Error Types">
@@ -16,28 +18,24 @@ export function TriggerDemo() {
 						size="sm"
 						onClick={() => router.push("/routing/not-found/trigger-404")}
 					>
-						Trigger 404 (notFound)
+						{t("trigger404")}
 					</Button>
 					<Button
 						variant="outline"
 						size="sm"
 						onClick={() => router.push("/routing/not-found/trigger-error")}
 					>
-						Trigger Error (throw)
+						{t("triggerError")}
 					</Button>
 					<Button
 						variant="outline"
 						size="sm"
 						onClick={() => router.push("/routing/not-found/normal")}
 					>
-						Normal Page (no error)
+						{t("normalPage")}
 					</Button>
 				</div>
-				<p className="text-xs text-muted-foreground">
-					Each button navigates to a dynamic route that either throws an error
-					or calls notFound(). The error is caught by the corresponding file
-					convention.
-				</p>
+				<p className="text-xs text-muted-foreground">{t("triggerDesc")}</p>
 			</div>
 		</DemoBox>
 	);

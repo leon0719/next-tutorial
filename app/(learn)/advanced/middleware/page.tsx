@@ -1,14 +1,13 @@
+import { getTranslations } from "next-intl/server";
 import { CodeBlock, DemoBox, DemoPage, Section } from "@/components/demo-page";
 
-export default function MiddlewarePage() {
+export default async function MiddlewarePage() {
+	const t = await getTranslations("advanced.middleware");
 	return (
-		<DemoPage
-			title="Middleware"
-			description="Middleware runs before a request is completed, letting you modify the response by rewriting, redirecting, or adding headers. It executes on every matched route at the edge."
-		>
+		<DemoPage title={t("title")} description={t("description")}>
 			<Section
-				title="How It Works"
-				description="Create a middleware.ts (or .js) file at the root of your project (or inside src/). It runs before every matched request."
+				title={t("howItWorksTitle")}
+				description={t("howItWorksDescription")}
 			>
 				<CodeBlock
 					filename="middleware.ts"
@@ -39,8 +38,8 @@ export const config = {
 			</Section>
 
 			<Section
-				title="Matcher Config"
-				description="The matcher determines which routes trigger your middleware. Without it, middleware runs on every request."
+				title={t("matcherConfigTitle")}
+				description={t("matcherConfigDescription")}
 			>
 				<CodeBlock
 					filename="middleware.ts"
@@ -60,36 +59,32 @@ export const config = {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Common Use Cases">
+			<Section title={t("commonUseCasesTitle")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="Authentication Checks">
+					<DemoBox title={t("authChecksTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Verify tokens or session cookies before allowing access to
-							protected routes. Redirect to login if unauthenticated.
+							{t("authChecksDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Geo-Routing">
+					<DemoBox title={t("geoRoutingTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Read request.geo to detect the user&apos;s country and rewrite to
-							region-specific content or redirect to localized domains.
+							{t("geoRoutingDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="A/B Testing">
+					<DemoBox title={t("abTestingTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Assign users to experiment groups via cookies, then rewrite to
-							different page variants without the user seeing a different URL.
+							{t("abTestingDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Rate Limiting">
+					<DemoBox title={t("rateLimitingTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Track request counts per IP using edge-compatible stores and
-							return 429 responses when limits are exceeded.
+							{t("rateLimitingDesc")}
 						</p>
 					</DemoBox>
 				</div>
 			</Section>
 
-			<Section title="Rewrites and Redirects">
+			<Section title={t("rewritesRedirectsTitle")}>
 				<CodeBlock
 					filename="middleware.ts"
 					language="tsx"
@@ -113,36 +108,21 @@ export function middleware(request: NextRequest) {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Next.js 16: proxy.ts">
-				<DemoBox title="New in Next.js 16">
-					<p className="text-sm text-muted-foreground">
-						Next.js 16 introduces{" "}
-						<code className="text-xs bg-muted px-1 py-0.5 rounded">
-							proxy.ts
-						</code>{" "}
-						as a complementary approach for certain use cases that were
-						previously handled by middleware, such as proxying API requests or
-						rewriting to external services. Middleware still works and is the
-						right choice for auth checks, header modifications, and redirects.
-						Check the Next.js docs for guidance on when to use each.
-					</p>
+			<Section title={t("proxyTitle")}>
+				<DemoBox title={t("proxyBoxTitle")}>
+					<p className="text-sm text-muted-foreground">{t("proxyBoxDesc")}</p>
 				</DemoBox>
 			</Section>
 
-			<Section title="Key Points">
+			<Section title={t("keyPointsTitle")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="Runs at the Edge">
+					<DemoBox title={t("runsAtEdgeTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Middleware uses the Edge Runtime by default. You cannot use
-							Node.js-only APIs like fs or native modules.
+							{t("runsAtEdgeDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="One Middleware File">
-						<p className="text-sm text-muted-foreground">
-							There is only one middleware.ts per project. Use the matcher
-							config or conditional logic inside the function to handle
-							different routes.
-						</p>
+					<DemoBox title={t("oneFileTitle")}>
+						<p className="text-sm text-muted-foreground">{t("oneFileDesc")}</p>
 					</DemoBox>
 				</div>
 			</Section>

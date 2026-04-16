@@ -1,24 +1,21 @@
+import { getTranslations } from "next-intl/server";
 import { CodeBlock, DemoBox, DemoPage, Section } from "@/components/demo-page";
 import { PostForm } from "./post-form";
 import { PostList } from "./post-list";
 
-export default function ServerActionsPage() {
+export default async function ServerActionsPage() {
+	const t = await getTranslations("data.serverActions");
+
 	return (
-		<DemoPage
-			title="Server Actions"
-			description="Server Actions are async functions that run on the server. Call them from forms or event handlers to mutate data — no API routes needed."
-		>
-			<Section
-				title="Live Demo — CRUD with Server Actions"
-				description="Create and delete posts using Server Actions. The form submits directly to the server, validates with Zod, and revalidates the page."
-			>
+		<DemoPage title={t("title")} description={t("description")}>
+			<Section title={t("liveDemo")} description={t("liveDemoDescription")}>
 				<div className="grid gap-4 md:grid-cols-2">
 					<PostForm />
 					<PostList />
 				</div>
 			</Section>
 
-			<Section title="Defining a Server Action">
+			<Section title={t("defining")}>
 				<CodeBlock
 					filename="app/actions.ts"
 					language="tsx"
@@ -52,7 +49,7 @@ export async function createPost(
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Using with useActionState (React 19)">
+			<Section title={t("usingWithActionState")}>
 				<CodeBlock filename="components/form.tsx" language="tsx">{`'use client'
 import { useActionState } from 'react'
 import { createPost } from '@/app/actions'
@@ -80,30 +77,26 @@ export function PostForm() {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Key Points">
+			<Section title={t("keyPoints")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="Progressive Enhancement">
+					<DemoBox title={t("progressiveEnhancement")}>
 						<p className="text-sm text-muted-foreground">
-							Forms with Server Actions work even with JavaScript disabled. The
-							form submits as a regular POST request.
+							{t("progressiveEnhancementDescription")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Always Validate">
+					<DemoBox title={t("alwaysValidate")}>
 						<p className="text-sm text-muted-foreground">
-							Server Actions receive raw FormData. Always validate with Zod or
-							similar. Never trust client input — even from your own forms.
+							{t("alwaysValidateDescription")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Revalidate After Mutation">
+					<DemoBox title={t("revalidateAfterMutation")}>
 						<p className="text-sm text-muted-foreground">
-							Call revalidatePath or revalidateTag after mutating data to
-							refresh the page with updated content.
+							{t("revalidateAfterMutationDescription")}
 						</p>
 					</DemoBox>
-					<DemoBox title="useActionState (React 19)">
+					<DemoBox title={t("useActionState")}>
 						<p className="text-sm text-muted-foreground">
-							Replaces the old useFormState. Returns [state, action, isPending]
-							— built-in pending state, no need for useTransition.
+							{t("useActionStateDescription")}
 						</p>
 					</DemoBox>
 				</div>

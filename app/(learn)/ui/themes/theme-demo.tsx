@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -7,6 +8,7 @@ import { Button } from "@/components/ui/button";
 export function ThemeDemo() {
 	const { theme, setTheme, resolvedTheme } = useTheme();
 	const [mounted, setMounted] = useState(false);
+	const t = useTranslations("ui.themes");
 
 	useEffect(() => setMounted(true), []);
 
@@ -24,18 +26,18 @@ export function ThemeDemo() {
 		<div className="space-y-6 rounded-lg border p-6">
 			{/* Theme Selector */}
 			<div className="space-y-3">
-				<p className="text-sm font-medium">Select Theme</p>
+				<p className="text-sm font-medium">{t("selectThemeLabel")}</p>
 				<div className="flex flex-wrap gap-2">
-					{themes.map((t) => (
+					{themes.map((themeOption) => (
 						<Button
-							key={t}
-							variant={theme === t ? "default" : "outline"}
+							key={themeOption}
+							variant={theme === themeOption ? "default" : "outline"}
 							size="sm"
-							onClick={() => setTheme(t)}
+							onClick={() => setTheme(themeOption)}
 						>
-							{t === "light" && "Light"}
-							{t === "dark" && "Dark"}
-							{t === "system" && "System"}
+							{themeOption === "light" && t("lightLabel")}
+							{themeOption === "dark" && t("darkLabel")}
+							{themeOption === "system" && t("systemLabel")}
 						</Button>
 					))}
 				</div>
@@ -43,7 +45,7 @@ export function ThemeDemo() {
 
 			{/* Current State */}
 			<div className="space-y-2">
-				<p className="text-sm font-medium">Current State</p>
+				<p className="text-sm font-medium">{t("currentStateLabel")}</p>
 				<div className="grid gap-2 sm:grid-cols-2">
 					<div className="rounded-md bg-muted px-3 py-2 text-sm">
 						<span className="text-muted-foreground">theme: </span>
@@ -58,7 +60,7 @@ export function ThemeDemo() {
 
 			{/* Color Swatches */}
 			<div className="space-y-2">
-				<p className="text-sm font-medium">Active CSS Variables</p>
+				<p className="text-sm font-medium">{t("activeCssVariablesLabel")}</p>
 				<div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
 					{[
 						{ name: "background", className: "bg-background" },
@@ -82,13 +84,10 @@ export function ThemeDemo() {
 
 			{/* Preview Card */}
 			<div className="space-y-2">
-				<p className="text-sm font-medium">Preview</p>
+				<p className="text-sm font-medium">{t("previewLabel")}</p>
 				<div className="rounded-lg border bg-card p-4 space-y-2">
-					<p className="font-medium text-card-foreground">Card Title</p>
-					<p className="text-sm text-muted-foreground">
-						This card uses CSS variables that automatically adjust when the
-						theme changes. No JavaScript re-render needed for colors.
-					</p>
+					<p className="font-medium text-card-foreground">{t("cardTitle")}</p>
+					<p className="text-sm text-muted-foreground">{t("cardText")}</p>
 					<div className="flex gap-2">
 						<Button size="sm">Primary</Button>
 						<Button size="sm" variant="secondary">

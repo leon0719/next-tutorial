@@ -1,34 +1,29 @@
+import { getTranslations } from "next-intl/server";
 import { CodeBlock, DemoBox, DemoPage, Section } from "@/components/demo-page";
 import { Badge } from "@/components/ui/badge";
 
-export default function AuthPage() {
+export default async function AuthPage() {
+	const t = await getTranslations("advanced.auth");
 	return (
-		<DemoPage
-			title="Authentication"
-			description="Authentication patterns in Next.js cover session management, route protection, and integration with popular auth libraries."
-		>
-			<Section title="Session Management">
+		<DemoPage title={t("title")} description={t("description")}>
+			<Section title={t("sessionManagementTitle")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="JWT Sessions">
+					<DemoBox title={t("jwtSessionsTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Stateless tokens stored in cookies. No database lookup needed on
-							each request. Fast but harder to revoke. Good for simple apps and
-							edge deployments.
+							{t("jwtSessionsDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Database Sessions">
+					<DemoBox title={t("dbSessionsTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Session ID stored in a cookie, session data in a database. Easy to
-							revoke and manage. Requires a database query per request. Better
-							for apps needing strict session control.
+							{t("dbSessionsDesc")}
 						</p>
 					</DemoBox>
 				</div>
 			</Section>
 
 			<Section
-				title="Protecting Routes"
-				description="There are two main approaches to protect routes from unauthenticated users."
+				title={t("protectingRoutesTitle")}
+				description={t("protectingRoutesDescription")}
 			>
 				<CodeBlock
 					filename="app/dashboard/page.tsx"
@@ -76,11 +71,9 @@ export const config = {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="authInterrupts (Next.js 16)">
+			<Section title={t("authInterruptsTitle")}>
 				<p className="text-sm text-muted-foreground mb-3">
-					Next.js 16 introduces authInterrupts, a built-in way to handle
-					authorization errors with dedicated error boundaries. Enable it in
-					your config, then create forbidden.tsx and unauthorized.tsx files.
+					{t("authInterruptsDesc")}
 				</p>
 				<CodeBlock
 					filename="next.config.ts"
@@ -117,58 +110,45 @@ export default function Unauthorized() {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Popular Libraries">
+			<Section title={t("popularLibrariesTitle")}>
 				<div className="grid gap-3 sm:grid-cols-3">
-					<DemoBox title="Auth.js (NextAuth)">
+					<DemoBox title={t("authJsTitle")}>
 						<div className="space-y-1">
 							<Badge variant="secondary" className="text-xs">
-								Most Popular
+								{t("authJsBadge")}
 							</Badge>
-							<p className="text-sm text-muted-foreground">
-								Full-featured auth with OAuth providers, credentials, JWT and
-								database sessions. Deep Next.js integration.
-							</p>
+							<p className="text-sm text-muted-foreground">{t("authJsDesc")}</p>
 						</div>
 					</DemoBox>
-					<DemoBox title="Clerk">
+					<DemoBox title={t("clerkTitle")}>
 						<div className="space-y-1">
 							<Badge variant="outline" className="text-xs">
-								Managed
+								{t("clerkBadge")}
 							</Badge>
-							<p className="text-sm text-muted-foreground">
-								Hosted auth service with drop-in UI components, user management
-								dashboard, and webhook support.
-							</p>
+							<p className="text-sm text-muted-foreground">{t("clerkDesc")}</p>
 						</div>
 					</DemoBox>
-					<DemoBox title="Lucia">
+					<DemoBox title={t("luciaTitle")}>
 						<div className="space-y-1">
 							<Badge variant="outline" className="text-xs">
-								Lightweight
+								{t("luciaBadge")}
 							</Badge>
-							<p className="text-sm text-muted-foreground">
-								Minimal, session-based auth library. You own the database
-								schema. Good for learning and custom setups.
-							</p>
+							<p className="text-sm text-muted-foreground">{t("luciaDesc")}</p>
 						</div>
 					</DemoBox>
 				</div>
 			</Section>
 
-			<Section title="Key Points">
+			<Section title={t("keyPointsTitle")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="Middleware vs Server Component">
+					<DemoBox title={t("middlewareVsServerTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Middleware is fast (edge) but limited — good for redirects. Server
-							Component checks are more flexible — you can query databases and
-							render different UI.
+							{t("middlewareVsServerDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Never Trust the Client">
+					<DemoBox title={t("neverTrustClientTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Always verify auth on the server. Client-side checks (hiding UI)
-							are for UX only. Server Components and Server Actions must
-							independently verify permissions.
+							{t("neverTrustClientDesc")}
 						</p>
 					</DemoBox>
 				</div>

@@ -1,16 +1,16 @@
+import { getTranslations } from "next-intl/server";
 import { CodeBlock, DemoBox, DemoPage, Section } from "@/components/demo-page";
 import { CartDemo } from "./cart-demo";
 import { CartSummary } from "./cart-summary";
 
-export default function StatePage() {
+export default async function StatePage() {
+	const t = await getTranslations("rendering.state");
+
 	return (
-		<DemoPage
-			title="State Management (Zustand)"
-			description="Zustand provides lightweight, hook-based state management that works perfectly with Next.js Client Components. No providers needed."
-		>
+		<DemoPage title={t("title")} description={t("description")}>
 			<Section
-				title="Live Demo — Shared Cart State"
-				description="Two separate Client Components sharing the same Zustand store. Add items on the left, see them appear on the right."
+				title={t("sectionLiveDemo")}
+				description={t("sectionLiveDemoDesc")}
 			>
 				<div className="grid gap-4 md:grid-cols-2">
 					<CartDemo />
@@ -18,7 +18,7 @@ export default function StatePage() {
 				</div>
 			</Section>
 
-			<Section title="Creating a Store">
+			<Section title={t("sectionCreatingStore")}>
 				<CodeBlock
 					filename="store.ts"
 					language="typescript"
@@ -39,7 +39,7 @@ export const useCounterStore = create<CounterStore>((set) => ({
 }));`}</CodeBlock>
 			</Section>
 
-			<Section title="Using in Components">
+			<Section title={t("sectionUsingInComponents")}>
 				<CodeBlock
 					filename="components/counter.tsx"
 					language="tsx"
@@ -59,32 +59,26 @@ export function Counter() {
 // ❌ const store = useStore();                    // re-renders on ANY change`}</CodeBlock>
 			</Section>
 
-			<Section title="Key Points">
+			<Section title={t("sectionKeyPoints")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="No Provider Needed">
+					<DemoBox title={t("keyNoProvider")}>
 						<p className="text-sm text-muted-foreground">
-							Unlike Redux or Context, Zustand stores work without wrapping your
-							app in a Provider. Just import and use the hook anywhere.
+							{t("keyNoProviderDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Client Components Only">
+					<DemoBox title={t("keyClientOnly")}>
 						<p className="text-sm text-muted-foreground">
-							Zustand uses React hooks, so it only works in Client Components.
-							For server data, use Server Components with direct DB access
-							instead.
+							{t("keyClientOnlyDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Selective Re-renders">
+					<DemoBox title={t("keySelectiveRerenders")}>
 						<p className="text-sm text-muted-foreground">
-							Use selectors to subscribe to specific state slices. Components
-							only re-render when their selected state changes — great for
-							performance.
+							{t("keySelectiveRerendersDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Tiny Bundle">
+					<DemoBox title={t("keyTinyBundle")}>
 						<p className="text-sm text-muted-foreground">
-							Zustand is ~1KB gzipped. No boilerplate, no reducers, no action
-							creators. Define state and actions in one place.
+							{t("keyTinyBundleDesc")}
 						</p>
 					</DemoBox>
 				</div>

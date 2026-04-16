@@ -1,79 +1,76 @@
+import { getTranslations } from "next-intl/server";
 import { CategoryOverview } from "@/components/category-overview";
 
-const demos = [
-	{
-		title: "Middleware",
-		description:
-			"Run code before a request is completed — auth checks, redirects, headers.",
-		href: "/advanced/middleware",
-		status: "ready" as const,
-	},
-	{
-		title: "i18n",
-		description: "Multi-language support with next-intl — zh-TW and English.",
-		href: "/advanced/i18n",
-		status: "ready" as const,
-	},
-	{
-		title: "Auth",
-		description:
-			"Authentication patterns — session management and route protection.",
-		href: "/advanced/auth",
-		status: "ready" as const,
-	},
-	{
-		title: "Draft Mode",
-		description: "Preview unpublished content from your CMS before going live.",
-		href: "/advanced/draft-mode",
-		status: "ready" as const,
-	},
-	{
-		title: "Edge Runtime",
-		description:
-			"Run server code at the edge — lightweight and globally distributed.",
-		href: "/advanced/edge-runtime",
-		status: "ready" as const,
-	},
-	{
-		title: "Error Handling",
-		description: "Error boundaries with error.tsx — graceful error recovery.",
-		href: "/advanced/error-handling",
-		status: "ready" as const,
-	},
-	{
-		title: "MDX",
-		description:
-			"Write JSX in Markdown — interactive documentation and blog posts.",
-		href: "/advanced/mdx",
-		status: "ready" as const,
-	},
-	{
-		title: "Instrumentation",
-		description:
-			"OpenTelemetry integration — trace and monitor your application.",
-		href: "/advanced/instrumentation",
-		status: "ready" as const,
-	},
-	{
-		title: "PWA",
-		description:
-			"Progressive Web App features — offline support and installability.",
-		href: "/advanced/pwa",
-		status: "ready" as const,
-	},
-	{
-		title: "Dates",
-		description: "Date handling with dayjs — formatting, parsing, and i18n.",
-		href: "/advanced/dates",
-		status: "ready" as const,
-	},
-];
+export default async function AdvancedPage() {
+	const t = await getTranslations("overviews.advanced");
 
-export default function AdvancedPage() {
+	const demos = [
+		{
+			title: t("middleware"),
+			description: t("middlewareDesc"),
+			href: "/advanced/middleware",
+			status: "ready" as const,
+		},
+		{
+			title: t("i18n"),
+			description: t("i18nDesc"),
+			href: "/advanced/i18n",
+			status: "ready" as const,
+		},
+		{
+			title: t("auth"),
+			description: t("authDesc"),
+			href: "/advanced/auth",
+			status: "ready" as const,
+		},
+		{
+			title: t("draftMode"),
+			description: t("draftModeDesc"),
+			href: "/advanced/draft-mode",
+			status: "ready" as const,
+		},
+		{
+			title: t("edgeRuntime"),
+			description: t("edgeRuntimeDesc"),
+			href: "/advanced/edge-runtime",
+			status: "ready" as const,
+		},
+		{
+			title: t("errorHandling"),
+			description: t("errorHandlingDesc"),
+			href: "/advanced/error-handling",
+			status: "ready" as const,
+		},
+		{
+			title: t("mdx"),
+			description: t("mdxDesc"),
+			href: "/advanced/mdx",
+			status: "ready" as const,
+		},
+		{
+			title: t("instrumentation"),
+			description: t("instrumentationDesc"),
+			href: "/advanced/instrumentation",
+			status: "ready" as const,
+		},
+		{
+			title: t("pwa"),
+			description: t("pwaDesc"),
+			href: "/advanced/pwa",
+			status: "ready" as const,
+		},
+		{
+			title: t("dates"),
+			description: t("datesDesc"),
+			href: "/advanced/dates",
+			status: "ready" as const,
+		},
+	];
+
 	return (
 		<CategoryOverview
-			title="Advanced"
-			description="Powerful features for production-grade applications — from middleware and authentication to internationalization and monitoring."
+			title={t("title")}
+			description={t("description")}
 			demos={demos}
 		/>
 	);

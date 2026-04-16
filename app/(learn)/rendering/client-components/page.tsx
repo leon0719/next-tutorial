@@ -1,16 +1,16 @@
+import { getTranslations } from "next-intl/server";
 import { CodeBlock, DemoBox, DemoPage, Section } from "@/components/demo-page";
 import { CounterDemo } from "./counter-demo";
 import { FormDemo } from "./form-demo";
 
-export default function ClientComponentsPage() {
+export default async function ClientComponentsPage() {
+	const t = await getTranslations("rendering.clientComponents");
+
 	return (
-		<DemoPage
-			title="Client Components"
-			description="Add 'use client' to opt into interactivity. Client Components can use hooks, event handlers, and browser APIs."
-		>
+		<DemoPage title={t("title")} description={t("description")}>
 			<Section
-				title="Interactive Demos"
-				description="These components use 'use client' — they run in the browser and can respond to user interaction."
+				title={t("sectionInteractiveDemos")}
+				description={t("sectionInteractiveDemosDesc")}
 			>
 				<div className="grid gap-4 md:grid-cols-2">
 					<CounterDemo />
@@ -18,7 +18,7 @@ export default function ClientComponentsPage() {
 				</div>
 			</Section>
 
-			<Section title="The 'use client' Directive">
+			<Section title={t("sectionDirective")}>
 				<CodeBlock
 					filename="components/counter.tsx"
 					language="tsx"
@@ -40,7 +40,7 @@ export function Counter() {
 // Error: useState only works in Client Components`}</CodeBlock>
 			</Section>
 
-			<Section title="What Triggers 'use client'?">
+			<Section title={t("sectionWhatTriggers")}>
 				<CodeBlock
 					filename="needs-use-client.tsx"
 					language="tsx"
@@ -65,10 +65,9 @@ usePathname(), useSearchParams()
 // - Static content`}</CodeBlock>
 			</Section>
 
-			<Section title="The Boundary Effect">
+			<Section title={t("sectionBoundaryEffect")}>
 				<p className="text-sm text-muted-foreground mb-3">
-					When you mark a file as "use client", everything it imports also
-					becomes part of the client bundle.
+					{t("boundaryEffectDesc")}
 				</p>
 				<CodeBlock filename="boundary.tsx" language="tsx">{`"use client";
 
@@ -82,34 +81,24 @@ import { MyComponent } from "./my-component";   // also client now
 // Parent layout/page can stay as Server Components`}</CodeBlock>
 			</Section>
 
-			<Section title="Key Points">
+			<Section title={t("sectionKeyPoints")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="Opt-in, Not Default">
+					<DemoBox title={t("keyOptIn")}>
+						<p className="text-sm text-muted-foreground">{t("keyOptInDesc")}</p>
+					</DemoBox>
+					<DemoBox title={t("keyBundleImpact")}>
 						<p className="text-sm text-muted-foreground">
-							Components are Server Components by default. Only add "use client"
-							when you need interactivity. Keep the boundary as deep as
-							possible.
+							{t("keyBundleImpactDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Bundle Impact">
+					<DemoBox title={t("keyPropsSerializable")}>
 						<p className="text-sm text-muted-foreground">
-							Everything imported by a "use client" file becomes part of the
-							client JS bundle. This is why you should push the boundary down to
-							leaf components.
+							{t("keyPropsSerializableDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Props Must Be Serializable">
+					<DemoBox title={t("keyHooksNeedClient")}>
 						<p className="text-sm text-muted-foreground">
-							When a Server Component passes props to a Client Component, the
-							props must be serializable (no functions, no classes, no Date
-							objects).
-						</p>
-					</DemoBox>
-					<DemoBox title="Hooks Need Client">
-						<p className="text-sm text-muted-foreground">
-							useState, useEffect, useRef, and all React hooks only work in
-							Client Components. The "use client" directive is your entry point
-							to React's interactive features.
+							{t("keyHooksNeedClientDesc")}
 						</p>
 					</DemoBox>
 				</div>

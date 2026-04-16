@@ -1,14 +1,13 @@
+import { getTranslations } from "next-intl/server";
 import { CodeBlock, DemoBox, DemoPage, Section } from "@/components/demo-page";
 
-export default function MetadataPage() {
+export default async function MetadataPage() {
+	const t = await getTranslations("ui.metadata");
 	return (
-		<DemoPage
-			title="Metadata & SEO"
-			description="Next.js provides a Metadata API to define page metadata for improved SEO and social sharing."
-		>
+		<DemoPage title={t("title")} description={t("description")}>
 			<Section
-				title="Static Metadata"
-				description="Export a metadata object from any layout.tsx or page.tsx."
+				title={t("staticMetadataTitle")}
+				description={t("staticMetadataDesc")}
 			>
 				<CodeBlock
 					filename="app/layout.tsx"
@@ -23,9 +22,9 @@ export const metadata: Metadata = {
 };`}</CodeBlock>
 			</Section>
 
-			<Section title="Dynamic Metadata">
+			<Section title={t("dynamicMetadataTitle")}>
 				<p className="text-sm text-muted-foreground mb-3">
-					Use generateMetadata for dynamic pages that need data fetching.
+					{t("dynamicMetadataText")}
 				</p>
 				<CodeBlock
 					filename="app/blog/[slug]/page.tsx"
@@ -50,7 +49,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Template & Default Titles">
+			<Section title={t("templateTitlesTitle")}>
 				<CodeBlock
 					filename="app/layout.tsx"
 					language="tsx"
@@ -68,7 +67,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 };`}</CodeBlock>
 			</Section>
 
-			<Section title="Special Files">
+			<Section title={t("specialFilesTitle")}>
 				<CodeBlock language="text">{`app/
 ├── favicon.ico          ← auto-detected favicon
 ├── icon.png             ← app icon (also icon.svg)
@@ -89,31 +88,26 @@ export default function robots(): MetadataRoute.Robots {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Key Points">
+			<Section title={t("keyPointsTitle")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="Automatic Merging">
+					<DemoBox title={t("autoMergingTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Metadata is merged from layout to page. Child metadata overrides
-							parent fields, so you can set defaults in layouts.
+							{t("autoMergingText")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Deduplication">
+					<DemoBox title={t("deduplicationTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Next.js automatically deduplicates meta tags. Only the deepest
-							metadata for each field is rendered in the HTML head.
+							{t("deduplicationText")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Open Graph">
+					<DemoBox title={t("openGraphTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Set openGraph in metadata for rich social media previews. Place
-							opengraph-image.png in any route for auto OG images.
+							{t("openGraphText")}
 						</p>
 					</DemoBox>
-					<DemoBox title="JSON-LD">
+					<DemoBox title={t("jsonLdTitle")}>
 						<p className="text-sm text-muted-foreground">
-							For structured data, render a script tag with
-							type=&quot;application/ld+json&quot; in your page component body.
-							Not part of the Metadata API.
+							{t.raw("jsonLdText")}
 						</p>
 					</DemoBox>
 				</div>

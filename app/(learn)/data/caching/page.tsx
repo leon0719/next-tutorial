@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import {
 	CodeBlock,
 	DemoBox,
@@ -7,42 +8,33 @@ import {
 } from "@/components/demo-page";
 import { Badge } from "@/components/ui/badge";
 
-export default function CachingPage() {
+export default async function CachingPage() {
+	const t = await getTranslations("data.caching");
+
 	return (
-		<DemoPage
-			title="Caching"
-			description="Next.js 16 has NO default caching. You must explicitly opt in using the 'use cache' directive. This gives you full control over what's cached and for how long."
-		>
-			<Section title="The New Caching Model">
-				<DemoBox title="Next.js 16 vs Previous Versions">
+		<DemoPage title={t("title")} description={t("description")}>
+			<Section title={t("newModel")}>
+				<DemoBox title={t("newModelTitle")}>
 					<div className="space-y-3 text-sm">
 						<div className="flex items-start gap-3">
 							<Badge variant="outline" className="mt-0.5 shrink-0">
-								v14/v15
+								{t("v14v15Badge")}
 							</Badge>
-							<p className="text-muted-foreground">
-								fetch() was cached by default. You had to opt OUT of caching
-								with cache: &apos;no-store&apos;. This caused confusion — stale
-								data was a common gotcha.
-							</p>
+							<p className="text-muted-foreground">{t("v14v15Description")}</p>
 						</div>
 						<div className="flex items-start gap-3">
 							<Badge variant="secondary" className="mt-0.5 shrink-0">
-								v16
+								{t("v16Badge")}
 							</Badge>
-							<p className="text-muted-foreground">
-								Nothing is cached by default. You opt IN with &apos;use
-								cache&apos;. Explicit, predictable, no surprises.
-							</p>
+							<p className="text-muted-foreground">{t("v16Description")}</p>
 						</div>
 					</div>
 				</DemoBox>
 			</Section>
 
-			<Section title="1. 'use cache' Directive">
+			<Section title={t("useCacheDirective")}>
 				<p className="text-sm text-muted-foreground mb-3">
-					Add &apos;use cache&apos; to a function or component to cache its
-					result. Works at the function level (like &apos;use server&apos;).
+					{t("useCacheDirectiveDescription")}
 				</p>
 				<CodeBlock
 					filename="lib/data.ts"
@@ -66,10 +58,9 @@ async function ProductList() {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="2. cacheLife() — Control Duration">
+			<Section title={t("cacheLife")}>
 				<p className="text-sm text-muted-foreground mb-3">
-					Set how long the cache should live. Use built-in profiles or custom
-					durations.
+					{t("cacheLifeDescription")}
 				</p>
 				<CodeBlock
 					filename="lib/data.ts"
@@ -98,9 +89,9 @@ async function getSettings() {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="3. cacheTag() — Tag for Invalidation">
+			<Section title={t("cacheTag")}>
 				<p className="text-sm text-muted-foreground mb-3">
-					Tag cached data so you can invalidate it precisely when data changes.
+					{t("cacheTagDescription")}
 				</p>
 				<CodeBlock
 					filename="lib/data.ts"
@@ -129,7 +120,7 @@ async function updateProduct(id: string, data: FormData) {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="4. Cache Hierarchy">
+			<Section title={t("cacheHierarchy")}>
 				<FileTree>{`Request Flow:
 
 Browser Request
@@ -147,32 +138,26 @@ Example:
       └── UserCart (dynamic — per-user data)`}</FileTree>
 			</Section>
 
-			<Section title="Key Points">
+			<Section title={t("keyPoints")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="No Default Cache">
+					<DemoBox title={t("noDefaultCache")}>
 						<p className="text-sm text-muted-foreground">
-							fetch() and database queries are NOT cached unless you add
-							&apos;use cache&apos;. This is the opposite of Next.js 14/15.
+							{t("noDefaultCacheDescription")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Function-Level Caching">
+					<DemoBox title={t("functionLevelCaching")}>
 						<p className="text-sm text-muted-foreground">
-							&apos;use cache&apos; works at the function level, not the route
-							level. You can cache specific data fetches while keeping others
-							fresh.
+							{t("functionLevelCachingDescription")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Arguments = Cache Key">
+					<DemoBox title={t("argumentsCacheKey")}>
 						<p className="text-sm text-muted-foreground">
-							Function arguments become part of the cache key.
-							getProduct(&quot;1&quot;) and getProduct(&quot;2&quot;) have
-							separate cache entries.
+							{t("argumentsCacheKeyDescription")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Requires Config">
+					<DemoBox title={t("requiresConfig")}>
 						<p className="text-sm text-muted-foreground">
-							Enable with cacheComponents: true in next.config.ts. This is the
-							new default in Next.js 16 but may need explicit opt-in.
+							{t("requiresConfigDescription")}
 						</p>
 					</DemoBox>
 				</div>

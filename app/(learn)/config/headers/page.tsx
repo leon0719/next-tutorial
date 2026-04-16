@@ -1,14 +1,17 @@
+import { getTranslations } from "next-intl/server";
 import { CodeBlock, DemoBox, DemoPage, Section } from "@/components/demo-page";
 
+const richComponents = {
+	code: (chunks: React.ReactNode) => <code>{chunks}</code>,
+};
+
 export default async function HeadersCSPPage() {
+	const t = await getTranslations("config.headers");
 	return (
-		<DemoPage
-			title="Headers & CSP"
-			description="Add custom HTTP headers in next.config.ts to improve security, caching, and compliance. Content Security Policy (CSP) helps prevent XSS attacks."
-		>
+		<DemoPage title={t("title")} description={t("description")}>
 			<Section
-				title="Custom Headers in next.config.ts"
-				description="Define headers that Next.js will add to responses matching specific paths."
+				title={t("customHeadersTitle")}
+				description={t("customHeadersDesc")}
 			>
 				<CodeBlock
 					filename="next.config.ts"
@@ -54,41 +57,43 @@ export default nextConfig;`}</CodeBlock>
 			</Section>
 
 			<Section
-				title="Essential Security Headers"
-				description="These headers protect against common web vulnerabilities. Add them to every production site."
+				title={t("securityHeadersTitle")}
+				description={t("securityHeadersDesc")}
 			>
 				<div className="overflow-x-auto">
 					<table className="w-full text-sm">
 						<thead>
 							<tr className="border-b">
-								<th className="text-left py-2 pr-4 font-medium">Header</th>
-								<th className="text-left py-2 pr-4 font-medium">Value</th>
-								<th className="text-left py-2 font-medium">Purpose</th>
+								<th className="text-left py-2 pr-4 font-medium">
+									{t("headerCol")}
+								</th>
+								<th className="text-left py-2 pr-4 font-medium">
+									{t("valueCol")}
+								</th>
+								<th className="text-left py-2 font-medium">
+									{t("purposeCol")}
+								</th>
 							</tr>
 						</thead>
 						<tbody className="text-muted-foreground">
 							<tr className="border-b">
 								<td className="py-2 pr-4 font-mono text-xs">X-Frame-Options</td>
 								<td className="py-2 pr-4 font-mono text-xs">DENY</td>
-								<td className="py-2">
-									Prevents clickjacking by blocking iframes
-								</td>
+								<td className="py-2">{t("xFramePurpose")}</td>
 							</tr>
 							<tr className="border-b">
 								<td className="py-2 pr-4 font-mono text-xs">
 									X-Content-Type-Options
 								</td>
 								<td className="py-2 pr-4 font-mono text-xs">nosniff</td>
-								<td className="py-2">Prevents MIME-type sniffing attacks</td>
+								<td className="py-2">{t("xContentPurpose")}</td>
 							</tr>
 							<tr className="border-b">
 								<td className="py-2 pr-4 font-mono text-xs">Referrer-Policy</td>
 								<td className="py-2 pr-4 font-mono text-xs">
 									strict-origin-when-cross-origin
 								</td>
-								<td className="py-2">
-									Controls referrer info sent with requests
-								</td>
+								<td className="py-2">{t("referrerPurpose")}</td>
 							</tr>
 							<tr className="border-b">
 								<td className="py-2 pr-4 font-mono text-xs">
@@ -97,7 +102,7 @@ export default nextConfig;`}</CodeBlock>
 								<td className="py-2 pr-4 font-mono text-xs">
 									camera=(), microphone=()
 								</td>
-								<td className="py-2">Restricts browser feature access</td>
+								<td className="py-2">{t("permissionsPurpose")}</td>
 							</tr>
 							<tr>
 								<td className="py-2 pr-4 font-mono text-xs">
@@ -106,17 +111,14 @@ export default nextConfig;`}</CodeBlock>
 								<td className="py-2 pr-4 font-mono text-xs">
 									max-age=63072000; includeSubDomains
 								</td>
-								<td className="py-2">Forces HTTPS for all future visits</td>
+								<td className="py-2">{t("hstsPurpose")}</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 			</Section>
 
-			<Section
-				title="Content Security Policy (CSP)"
-				description="CSP tells the browser which sources of content are allowed. It is the most effective defense against XSS attacks."
-			>
+			<Section title={t("cspTitle")} description={t("cspDesc")}>
 				<CodeBlock
 					filename="next.config.ts"
 					language="typescript"
@@ -154,40 +156,32 @@ const nextConfig: NextConfig = {
 export default nextConfig;`}</CodeBlock>
 			</Section>
 
-			<Section title="CSP Directives Explained">
+			<Section title={t("cspDirectivesTitle")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="default-src">
+					<DemoBox title={t("defaultSrcTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Fallback for all resource types not explicitly listed. Setting it
-							to <code>&apos;self&apos;</code> restricts loading to your own
-							domain only.
+							{t.rich("defaultSrcText", richComponents)}
 						</p>
 					</DemoBox>
-					<DemoBox title="script-src">
+					<DemoBox title={t("scriptSrcTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Controls which scripts can execute. Use nonces or hashes instead
-							of <code>&apos;unsafe-inline&apos;</code> in production for
-							maximum security.
+							{t.rich("scriptSrcText", richComponents)}
 						</p>
 					</DemoBox>
-					<DemoBox title="style-src">
+					<DemoBox title={t("styleSrcTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Controls which stylesheets are allowed. Many CSS-in-JS libraries
-							require <code>&apos;unsafe-inline&apos;</code>, which weakens this
-							directive.
+							{t.rich("styleSrcText", richComponents)}
 						</p>
 					</DemoBox>
-					<DemoBox title="frame-ancestors">
+					<DemoBox title={t("frameAncestorsTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Modern replacement for X-Frame-Options. Setting it to{" "}
-							<code>&apos;none&apos;</code> prevents your site from being loaded
-							in any iframe.
+							{t.rich("frameAncestorsText", richComponents)}
 						</p>
 					</DemoBox>
 				</div>
 			</Section>
 
-			<Section title="Nonce-Based CSP (Recommended)">
+			<Section title={t("nonceBasedTitle")}>
 				<CodeBlock
 					filename="middleware.ts"
 					language="typescript"
@@ -211,12 +205,9 @@ export function middleware(request: NextRequest) {
   response.headers.set("x-nonce", nonce);
   return response;
 }`}</CodeBlock>
-				<DemoBox title="Why Nonces?">
+				<DemoBox title={t("whyNoncesTitle")}>
 					<p className="text-sm text-muted-foreground">
-						A nonce is a random value generated per request. Only scripts with a
-						matching <code>nonce</code> attribute will execute. This eliminates
-						the need for <code>&apos;unsafe-inline&apos;</code> and provides
-						strong XSS protection, since attackers cannot guess the nonce.
+						{t.rich("whyNoncesText", richComponents)}
 					</p>
 				</DemoBox>
 			</Section>

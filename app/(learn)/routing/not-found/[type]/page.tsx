@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 
 export default async function TriggerPage({
 	params,
@@ -17,13 +18,12 @@ export default async function TriggerPage({
 		);
 	}
 
+	const t = await getTranslations("routing.notFound");
+
 	return (
 		<div className="space-y-4">
-			<h1 className="text-2xl font-bold">Normal Page</h1>
-			<p className="text-muted-foreground">
-				This page loaded successfully because the type &quot;{type}&quot;
-				didn&apos;t trigger any errors.
-			</p>
+			<h1 className="text-2xl font-bold">{t("normalPageTitle")}</h1>
+			<p className="text-muted-foreground">{t("normalPageDesc", { type })}</p>
 		</div>
 	);
 }

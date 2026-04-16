@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import {
 	CodeBlock,
 	DemoBox,
@@ -6,15 +7,17 @@ import {
 	Section,
 } from "@/components/demo-page";
 
+const richComponents = {
+	code: (chunks: React.ReactNode) => <code>{chunks}</code>,
+};
+
 export default async function EnvVariablesPage() {
+	const t = await getTranslations("config.env");
 	return (
-		<DemoPage
-			title="Environment Variables"
-			description="Next.js has built-in support for environment variables via .env files. Learn how to safely use them on the server and client."
-		>
+		<DemoPage title={t("title")} description={t("description")}>
 			<Section
-				title="The .env File Hierarchy"
-				description="Next.js loads environment variables from multiple files in a specific order. Later files override earlier ones."
+				title={t("envHierarchyTitle")}
+				description={t("envHierarchyDesc")}
 			>
 				<FileTree>{`.env                  # Loaded in all environments
 .env.local            # Loaded in all environments (git-ignored)
@@ -22,7 +25,7 @@ export default async function EnvVariablesPage() {
 .env.development.local# Loaded in dev only (git-ignored)
 .env.production       # Loaded in production only
 .env.production.local # Loaded in production only (git-ignored)`}</FileTree>
-				<DemoBox title="Loading Priority (highest to lowest)">
+				<DemoBox title={t("loadingPriorityTitle")}>
 					<ol className="text-sm text-muted-foreground space-y-1 list-decimal list-inside">
 						<li>
 							<code>.env.development.local</code> or{" "}
@@ -41,10 +44,7 @@ export default async function EnvVariablesPage() {
 				</DemoBox>
 			</Section>
 
-			<Section
-				title="Server-Only Variables"
-				description="By default, environment variables are only available on the server. They are never sent to the browser."
-			>
+			<Section title={t("serverOnlyTitle")} description={t("serverOnlyDesc")}>
 				<CodeBlock
 					filename=".env.local"
 					language="bash"
@@ -65,10 +65,7 @@ export async function GET() {
 }`}</CodeBlock>
 			</Section>
 
-			<Section
-				title="Client-Side Variables with NEXT_PUBLIC_"
-				description="To expose a variable to the browser, prefix it with NEXT_PUBLIC_. Next.js inlines these values at build time."
-			>
+			<Section title={t("clientSideTitle")} description={t("clientSideDesc")}>
 				<CodeBlock
 					filename=".env.local"
 					language="bash"
@@ -92,52 +89,42 @@ export function ApiClient() {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Live Example">
-				<DemoBox title="Current NODE_ENV Value">
+			<Section title={t("liveExampleTitle")}>
+				<DemoBox title={t("nodeEnvTitle")}>
 					<div className="space-y-2">
 						<p className="text-sm text-muted-foreground">
-							This value is read from <code>process.env.NODE_ENV</code> at
-							render time on the server:
+							{t.rich("nodeEnvText", richComponents)}
 						</p>
 						<p className="font-mono text-lg font-semibold">
 							{process.env.NODE_ENV}
 						</p>
 						<p className="text-xs text-muted-foreground">
-							NODE_ENV is automatically set by Next.js: &quot;development&quot;
-							when running <code>next dev</code>, &quot;production&quot; when
-							running <code>next build &amp;&amp; next start</code>.
+							{t.rich("nodeEnvNote", richComponents)}
 						</p>
 					</div>
 				</DemoBox>
 			</Section>
 
-			<Section title="Security Rules">
+			<Section title={t("securityRulesTitle")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="Never Expose Secrets">
+					<DemoBox title={t("neverExposeTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Never prefix sensitive values like API keys, database URLs, or
-							tokens with <code>NEXT_PUBLIC_</code>. They will be embedded in
-							your JavaScript bundle and visible to anyone.
+							{t.rich("neverExposeText", richComponents)}
 						</p>
 					</DemoBox>
-					<DemoBox title="Git-Ignore .env.local">
+					<DemoBox title={t("gitIgnoreTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Always add <code>.env.local</code> to your <code>.gitignore</code>
-							. Commit <code>.env</code> with safe defaults and use{" "}
-							<code>.env.local</code> for real secrets during development.
+							{t.rich("gitIgnoreText", richComponents)}
 						</p>
 					</DemoBox>
-					<DemoBox title="Build-Time Inlining">
+					<DemoBox title={t("buildTimeTitle")}>
 						<p className="text-sm text-muted-foreground">
-							<code>NEXT_PUBLIC_</code> values are replaced at build time, not
-							runtime. Changing them requires a rebuild to take effect.
+							{t.rich("buildTimeText", richComponents)}
 						</p>
 					</DemoBox>
-					<DemoBox title="Use Server Components">
+					<DemoBox title={t("useServerComponentsTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Prefer reading secrets in Server Components or API routes. This
-							keeps them entirely off the client and out of the JavaScript
-							bundle.
+							{t("useServerComponentsText")}
 						</p>
 					</DemoBox>
 				</div>

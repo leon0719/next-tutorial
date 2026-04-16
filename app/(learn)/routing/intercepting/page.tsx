@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import {
 	CodeBlock,
 	DemoBox,
@@ -22,13 +23,12 @@ const photos = [
 	{ id: 6, title: "Snow Peaks", color: "bg-slate-200 dark:bg-slate-900" },
 ];
 
-export default function InterceptingRoutesPage() {
+export default async function InterceptingRoutesPage() {
+	const t = await getTranslations("routing.intercepting");
+
 	return (
-		<DemoPage
-			title="Intercepting Routes"
-			description="Intercepting routes let you load a route within the current layout — perfect for modals that show content without losing page context."
-		>
-			<Section title="File Structure">
+		<DemoPage title={t("title")} description={t("description")}>
+			<Section title={t("fileStructure")}>
 				<FileTree>{`app/
 ├── @modal/                     ← Parallel route slot for modal
 │   ├── default.tsx             ← Empty default (no modal shown)
@@ -43,35 +43,30 @@ export default function InterceptingRoutesPage() {
 └── layout.tsx                  ← Renders {children} + {modal}`}</FileTree>
 			</Section>
 
-			<Section title="How Interception Works">
-				<DemoBox title="The Two Paths">
+			<Section title={t("howItWorks")}>
+				<DemoBox title={t("twoPaths")}>
 					<div className="space-y-4">
 						<div className="flex items-start gap-3">
 							<Badge variant="secondary" className="mt-0.5 shrink-0">
-								Soft Nav
+								{t("softNav")}
 							</Badge>
 							<p className="text-sm text-muted-foreground">
-								Clicking a Link → route is <strong>intercepted</strong> →
-								content loads in a modal overlay → URL updates but page stays
+								{t("softNavDesc")}
 							</p>
 						</div>
 						<div className="flex items-start gap-3">
 							<Badge variant="outline" className="mt-0.5 shrink-0">
-								Hard Nav
+								{t("hardNav")}
 							</Badge>
 							<p className="text-sm text-muted-foreground">
-								Direct URL / page refresh → goes to the <strong>actual</strong>{" "}
-								route → full page renders normally
+								{t("hardNavDesc")}
 							</p>
 						</div>
 					</div>
 				</DemoBox>
 			</Section>
 
-			<Section
-				title="Demo — Photo Gallery"
-				description="Click a photo to see the detail page. In a full implementation, clicking would show a modal (intercepted), while direct URL access shows the full page."
-			>
+			<Section title={t("photoDemo")} description={t("photoDemoDesc")}>
 				<div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
 					{photos.map((photo) => (
 						<Link key={photo.id} href={`/routing/intercepting/${photo.id}`}>
@@ -89,7 +84,7 @@ export default function InterceptingRoutesPage() {
 				</div>
 			</Section>
 
-			<Section title="Interception Syntax">
+			<Section title={t("syntax")}>
 				<CodeBlock
 					filename="Convention"
 					language="text"
@@ -105,7 +100,7 @@ export default function InterceptingRoutesPage() {
         /app/@modal/(...)photos/[id]  intercepts  /photos/[id]`}</CodeBlock>
 			</Section>
 
-			<Section title="Complete Example — Modal Pattern">
+			<Section title={t("completeExample")}>
 				<CodeBlock
 					filename="app/layout.tsx"
 					language="tsx"
@@ -171,30 +166,26 @@ export default async function PhotoPage({
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Key Points">
+			<Section title={t("keyPoints")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="Requires Parallel Routes">
+					<DemoBox title={t("requiresParallel")}>
 						<p className="text-sm text-muted-foreground">
-							The modal pattern needs a @modal parallel route slot in the
-							layout. The intercepted route goes inside @modal/(.)path.
+							{t("requiresParallelDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="URL Updates">
+					<DemoBox title={t("urlUpdates")}>
 						<p className="text-sm text-muted-foreground">
-							The URL updates to the intercepted route (shareable!), but the
-							content loads in-place without a full page navigation.
+							{t("urlUpdatesDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Common Use Cases">
+					<DemoBox title={t("commonUseCases")}>
 						<p className="text-sm text-muted-foreground">
-							Photo galleries, login modals, shopping cart previews, social
-							media post details — anything that benefits from an overlay.
+							{t("commonUseCasesDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Refresh = Full Page">
+					<DemoBox title={t("refreshFullPage")}>
 						<p className="text-sm text-muted-foreground">
-							Refreshing the page or sharing the URL loads the actual route (not
-							the intercepted version). Best of both worlds.
+							{t("refreshFullPageDesc")}
 						</p>
 					</DemoBox>
 				</div>

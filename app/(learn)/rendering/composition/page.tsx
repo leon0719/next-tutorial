@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import {
 	CodeBlock,
 	DemoBox,
@@ -11,20 +12,21 @@ import { posts } from "@/lib/db/schema";
 import { InteractiveCard } from "./interactive-card";
 
 export default async function CompositionPage() {
+	const t = await getTranslations("rendering.composition");
 	// Server-side data fetching
 	const allPosts = db.select().from(posts).limit(3).all();
 
 	return (
-		<DemoPage
-			title="Composition Pattern"
-			description="The most powerful pattern in Next.js: Server Components pass children to Client Components. Interactive wrappers, server-rendered content."
-		>
+		<DemoPage title={t("title")} description={t("description")}>
 			<Section
-				title="Live Demo — Server Content in Client Wrapper"
-				description="The collapsible card below is a Client Component (interactive). But its CONTENT was rendered on the server."
+				title={t("sectionLiveDemo")}
+				description={t("sectionLiveDemoDesc")}
 			>
 				<div className="grid gap-4 md:grid-cols-2">
-					<InteractiveCard title="Server-Rendered Posts" badge="client wrapper">
+					<InteractiveCard
+						title={t("serverRenderedPosts")}
+						badge={t("clientWrapper")}
+					>
 						<div className="space-y-2">
 							{allPosts.map((post) => (
 								<div
@@ -38,24 +40,27 @@ export default async function CompositionPage() {
 								</div>
 							))}
 							<p className="text-xs text-muted-foreground mt-2">
-								↑ This data was fetched on the server (not in the client bundle)
+								{t("serverDataNote")}
 							</p>
 						</div>
 					</InteractiveCard>
 
-					<InteractiveCard title="Server Timestamp" badge="client wrapper">
+					<InteractiveCard
+						title={t("serverTimestamp")}
+						badge={t("clientWrapper")}
+					>
 						<div className="space-y-2">
-							<p className="text-sm text-muted-foreground">Rendered at:</p>
+							<p className="text-sm text-muted-foreground">{t("renderedAt")}</p>
 							<p className="font-mono text-sm">{new Date().toISOString()}</p>
 							<p className="text-xs text-muted-foreground">
-								↑ This timestamp was generated on the server at render time
+								{t("serverTimestampNote")}
 							</p>
 						</div>
 					</InteractiveCard>
 				</div>
 			</Section>
 
-			<Section title="The Pattern">
+			<Section title={t("sectionPattern")}>
 				<FileTree>{`// ✅ CORRECT: Server content as children of Client wrapper
 
 Server Component (page.tsx)
@@ -64,7 +69,7 @@ Server Component (page.tsx)
         └── <div>{post.title}</div>          ← server data, zero client JS`}</FileTree>
 			</Section>
 
-			<Section title="How It Works">
+			<Section title={t("sectionHowItWorks")}>
 				<CodeBlock
 					filename="app/dashboard/page.tsx (Server)"
 					language="tsx"
@@ -109,11 +114,11 @@ export function Accordion({ children }: { children: React.ReactNode }) {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Common Mistakes">
+			<Section title={t("sectionCommonMistakes")}>
 				<div className="grid gap-4 md:grid-cols-2">
 					<div>
 						<h3 className="text-sm font-semibold mb-2 text-red-600 dark:text-red-400">
-							❌ Wrong: Import Server in Client
+							❌ {t("wrongImport")}
 						</h3>
 						<CodeBlock filename="wrong.tsx" language="tsx">{`"use client";
 
@@ -133,7 +138,7 @@ export function Wrapper() {
 					</div>
 					<div>
 						<h3 className="text-sm font-semibold mb-2 text-green-600 dark:text-green-400">
-							✅ Right: Pass as Children
+							✅ {t("rightChildren")}
 						</h3>
 						<CodeBlock
 							filename="right.tsx"
@@ -161,15 +166,15 @@ export function Wrapper({ children }) {
 				</div>
 			</Section>
 
-			<Section title="Serialization Rules">
-				<DemoBox title="What Can Be Passed as Props?">
+			<Section title={t("sectionSerialization")}>
+				<DemoBox title={t("serializationTitle")}>
 					<div className="grid gap-2 text-sm">
 						<div className="flex items-center gap-2">
 							<Badge variant="secondary" className="text-xs">
 								✅
 							</Badge>
 							<span className="text-muted-foreground">
-								Strings, numbers, booleans, null, undefined
+								{t("serStringsNumbers")}
 							</span>
 						</div>
 						<div className="flex items-center gap-2">
@@ -177,23 +182,21 @@ export function Wrapper({ children }) {
 								✅
 							</Badge>
 							<span className="text-muted-foreground">
-								Arrays and plain objects (of serializable values)
+								{t("serArraysObjects")}
 							</span>
 						</div>
 						<div className="flex items-center gap-2">
 							<Badge variant="secondary" className="text-xs">
 								✅
 							</Badge>
-							<span className="text-muted-foreground">
-								React.ReactNode (JSX elements, children)
-							</span>
+							<span className="text-muted-foreground">{t("serReactNode")}</span>
 						</div>
 						<div className="flex items-center gap-2">
 							<Badge variant="secondary" className="text-xs">
 								✅
 							</Badge>
 							<span className="text-muted-foreground">
-								Server Actions (functions marked with "use server")
+								{t("serServerActions")}
 							</span>
 						</div>
 						<div className="flex items-center gap-2">
@@ -201,7 +204,7 @@ export function Wrapper({ children }) {
 								❌
 							</Badge>
 							<span className="text-muted-foreground">
-								Functions, classes, Date objects, Map, Set
+								{t("serNoFunctions")}
 							</span>
 						</div>
 						<div className="flex items-center gap-2">
@@ -209,7 +212,7 @@ export function Wrapper({ children }) {
 								❌
 							</Badge>
 							<span className="text-muted-foreground">
-								Event handlers (pass from client, not server)
+								{t("serNoEventHandlers")}
 							</span>
 						</div>
 					</div>

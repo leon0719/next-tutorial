@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { DemoBox, DemoPage, Section } from "@/components/demo-page";
 import { Badge } from "@/components/ui/badge";
 
@@ -44,6 +45,7 @@ export default async function PhotoDetailPage({
 	params: Promise<{ id: string }>;
 }) {
 	const { id } = await params;
+	const t = await getTranslations("routing.intercepting");
 	const photo = photos[id] || {
 		title: "Unknown Photo",
 		color: "bg-muted",
@@ -51,11 +53,8 @@ export default async function PhotoDetailPage({
 	};
 
 	return (
-		<DemoPage
-			title={photo.title}
-			description="This is the FULL page view. In a real intercepting routes setup, clicking from the gallery would show a modal instead."
-		>
-			<Section title="Photo Detail">
+		<DemoPage title={photo.title} description={t("fullPageView")}>
+			<Section title={t("photoDetail")}>
 				<div className={`h-64 rounded-lg ${photo.color}`} />
 				<div className="mt-4 space-y-2">
 					<div className="flex items-center gap-2">
@@ -66,16 +65,15 @@ export default async function PhotoDetailPage({
 				</div>
 			</Section>
 
-			<DemoBox title="Navigation">
+			<DemoBox title={t("navigation")}>
 				<p className="text-sm text-muted-foreground mb-2">
-					This page loaded as a full page (not intercepted). Try refreshing —
-					you'll always see this full view, not a modal.
+					{t("navigationDesc")}
 				</p>
 				<Link
 					href="/routing/intercepting"
 					className="text-sm underline underline-offset-4 hover:text-foreground text-muted-foreground"
 				>
-					← Back to gallery
+					{t("backToGallery")}
 				</Link>
 			</DemoBox>
 		</DemoPage>

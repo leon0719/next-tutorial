@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import {
 	CodeBlock,
 	DemoBox,
@@ -7,13 +8,12 @@ import {
 } from "@/components/demo-page";
 import { NavDemo } from "./nav-demo";
 
-export default function RoutingBasicsPage() {
+export default async function RoutingBasicsPage() {
+	const t = await getTranslations("routing.basics");
+
 	return (
-		<DemoPage
-			title="Routing Basics"
-			description="Next.js uses a file-system based router. Every folder inside app/ becomes a URL segment, and page.tsx makes it publicly accessible."
-		>
-			<Section title="File Structure">
+		<DemoPage title={t("title")} description={t("description")}>
+			<Section title={t("fileStructure")}>
 				<FileTree>{`app/
 ├── layout.tsx        ← Root Layout (wraps all pages)
 ├── page.tsx          ← / (home)
@@ -29,18 +29,12 @@ export default function RoutingBasicsPage() {
             └── page.tsx  ← /routing/basics (this page!)`}</FileTree>
 			</Section>
 
-			<Section
-				title="Navigation Methods"
-				description="Next.js provides several ways to navigate between pages."
-			>
+			<Section title={t("navMethods")} description={t("navMethodsDesc")}>
 				<NavDemo />
 			</Section>
 
-			<Section title="1. Link Component (Recommended)">
-				<p className="text-sm text-muted-foreground mb-3">
-					The {"<Link>"} component extends HTML {"<a>"} with prefetching and
-					client-side navigation.
-				</p>
+			<Section title={t("linkSection")}>
+				<p className="text-sm text-muted-foreground mb-3">{t("linkDesc")}</p>
 				<CodeBlock
 					filename="app/page.tsx"
 					language="tsx"
@@ -56,11 +50,8 @@ export default function RoutingBasicsPage() {
 <Link href={\`/blog/\${post.slug}\`}>{post.title}</Link>`}</CodeBlock>
 			</Section>
 
-			<Section title="2. useRouter Hook (Client Components)">
-				<p className="text-sm text-muted-foreground mb-3">
-					For programmatic navigation inside event handlers. Must be used in
-					Client Components with &apos;use client&apos;.
-				</p>
+			<Section title={t("routerSection")}>
+				<p className="text-sm text-muted-foreground mb-3">{t("routerDesc")}</p>
 				<CodeBlock
 					filename="components/nav-button.tsx"
 					language="tsx"
@@ -89,10 +80,9 @@ export function NavButton() {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="3. redirect() (Server Components)">
+			<Section title={t("redirectSection")}>
 				<p className="text-sm text-muted-foreground mb-3">
-					For server-side redirects inside Server Components, Server Actions, or
-					Route Handlers.
+					{t("redirectDesc")}
 				</p>
 				<CodeBlock
 					filename="app/old-page/page.tsx"
@@ -106,21 +96,15 @@ export default function OldPage() {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Key Points">
+			<Section title={t("keyPoints")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="Prefetching">
+					<DemoBox title={t("prefetching")}>
 						<p className="text-sm text-muted-foreground">
-							Link automatically prefetches routes when they appear in the
-							viewport. Static routes are fully prefetched; dynamic routes
-							prefetch up to the nearest loading.tsx boundary.
+							{t("prefetchingDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Soft vs Hard Navigation">
-						<p className="text-sm text-muted-foreground">
-							Client-side navigation (Link, useRouter) is &quot;soft&quot; —
-							only changed segments re-render. Full page reload is
-							&quot;hard&quot; — the entire page re-renders from scratch.
-						</p>
+					<DemoBox title={t("softHard")}>
+						<p className="text-sm text-muted-foreground">{t("softHardDesc")}</p>
 					</DemoBox>
 				</div>
 			</Section>

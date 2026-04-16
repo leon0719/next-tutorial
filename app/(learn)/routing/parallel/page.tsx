@@ -1,17 +1,16 @@
+import { getTranslations } from "next-intl/server";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-export default function ParallelMainPage() {
+export default async function ParallelMainPage() {
+	const t = await getTranslations("routing.parallel");
+
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle className="text-base">Main Content</CardTitle>
+				<CardTitle className="text-base">{t("mainContent")}</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<p className="text-sm text-muted-foreground">
-					This is the <code className="bg-muted px-1 rounded">children</code>{" "}
-					slot — the default page.tsx content. The layout renders this alongside
-					the @analytics and @dashboard slots simultaneously.
-				</p>
+				<p className="text-sm text-muted-foreground">{t("mainContentDesc")}</p>
 			</CardContent>
 		</Card>
 	);

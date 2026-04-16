@@ -1,16 +1,18 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
 export function AnimationDemo() {
 	const [showFadeIn, setShowFadeIn] = useState(false);
+	const t = useTranslations("ui.animations");
 
 	return (
 		<div className="grid gap-6 sm:grid-cols-2">
 			{/* Hover Transitions */}
 			<div className="space-y-3">
-				<p className="text-sm font-medium">CSS Transitions (hover)</p>
+				<p className="text-sm font-medium">{t("cssTransitionsLabel")}</p>
 				<div className="flex flex-wrap gap-3">
 					<div className="rounded-lg bg-primary px-4 py-2 text-primary-foreground text-sm transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-pointer">
 						Scale
@@ -29,7 +31,7 @@ export function AnimationDemo() {
 
 			{/* Keyframe Animation */}
 			<div className="space-y-3">
-				<p className="text-sm font-medium">Keyframe Animation</p>
+				<p className="text-sm font-medium">{t("keyframeAnimationLabel")}</p>
 				<div className="space-y-3">
 					<Button
 						variant="outline"
@@ -39,7 +41,7 @@ export function AnimationDemo() {
 							requestAnimationFrame(() => setShowFadeIn(true));
 						}}
 					>
-						Trigger Fade In
+						{t("triggerFadeIn")}
 					</Button>
 					{showFadeIn && (
 						<div
@@ -48,10 +50,8 @@ export function AnimationDemo() {
 								animation: "demo-fade-in 0.6s ease-out forwards",
 							}}
 						>
-							<p className="font-medium">Hello!</p>
-							<p className="text-muted-foreground">
-								This content faded in with a CSS keyframe animation.
-							</p>
+							<p className="font-medium">{t("helloText")}</p>
+							<p className="text-muted-foreground">{t("fadeInText")}</p>
 						</div>
 					)}
 				</div>
@@ -71,7 +71,7 @@ export function AnimationDemo() {
 
 			{/* Pulse Animation */}
 			<div className="space-y-3">
-				<p className="text-sm font-medium">Built-in Tailwind Animations</p>
+				<p className="text-sm font-medium">{t("builtInTailwindLabel")}</p>
 				<div className="flex gap-4 items-center">
 					<div className="h-4 w-4 rounded-full bg-primary animate-pulse" />
 					<span className="text-sm text-muted-foreground">animate-pulse</span>
@@ -88,11 +88,9 @@ export function AnimationDemo() {
 
 			{/* Reduced Motion */}
 			<div className="space-y-3">
-				<p className="text-sm font-medium">Accessibility</p>
+				<p className="text-sm font-medium">{t("accessibilityLabel")}</p>
 				<div className="rounded-lg border bg-muted/30 p-4 text-sm space-y-2">
-					<p className="text-muted-foreground">
-						Use Tailwind&apos;s motion variants to respect user preferences:
-					</p>
+					<p className="text-muted-foreground">{t("accessibilityText")}</p>
 					<code className="block text-xs bg-muted rounded px-2 py-1">
 						motion-safe:animate-bounce
 					</code>

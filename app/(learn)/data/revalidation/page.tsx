@@ -1,30 +1,27 @@
+import { getTranslations } from "next-intl/server";
 import { CodeBlock, DemoBox, DemoPage, Section } from "@/components/demo-page";
 
-export default function RevalidationPage() {
+export default async function RevalidationPage() {
+	const t = await getTranslations("data.revalidation");
+
 	return (
-		<DemoPage
-			title="Revalidation"
-			description="Revalidation updates cached data without rebuilding the entire page. Next.js 16 offers time-based (cacheLife) and on-demand (revalidateTag, revalidatePath) strategies."
-		>
-			<Section title="Two Revalidation Strategies">
+		<DemoPage title={t("title")} description={t("description")}>
+			<Section title={t("twoStrategies")}>
 				<div className="grid gap-4 md:grid-cols-2">
-					<DemoBox title="Time-based (cacheLife)">
+					<DemoBox title={t("timeBased")}>
 						<p className="text-sm text-muted-foreground">
-							Cache expires after a set duration. After expiry, the next request
-							gets fresh data while stale data is served in the meantime
-							(stale-while-revalidate).
+							{t("timeBasedDescription")}
 						</p>
 					</DemoBox>
-					<DemoBox title="On-demand (revalidateTag / revalidatePath)">
+					<DemoBox title={t("onDemand")}>
 						<p className="text-sm text-muted-foreground">
-							Manually invalidate cache when data changes — typically inside a
-							Server Action after a mutation (create, update, delete).
+							{t("onDemandDescription")}
 						</p>
 					</DemoBox>
 				</div>
 			</Section>
 
-			<Section title="1. Time-based with cacheLife">
+			<Section title={t("timeBasedSection")}>
 				<CodeBlock
 					filename="lib/data.ts"
 					language="tsx"
@@ -48,9 +45,9 @@ async function getSettings() {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="2. On-demand with revalidateTag">
+			<Section title={t("onDemandSection")}>
 				<p className="text-sm text-muted-foreground mb-3">
-					Tag your cached data, then invalidate by tag when data changes.
+					{t("onDemandSectionDescription")}
 				</p>
 				<CodeBlock
 					filename="lib/data.ts"
@@ -94,10 +91,9 @@ export async function updatePost(id: number, formData: FormData) {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="3. revalidatePath">
+			<Section title={t("revalidatePath")}>
 				<p className="text-sm text-muted-foreground mb-3">
-					Invalidate all cached data for a specific URL path. Less precise than
-					tags but simpler.
+					{t("revalidatePathDescription")}
 				</p>
 				<CodeBlock filename="app/actions.ts" language="tsx">{`'use server'
 import { revalidatePath } from 'next/cache'
@@ -116,10 +112,12 @@ export async function createPost(formData: FormData) {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="4. updateTag vs revalidateTag (New in v16)">
+			<Section title={t("updateTagVsRevalidateTag")}>
 				<div className="grid gap-4 md:grid-cols-2">
 					<div>
-						<h3 className="text-sm font-semibold mb-2">revalidateTag</h3>
+						<h3 className="text-sm font-semibold mb-2">
+							{t("revalidateTagLabel")}
+						</h3>
 						<CodeBlock
 							filename="stale-while-revalidate"
 							language="tsx"
@@ -134,7 +132,9 @@ revalidateTag('posts')
 // Pattern: stale-while-revalidate`}</CodeBlock>
 					</div>
 					<div>
-						<h3 className="text-sm font-semibold mb-2">updateTag (v16 new)</h3>
+						<h3 className="text-sm font-semibold mb-2">
+							{t("updateTagLabel")}
+						</h3>
 						<CodeBlock
 							filename="read-your-own-writes"
 							language="tsx"
@@ -152,32 +152,26 @@ updateTag('posts')
 				</div>
 			</Section>
 
-			<Section title="Key Points">
+			<Section title={t("keyPoints")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="Tag > Path">
+					<DemoBox title={t("tagOverPath")}>
 						<p className="text-sm text-muted-foreground">
-							Prefer revalidateTag over revalidatePath. Tags are precise — you
-							invalidate exactly the data that changed, not an entire page.
+							{t("tagOverPathDescription")}
 						</p>
 					</DemoBox>
-					<DemoBox title="updateTag for Forms">
+					<DemoBox title={t("updateTagForForms")}>
 						<p className="text-sm text-muted-foreground">
-							Use updateTag in Server Actions so the user sees their change
-							immediately after submitting a form. revalidateTag would show
-							stale data first.
+							{t("updateTagForFormsDescription")}
 						</p>
 					</DemoBox>
-					<DemoBox title="No Cache = No Revalidation">
+					<DemoBox title={t("noCacheNoRevalidation")}>
 						<p className="text-sm text-muted-foreground">
-							Revalidation only works with cached data. If you don&apos;t use
-							&apos;use cache&apos;, data is always fresh — no revalidation
-							needed.
+							{t("noCacheNoRevalidationDescription")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Server Actions Only">
+					<DemoBox title={t("serverActionsOnly")}>
 						<p className="text-sm text-muted-foreground">
-							updateTag only works in Server Actions. revalidateTag works in
-							both Server Actions and Route Handlers.
+							{t("serverActionsOnlyDescription")}
 						</p>
 					</DemoBox>
 				</div>

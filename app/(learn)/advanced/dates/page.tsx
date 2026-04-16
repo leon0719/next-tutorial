@@ -1,44 +1,38 @@
+import { getTranslations } from "next-intl/server";
 import { CodeBlock, DemoBox, DemoPage, Section } from "@/components/demo-page";
 import { Badge } from "@/components/ui/badge";
 import { DateDemo } from "./date-demo";
 
-export default function DatesPage() {
+export default async function DatesPage() {
+	const t = await getTranslations("advanced.dates");
 	return (
-		<DemoPage
-			title="Date Handling with dayjs"
-			description="Lightweight date library (2KB) for formatting, parsing, relative time, and i18n — a modern alternative to Moment.js."
-		>
-			<Section title="Live Demo">
+		<DemoPage title={t("title")} description={t("description")}>
+			<Section title={t("liveDemoTitle")}>
 				<DateDemo />
 			</Section>
 
 			<Section
-				title="Why dayjs?"
-				description="dayjs provides a Moment.js-compatible API at a fraction of the size, with immutable operations and a plugin architecture."
+				title={t("whyDayjsTitle")}
+				description={t("whyDayjsDescription")}
 			>
 				<div className="grid gap-3 sm:grid-cols-3">
-					<DemoBox title="2KB Gzipped">
+					<DemoBox title={t("twoKbTitle")}>
+						<p className="text-sm text-muted-foreground">{t("twoKbDesc")}</p>
+					</DemoBox>
+					<DemoBox title={t("immutableTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Moment.js is ~70KB. dayjs gives the same API at 2KB. Massive
-							bundle size savings for client-side usage.
+							{t("immutableDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Immutable">
+					<DemoBox title={t("pluginSystemTitle")}>
 						<p className="text-sm text-muted-foreground">
-							All operations return new dayjs objects. No accidental mutation of
-							dates unlike the native Date or Moment.js.
-						</p>
-					</DemoBox>
-					<DemoBox title="Plugin System">
-						<p className="text-sm text-muted-foreground">
-							Only load what you need — relativeTime, timezone, weekday, and 20+
-							other plugins available on demand.
+							{t("pluginSystemDesc")}
 						</p>
 					</DemoBox>
 				</div>
 			</Section>
 
-			<Section title="Basic Usage">
+			<Section title={t("basicUsageTitle")}>
 				<CodeBlock
 					filename="lib/dates.ts"
 					language="tsx"
@@ -67,7 +61,7 @@ dayjs('2025-06-15').isAfter('2025-01-01')   // true
 dayjs('2025-06-15').isSame('2025-06-15')    // true`}</CodeBlock>
 			</Section>
 
-			<Section title="Relative Time Plugin">
+			<Section title={t("relativeTimeTitle")}>
 				<CodeBlock
 					filename="lib/relative.ts"
 					language="tsx"
@@ -82,7 +76,7 @@ dayjs().add(2, 'day').fromNow()            // "in 2 days"
 dayjs('2024-01-01').toNow()                // "in a year"`}</CodeBlock>
 			</Section>
 
-			<Section title="i18n / Localization">
+			<Section title={t("i18nTitle")}>
 				<CodeBlock
 					filename="lib/dates-i18n.ts"
 					language="tsx"
@@ -102,54 +96,41 @@ dayjs.locale('en')
 dayjs().format('MMMM DD, dddd')   // "June 15, Sunday"`}</CodeBlock>
 			</Section>
 
-			<Section title="Server vs Client">
+			<Section title={t("serverVsClientTitle")}>
 				<DemoBox>
 					<div className="space-y-3">
 						<div className="flex items-start gap-3">
 							<Badge variant="secondary" className="mt-0.5 shrink-0">
-								Server
+								{t("serverBadge")}
 							</Badge>
-							<p className="text-sm text-muted-foreground">
-								Use dayjs in Server Components for static date formatting. The
-								formatted string is sent as HTML — no JS shipped to the client.
-							</p>
+							<p className="text-sm text-muted-foreground">{t("serverDesc")}</p>
 						</div>
 						<div className="flex items-start gap-3">
 							<Badge variant="secondary" className="mt-0.5 shrink-0">
-								Client
+								{t("clientBadge")}
 							</Badge>
-							<p className="text-sm text-muted-foreground">
-								Use dayjs in Client Components for live timestamps, countdowns,
-								or user-timezone-aware formatting. The 2KB library is included
-								in the client bundle.
-							</p>
+							<p className="text-sm text-muted-foreground">{t("clientDesc")}</p>
 						</div>
 						<div className="flex items-start gap-3">
 							<Badge variant="outline" className="mt-0.5 shrink-0">
-								Tip
+								{t("tipBadge")}
 							</Badge>
-							<p className="text-sm text-muted-foreground">
-								For timezone handling, use the dayjs/plugin/utc and
-								dayjs/plugin/timezone plugins. Detect user timezone with
-								Intl.DateTimeFormat().resolvedOptions().timeZone.
-							</p>
+							<p className="text-sm text-muted-foreground">{t("tipDesc")}</p>
 						</div>
 					</div>
 				</DemoBox>
 			</Section>
 
-			<Section title="Comparison with Native Date">
+			<Section title={t("comparisonTitle")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="Native Date Pitfalls">
+					<DemoBox title={t("nativePitfallsTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Months are 0-indexed (January = 0), no built-in formatting,
-							mutable by default, and timezone handling is painful.
+							{t("nativePitfallsDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="dayjs Advantages">
+					<DemoBox title={t("dayjsAdvantagesTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Consistent API, chainable operations, built-in formatting tokens,
-							immutable, and locale support via plugins.
+							{t("dayjsAdvantagesDesc")}
 						</p>
 					</DemoBox>
 				</div>

@@ -1,16 +1,14 @@
+import { getTranslations } from "next-intl/server";
 import { CodeBlock, DemoBox, DemoPage, Section } from "@/components/demo-page";
 import { Badge } from "@/components/ui/badge";
 
-export default function EdgeRuntimePage() {
+export default async function EdgeRuntimePage() {
+	const t = await getTranslations("advanced.edgeRuntime");
 	return (
-		<DemoPage
-			title="Edge Runtime"
-			description="The Edge Runtime is a lightweight subset of Node.js APIs designed for low-latency responses. Routes and middleware can opt into it for faster cold starts and global distribution."
-		>
-			<Section title="Opting Into Edge Runtime">
+		<DemoPage title={t("title")} description={t("description")}>
+			<Section title={t("optingInTitle")}>
 				<p className="text-sm text-muted-foreground mb-3">
-					Export a runtime config from any route segment to switch from the
-					default Node.js runtime to Edge.
+					{t("optingInDesc")}
 				</p>
 				<CodeBlock
 					filename="app/api/hello/route.ts"
@@ -35,40 +33,40 @@ export default function FastPage() {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Edge vs Node.js Runtime">
+			<Section title={t("edgeVsNodeTitle")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="Edge Runtime">
+					<DemoBox title={t("edgeRuntimeTitle")}>
 						<div className="space-y-2">
 							<Badge variant="secondary" className="text-xs">
-								Lightweight
+								{t("edgeBadge")}
 							</Badge>
 							<ul className="text-sm text-muted-foreground space-y-1 list-disc list-inside">
-								<li>Sub-millisecond cold starts</li>
-								<li>Globally distributed (runs near the user)</li>
-								<li>Web standard APIs (fetch, Response, URL, crypto)</li>
-								<li>Limited to ~4MB code size</li>
-								<li>No native Node.js modules</li>
+								<li>{t("edgeItem1")}</li>
+								<li>{t("edgeItem2")}</li>
+								<li>{t("edgeItem3")}</li>
+								<li>{t("edgeItem4")}</li>
+								<li>{t("edgeItem5")}</li>
 							</ul>
 						</div>
 					</DemoBox>
-					<DemoBox title="Node.js Runtime (Default)">
+					<DemoBox title={t("nodeRuntimeTitle")}>
 						<div className="space-y-2">
 							<Badge variant="outline" className="text-xs">
-								Full-Featured
+								{t("nodeBadge")}
 							</Badge>
 							<ul className="text-sm text-muted-foreground space-y-1 list-disc list-inside">
-								<li>Full Node.js API access (fs, path, etc.)</li>
-								<li>All npm packages work</li>
-								<li>No code size limit</li>
-								<li>Runs in a single region by default</li>
-								<li>Slower cold starts</li>
+								<li>{t("nodeItem1")}</li>
+								<li>{t("nodeItem2")}</li>
+								<li>{t("nodeItem3")}</li>
+								<li>{t("nodeItem4")}</li>
+								<li>{t("nodeItem5")}</li>
 							</ul>
 						</div>
 					</DemoBox>
 				</div>
 			</Section>
 
-			<Section title="What You Can Use at the Edge">
+			<Section title={t("whatYouCanUseTitle")}>
 				<CodeBlock
 					filename="app/api/edge-example/route.ts"
 					language="tsx"
@@ -96,76 +94,53 @@ export async function GET(request: Request) {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Limitations">
-				<DemoBox title="What You Cannot Use">
+			<Section title={t("limitationsTitle")}>
+				<DemoBox title={t("limitationsBoxTitle")}>
 					<ul className="text-sm text-muted-foreground space-y-1 list-disc list-inside">
-						<li>
-							<code className="text-xs bg-muted px-1 py-0.5 rounded">fs</code> —
-							no filesystem access
-						</li>
-						<li>
-							<code className="text-xs bg-muted px-1 py-0.5 rounded">
-								child_process
-							</code>{" "}
-							— cannot spawn processes
-						</li>
-						<li>
-							Native Node.js modules (e.g., bcrypt) — use Web Crypto or
-							edge-compatible alternatives
-						</li>
-						<li>Some npm packages that depend on Node.js internals</li>
-						<li>
-							Long-running computations — edge functions have execution time
-							limits
-						</li>
+						<li>{t("limitItem1")}</li>
+						<li>{t("limitItem2")}</li>
+						<li>{t("limitItem3")}</li>
+						<li>{t("limitItem4")}</li>
+						<li>{t("limitItem5")}</li>
 					</ul>
 				</DemoBox>
 			</Section>
 
-			<Section title="Use Cases">
+			<Section title={t("useCasesTitle")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="Low-Latency APIs">
+					<DemoBox title={t("lowLatencyTitle")}>
 						<p className="text-sm text-muted-foreground">
-							API routes that need fast global responses — feature flags, A/B
-							test assignments, simple data lookups from edge-compatible stores
-							like KV or D1.
+							{t("lowLatencyDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Geo-Routing">
+					<DemoBox title={t("geoRoutingTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Read the user&apos;s location from request headers and serve
-							region-specific content or redirect to the nearest data center.
+							{t("geoRoutingDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Auth Token Verification">
+					<DemoBox title={t("authTokenTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Validate JWTs at the edge using Web Crypto before the request
-							reaches your origin server. Reject invalid tokens early.
+							{t("authTokenDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Personalization">
+					<DemoBox title={t("personalizationTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Read cookies or headers to personalize responses without a
-							round-trip to the origin. Combine with edge-compatible databases
-							for dynamic content.
+							{t("personalizationDesc")}
 						</p>
 					</DemoBox>
 				</div>
 			</Section>
 
-			<Section title="Key Points">
+			<Section title={t("keyPointsTitle")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="Middleware Is Always Edge">
+					<DemoBox title={t("middlewareAlwaysEdgeTitle")}>
 						<p className="text-sm text-muted-foreground">
-							middleware.ts always runs on the Edge Runtime. You do not need to
-							export a runtime config — it is edge by default.
+							{t("middlewareAlwaysEdgeDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Choose Wisely">
+					<DemoBox title={t("chooseWiselyTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Only use Edge Runtime when latency matters and your code stays
-							within the API constraints. For most pages and APIs, the Node.js
-							runtime is simpler and more capable.
+							{t("chooseWiselyDesc")}
 						</p>
 					</DemoBox>
 				</div>

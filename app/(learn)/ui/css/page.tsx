@@ -1,15 +1,11 @@
+import { getTranslations } from "next-intl/server";
 import { CodeBlock, DemoBox, DemoPage, Section } from "@/components/demo-page";
 
-export default function CSSPage() {
+export default async function CSSPage() {
+	const t = await getTranslations("ui.css");
 	return (
-		<DemoPage
-			title="CSS Styling"
-			description="Next.js supports multiple CSS approaches. Tailwind CSS v4 is the recommended default, with CSS Modules and global CSS also available."
-		>
-			<Section
-				title="Tailwind CSS v4"
-				description="Tailwind v4 uses native CSS @import instead of tailwind.config.js. This project already uses it."
-			>
+		<DemoPage title={t("title")} description={t("description")}>
+			<Section title={t("tailwindV4Title")} description={t("tailwindV4Desc")}>
 				<CodeBlock
 					filename="app/globals.css"
 					language="css"
@@ -30,7 +26,7 @@ export default function CSSPage() {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Live Tailwind Example">
+			<Section title={t("liveTailwindTitle")}>
 				<div className="flex flex-wrap gap-3">
 					<div className="rounded-lg bg-primary px-4 py-2 text-primary-foreground text-sm font-medium">
 						Primary
@@ -50,7 +46,7 @@ export default function CSSPage() {
 </div>`}</CodeBlock>
 			</Section>
 
-			<Section title="CSS Modules">
+			<Section title={t("cssModulesTitle")}>
 				<CodeBlock
 					filename="components/button.module.css"
 					language="css"
@@ -74,9 +70,9 @@ export function Button() {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Global CSS">
+			<Section title={t("globalCssTitle")}>
 				<p className="text-sm text-muted-foreground mb-3">
-					Import global CSS in your root layout. It applies to all routes.
+					{t("globalCssText")}
 				</p>
 				<CodeBlock
 					filename="app/layout.tsx"
@@ -92,30 +88,26 @@ export default function RootLayout({ children }) {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Key Points">
+			<Section title={t("keyPointsTitle")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="Tailwind v4 Changes">
+					<DemoBox title={t("tailwindV4ChangesTitle")}>
 						<p className="text-sm text-muted-foreground">
-							No more tailwind.config.js. Configuration is done via CSS with
-							@theme and @custom-variant directives.
+							{t("tailwindV4ChangesText")}
 						</p>
 					</DemoBox>
-					<DemoBox title="CSS Modules Scoping">
+					<DemoBox title={t("cssModulesScopingTitle")}>
 						<p className="text-sm text-muted-foreground">
-							CSS Modules auto-scope class names to prevent conflicts. Use
-							.module.css extension to enable them.
+							{t("cssModulesScopingText")}
 						</p>
 					</DemoBox>
-					<DemoBox title="CSS Variables">
+					<DemoBox title={t("cssVariablesTitle")}>
 						<p className="text-sm text-muted-foreground">
-							This project uses CSS custom properties (oklch colors) for
-							theming. Tailwind maps them via @theme inline.
+							{t("cssVariablesText")}
 						</p>
 					</DemoBox>
-					<DemoBox title="No Runtime CSS-in-JS">
+					<DemoBox title={t("noRuntimeCssInJsTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Server Components do not support runtime CSS-in-JS libraries like
-							styled-components. Use Tailwind or CSS Modules instead.
+							{t("noRuntimeCssInJsText")}
 						</p>
 					</DemoBox>
 				</div>

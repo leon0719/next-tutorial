@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import {
 	CodeBlock,
 	DemoBox,
@@ -7,15 +8,13 @@ import {
 } from "@/components/demo-page";
 import { Badge } from "@/components/ui/badge";
 
-export default function MdxPage() {
+export default async function MdxPage() {
+	const t = await getTranslations("advanced.mdx");
 	return (
-		<DemoPage
-			title="MDX"
-			description="Write JSX in your Markdown — combine the simplicity of content authoring with the power of React components for interactive documentation and blog posts."
-		>
+		<DemoPage title={t("title")} description={t("description")}>
 			<Section
-				title="What is MDX?"
-				description="MDX lets you use JSX directly in Markdown files. You can import and use React components alongside standard Markdown content."
+				title={t("whatIsMdxTitle")}
+				description={t("whatIsMdxDescription")}
 			>
 				<DemoBox>
 					<div className="flex items-start gap-3">
@@ -23,19 +22,14 @@ export default function MdxPage() {
 							MDX
 						</Badge>
 						<p className="text-sm text-muted-foreground">
-							MDX is a superset of Markdown. Any valid Markdown is valid MDX,
-							but you can also embed JSX expressions, import statements, and
-							export metadata.
+							{t("whatIsMdxNote")}
 						</p>
 					</div>
 				</DemoBox>
 			</Section>
 
-			<Section title="@next/mdx Setup">
-				<p className="text-sm text-muted-foreground mb-3">
-					Install @next/mdx and configure your next.config.ts to handle .mdx
-					files as pages or imports.
-				</p>
+			<Section title={t("setupTitle")}>
+				<p className="text-sm text-muted-foreground mb-3">{t("setupDesc")}</p>
 				<CodeBlock
 					filename="next.config.ts"
 					language="tsx"
@@ -56,10 +50,9 @@ const withMDX = createMDX({
 export default withMDX(nextConfig)`}</CodeBlock>
 			</Section>
 
-			<Section title=".mdx File Convention">
+			<Section title={t("fileConventionTitle")}>
 				<p className="text-sm text-muted-foreground mb-3">
-					MDX files in the app directory work just like page.tsx files. You can
-					also import .mdx files as components.
+					{t("fileConventionDesc")}
 				</p>
 				<FileTree>{`app/
 ├── blog/
@@ -71,7 +64,7 @@ export default withMDX(nextConfig)`}</CodeBlock>
     └── intro.mdx          ← importable as a component`}</FileTree>
 			</Section>
 
-			<Section title="Using Components in MDX">
+			<Section title={t("usingComponentsTitle")}>
 				<CodeBlock
 					filename="app/blog/my-post/page.mdx"
 					language="mdx"
@@ -93,10 +86,9 @@ Here is regular **Markdown** content.
 You can mix Markdown and JSX freely.`}</CodeBlock>
 			</Section>
 
-			<Section title="mdx-components.tsx">
+			<Section title={t("mdxComponentsTitle")}>
 				<p className="text-sm text-muted-foreground mb-3">
-					Define a mdx-components.tsx file at the project root to customize how
-					standard HTML elements are rendered in MDX content.
+					{t("mdxComponentsDesc")}
 				</p>
 				<CodeBlock
 					filename="mdx-components.tsx"
@@ -125,7 +117,7 @@ export function useMDXComponents(
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Frontmatter & Metadata">
+			<Section title={t("frontmatterTitle")}>
 				<CodeBlock
 					filename="app/blog/post/page.mdx"
 					language="mdx"
@@ -139,31 +131,26 @@ export function useMDXComponents(
 Content goes here...`}</CodeBlock>
 			</Section>
 
-			<Section title="Key Points">
+			<Section title={t("keyPointsTitle")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="Server Components by Default">
+					<DemoBox title={t("serverComponentsTitle")}>
 						<p className="text-sm text-muted-foreground">
-							MDX pages in the App Router are Server Components. Add &quot;use
-							client&quot; as an export if you need interactivity.
+							{t("serverComponentsDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Remark & Rehype Plugins">
+					<DemoBox title={t("remarkRehypeTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Extend MDX with remark plugins (Markdown AST) and rehype plugins
-							(HTML AST) for features like syntax highlighting or math
-							rendering.
+							{t("remarkRehypeDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Type Safety">
+					<DemoBox title={t("typeSafetyTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Props passed to components in MDX files are type-checked. Your IDE
-							will show errors if you pass the wrong props.
+							{t("typeSafetyDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Remote MDX">
+					<DemoBox title={t("remoteMdxTitle")}>
 						<p className="text-sm text-muted-foreground">
-							For MDX from a CMS or database, use next-mdx-remote or mdx-bundler
-							to compile MDX at runtime with full component support.
+							{t("remoteMdxDesc")}
 						</p>
 					</DemoBox>
 				</div>

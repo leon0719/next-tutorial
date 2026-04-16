@@ -1,27 +1,21 @@
+import { getTranslations } from "next-intl/server";
 import { CodeBlock, DemoBox, DemoPage, Section } from "@/components/demo-page";
 
-export default function FontsPage() {
+export default async function FontsPage() {
+	const t = await getTranslations("ui.fonts");
 	return (
-		<DemoPage
-			title="Font Optimization"
-			description="Next.js automatically self-hosts Google Fonts with zero layout shift. This project uses Geist Sans and Geist Mono."
-		>
-			<Section
-				title="This Project's Font Setup"
-				description="Geist fonts are loaded in the root layout and applied via CSS variables."
-			>
+		<DemoPage title={t("title")} description={t("description")}>
+			<Section title={t("fontSetupTitle")} description={t("fontSetupDesc")}>
 				<div className="space-y-4 rounded-lg border p-6">
 					<div>
 						<p className="text-xs text-muted-foreground mb-1">
-							font-sans (Geist Sans)
+							{t("fontSansLabel")}
 						</p>
-						<p className="font-sans text-2xl">
-							The quick brown fox jumps over the lazy dog
-						</p>
+						<p className="font-sans text-2xl">{t("fontSample")}</p>
 					</div>
 					<div>
 						<p className="text-xs text-muted-foreground mb-1">
-							font-mono (Geist Mono)
+							{t("fontMonoLabel")}
 						</p>
 						<p className="font-mono text-2xl">const x = 42;</p>
 					</div>
@@ -50,7 +44,7 @@ export default function RootLayout({ children }) {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Using CSS Variables with Tailwind">
+			<Section title={t("cssVariablesTailwindTitle")}>
 				<CodeBlock filename="app/globals.css" language="css">{`@theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -63,9 +57,9 @@ export default function RootLayout({ children }) {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Local Fonts">
+			<Section title={t("localFontsTitle")}>
 				<p className="text-sm text-muted-foreground mb-3">
-					Use next/font/local for custom font files stored in your project.
+					{t("localFontsText")}
 				</p>
 				<CodeBlock
 					filename="app/layout.tsx"
@@ -89,30 +83,26 @@ export default function RootLayout({ children }) {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Key Points">
+			<Section title={t("keyPointsTitle")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="Zero Layout Shift">
+					<DemoBox title={t("zeroLayoutShiftTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Fonts are self-hosted at build time using size-adjust, eliminating
-							flash of unstyled text (FOUT) and CLS.
+							{t("zeroLayoutShiftText")}
 						</p>
 					</DemoBox>
-					<DemoBox title="CSS Variables Approach">
+					<DemoBox title={t("cssVariablesApproachTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Use the variable option to create a CSS custom property, then
-							reference it in Tailwind or your CSS.
+							{t("cssVariablesApproachText")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Automatic Subsetting">
+					<DemoBox title={t("autoSubsettingTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Google Fonts are automatically subset to only include the
-							characters needed for your specified subsets.
+							{t("autoSubsettingText")}
 						</p>
 					</DemoBox>
-					<DemoBox title="No External Requests">
+					<DemoBox title={t("noExternalRequestsTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Font files are downloaded at build time and served from your
-							domain. No requests to Google at runtime.
+							{t("noExternalRequestsText")}
 						</p>
 					</DemoBox>
 				</div>

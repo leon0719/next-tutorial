@@ -1,15 +1,16 @@
+import { getTranslations } from "next-intl/server";
 import { CodeBlock, DemoBox, DemoPage, Section } from "@/components/demo-page";
 
+const richComponents = {
+	code: (chunks: React.ReactNode) => <code>{chunks}</code>,
+	strong: (chunks: React.ReactNode) => <strong>{chunks}</strong>,
+};
+
 export default async function BundleAnalyzerPage() {
+	const t = await getTranslations("config.bundle");
 	return (
-		<DemoPage
-			title="Bundle Analyzer"
-			description="Visualize your JavaScript bundle to find and eliminate bloat. The bundle analyzer generates an interactive treemap of every module in your build."
-		>
-			<Section
-				title="Setup"
-				description="Install @next/bundle-analyzer and configure next.config.ts to enable it with an environment variable."
-			>
+		<DemoPage title={t("title")} description={t("description")}>
+			<Section title={t("setupTitle")} description={t("setupDesc")}>
 				<CodeBlock
 					filename="terminal"
 					language="bash"
@@ -30,10 +31,7 @@ export default withBundleAnalyzer({
 })(nextConfig);`}</CodeBlock>
 			</Section>
 
-			<Section
-				title="Running the Analyzer"
-				description="Set the ANALYZE environment variable before building to generate the report."
-			>
+			<Section title={t("runningTitle")} description={t("runningDesc")}>
 				<CodeBlock
 					filename="terminal"
 					language="bash"
@@ -43,32 +41,20 @@ ANALYZE=true bun run build
 # This opens two HTML files in your browser:
 #   - client.html  (what ships to the browser)
 #   - nodejs.html  (server-side bundles)`}</CodeBlock>
-				<DemoBox title="What to Look For">
+				<DemoBox title={t("whatToLookForTitle")}>
 					<div className="space-y-2 text-sm text-muted-foreground">
-						<p>
-							<strong>Large rectangles</strong> — Bigger boxes mean bigger
-							modules. Look for unexpectedly large dependencies.
-						</p>
-						<p>
-							<strong>Duplicate modules</strong> — The same library appearing
-							multiple times may indicate version conflicts.
-						</p>
-						<p>
-							<strong>Unused libraries</strong> — Libraries you imported but
-							barely use still contribute their full size to the bundle.
-						</p>
+						<p>{t.rich("largeRectanglesText", richComponents)}</p>
+						<p>{t.rich("duplicateModulesText", richComponents)}</p>
+						<p>{t.rich("unusedLibrariesText", richComponents)}</p>
 					</div>
 				</DemoBox>
 			</Section>
 
-			<Section
-				title="Tree Shaking"
-				description="Tree shaking removes unused exports from your bundle. It works automatically with ES modules but can fail silently."
-			>
+			<Section title={t("treeShakingTitle")} description={t("treeShakingDesc")}>
 				<div className="grid gap-4 md:grid-cols-2">
 					<div>
 						<h3 className="text-sm font-semibold mb-2 text-red-600 dark:text-red-400">
-							Bad — Imports Everything
+							{t("badImportLabel")}
 						</h3>
 						<CodeBlock
 							filename="bad-import.ts"
@@ -80,7 +66,7 @@ const result = _.groupBy(items, "category");`}</CodeBlock>
 					</div>
 					<div>
 						<h3 className="text-sm font-semibold mb-2 text-green-600 dark:text-green-400">
-							Good — Imports Only What You Need
+							{t("goodImportLabel")}
 						</h3>
 						<CodeBlock
 							filename="good-import.ts"
@@ -94,8 +80,8 @@ const result = groupBy(items, "category");`}</CodeBlock>
 			</Section>
 
 			<Section
-				title="Dynamic Imports"
-				description="Load heavy components only when they are needed using next/dynamic or React.lazy."
+				title={t("dynamicImportsTitle")}
+				description={t("dynamicImportsDesc")}
 			>
 				<CodeBlock
 					filename="app/page.tsx"
@@ -120,42 +106,26 @@ export default function DashboardPage() {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Tips for Reducing Bundle Size">
+			<Section title={t("tipsTitle")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="Audit Dependencies">
+					<DemoBox title={t("auditDepsTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Run the analyzer regularly. Remove unused packages and replace
-							heavy ones with lighter alternatives (e.g., <code>date-fns</code>{" "}
-							instead of <code>moment</code>).
+							{t.rich("auditDepsText", richComponents)}
 						</p>
 					</DemoBox>
-					<DemoBox title="Use Server Components">
+					<DemoBox title={t("useServerComponentsTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Server Components send zero JavaScript to the client. Keep data
-							fetching and heavy logic in Server Components and only use{" "}
-							<code>&quot;use client&quot;</code> for interactivity.
+							{t.rich("useServerComponentsText", richComponents)}
 						</p>
 					</DemoBox>
-					<DemoBox title="Lazy Load Below the Fold">
+					<DemoBox title={t("lazyLoadTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Use <code>next/dynamic</code> for components not visible on
-							initial load: modals, tabs, charts, and anything behind user
-							interaction.
+							{t.rich("lazyLoadText", richComponents)}
 						</p>
 					</DemoBox>
-					<DemoBox title="Check Package Size Before Installing">
+					<DemoBox title={t("checkPackageSizeTitle")}>
 						<p className="text-sm text-muted-foreground">
-							Use{" "}
-							<a
-								href="https://bundlephobia.com"
-								className="underline"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								bundlephobia.com
-							</a>{" "}
-							to check the size cost of any npm package before adding it to your
-							project.
+							{t("checkPackageSizeText")}
 						</p>
 					</DemoBox>
 				</div>

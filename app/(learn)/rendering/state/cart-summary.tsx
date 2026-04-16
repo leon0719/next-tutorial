@@ -1,12 +1,14 @@
 "use client";
 
 import { Trash2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useCartStore } from "./store";
 
 export function CartSummary() {
+	const t = useTranslations("rendering.state");
 	const items = useCartStore((s) => s.items);
 	const removeItem = useCartStore((s) => s.removeItem);
 	const clearCart = useCartStore((s) => s.clearCart);
@@ -17,7 +19,7 @@ export function CartSummary() {
 		<Card>
 			<CardHeader className="pb-2">
 				<div className="flex items-center justify-between">
-					<CardTitle className="text-base">Cart</CardTitle>
+					<CardTitle className="text-base">{t("cartTitle")}</CardTitle>
 					<Badge variant="outline" className="text-xs">
 						Component B
 					</Badge>
@@ -25,9 +27,7 @@ export function CartSummary() {
 			</CardHeader>
 			<CardContent>
 				{items.length === 0 ? (
-					<p className="text-sm text-muted-foreground">
-						Cart is empty. Add some products!
-					</p>
+					<p className="text-sm text-muted-foreground">{t("cartEmpty")}</p>
 				) : (
 					<div className="space-y-3">
 						<div className="space-y-2">
@@ -57,13 +57,15 @@ export function CartSummary() {
 						</div>
 						<div className="border-t pt-2 flex items-center justify-between">
 							<div>
-								<p className="text-sm font-semibold">Total: ${totalPrice()}</p>
+								<p className="text-sm font-semibold">
+									{t("cartTotal", { total: totalPrice() })}
+								</p>
 								<p className="text-xs text-muted-foreground">
-									{totalItems()} items
+									{t("cartItems", { count: totalItems() })}
 								</p>
 							</div>
 							<Button variant="outline" size="sm" onClick={clearCart}>
-								Clear
+								{t("cartClear")}
 							</Button>
 						</div>
 					</div>

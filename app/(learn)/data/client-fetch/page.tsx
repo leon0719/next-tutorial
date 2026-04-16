@@ -1,20 +1,17 @@
+import { getTranslations } from "next-intl/server";
 import { CodeBlock, DemoBox, DemoPage, Section } from "@/components/demo-page";
 import { PostsQuery } from "./posts-query";
 
-export default function ClientFetchPage() {
+export default async function ClientFetchPage() {
+	const t = await getTranslations("data.clientFetch");
+
 	return (
-		<DemoPage
-			title="Client Fetch (TanStack Query)"
-			description="For client-side data fetching with caching, refetching, loading states, and error handling. Perfect for interactive data that changes based on user actions."
-		>
-			<Section
-				title="Live Demo — Fetching from Hono API"
-				description="This component uses useQuery to fetch posts from /api/posts. Try the refetch button!"
-			>
+		<DemoPage title={t("title")} description={t("description")}>
+			<Section title={t("liveDemo")} description={t("liveDemoDescription")}>
 				<PostsQuery />
 			</Section>
 
-			<Section title="Basic useQuery">
+			<Section title={t("basicQuery")}>
 				<CodeBlock
 					filename="components/posts.tsx"
 					language="tsx"
@@ -47,10 +44,9 @@ export function Posts() {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Setup — QueryClientProvider">
+			<Section title={t("setup")}>
 				<p className="text-sm text-muted-foreground mb-3">
-					TanStack Query needs a QueryClientProvider wrapping your app. This
-					project sets it up in app/providers.tsx.
+					{t("setupDescription")}
 				</p>
 				<CodeBlock filename="app/providers.tsx" language="tsx">{`"use client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -68,33 +64,26 @@ export function Providers({ children }: { children: React.ReactNode }) {
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Key Points">
+			<Section title={t("keyPoints")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="Automatic Caching">
+					<DemoBox title={t("autoCaching")}>
 						<p className="text-sm text-muted-foreground">
-							TanStack Query caches responses by queryKey. Same key = same
-							cached data across components. Configure staleTime to control
-							freshness.
+							{t("autoCachingDescription")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Background Refetch">
+					<DemoBox title={t("backgroundRefetch")}>
 						<p className="text-sm text-muted-foreground">
-							Stale data is shown immediately while fresh data fetches in the
-							background. No loading spinner for cached data — instant UI.
+							{t("backgroundRefetchDescription")}
 						</p>
 					</DemoBox>
-					<DemoBox title="When to Use">
+					<DemoBox title={t("whenToUse")}>
 						<p className="text-sm text-muted-foreground">
-							Use client fetch for: real-time data, user-triggered refreshes,
-							infinite scroll, search-as-you-type, or any data that changes
-							based on client state.
+							{t("whenToUseDescription")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Server Fetch First">
+					<DemoBox title={t("serverFetchFirst")}>
 						<p className="text-sm text-muted-foreground">
-							Default to Server Components for initial data. Add TanStack Query
-							only when you need client-side interactivity (refetch, polling,
-							optimistic updates).
+							{t("serverFetchFirstDescription")}
 						</p>
 					</DemoBox>
 				</div>

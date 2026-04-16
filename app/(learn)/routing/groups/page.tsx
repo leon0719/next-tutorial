@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import {
 	CodeBlock,
 	DemoBox,
@@ -7,13 +8,12 @@ import {
 } from "@/components/demo-page";
 import { Badge } from "@/components/ui/badge";
 
-export default function RouteGroupsPage() {
+export default async function RouteGroupsPage() {
+	const t = await getTranslations("routing.groups");
+
 	return (
-		<DemoPage
-			title="Route Groups"
-			description="Route groups organize routes without affecting the URL structure. Wrap a folder name in parentheses (folderName) to create a group."
-		>
-			<Section title="File Structure">
+		<DemoPage title={t("title")} description={t("description")}>
+			<Section title={t("fileStructure")}>
 				<FileTree>{`app/
 ├── (marketing)/          ← Group: not in URL
 │   ├── layout.tsx        ← Marketing-specific layout
@@ -34,11 +34,11 @@ export default function RouteGroupsPage() {
             └── route.ts  ← /api/*`}</FileTree>
 			</Section>
 
-			<Section title="This Project Uses Route Groups!">
+			<Section title={t("liveExample")}>
 				<DemoBox title="Live Example">
 					<div className="space-y-3">
 						<p className="text-sm text-muted-foreground">
-							This learning hub uses two route groups:
+							{t("liveExampleDesc")}
 						</p>
 						<div className="space-y-2">
 							<div className="flex items-center gap-2">
@@ -46,7 +46,7 @@ export default function RouteGroupsPage() {
 									(learn)
 								</Badge>
 								<span className="text-sm text-muted-foreground">
-									→ All demo pages with sidebar layout (this page!)
+									{t("learnGroup")}
 								</span>
 							</div>
 							<div className="flex items-center gap-2">
@@ -54,29 +54,24 @@ export default function RouteGroupsPage() {
 									(api-demo)
 								</Badge>
 								<span className="text-sm text-muted-foreground">
-									→ API routes handled by Hono
+									{t("apiGroup")}
 								</span>
 							</div>
 						</div>
 						<p className="text-sm text-muted-foreground">
-							The URL for this page is{" "}
+							{t("urlNote")}{" "}
 							<code className="bg-muted px-1.5 py-0.5 rounded text-xs">
 								/routing/groups
 							</code>{" "}
-							— notice{" "}
-							<code className="bg-muted px-1.5 py-0.5 rounded text-xs">
-								(learn)
-							</code>{" "}
-							is NOT in the URL!
+							{t("urlNoteEnd")}
 						</p>
 					</div>
 				</DemoBox>
 			</Section>
 
-			<Section title="Multiple Layouts">
+			<Section title={t("multipleLayouts")}>
 				<p className="text-sm text-muted-foreground mb-3">
-					Each route group can have its own layout. This is perfect for sections
-					with different UI shells.
+					{t("multipleLayoutsDesc")}
 				</p>
 				<CodeBlock
 					filename="app/(marketing)/layout.tsx"
@@ -114,30 +109,26 @@ export default function ShopLayout({
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Key Points">
+			<Section title={t("keyPoints")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title="URL Not Affected">
+					<DemoBox title={t("urlNotAffected")}>
 						<p className="text-sm text-muted-foreground">
-							(marketing)/about/page.tsx renders at /about, not
-							/(marketing)/about. The group folder is purely organizational.
+							{t("urlNotAffectedDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Separate Layouts">
+					<DemoBox title={t("separateLayouts")}>
 						<p className="text-sm text-muted-foreground">
-							Each group can have its own layout.tsx. Great for sections with
-							different UI shells (e.g., marketing site vs dashboard).
+							{t("separateLayoutsDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="No Duplicate Routes">
+					<DemoBox title={t("noDuplicates")}>
 						<p className="text-sm text-muted-foreground">
-							Routes across groups cannot resolve to the same URL.
-							(marketing)/about and (shop)/about would cause a build error.
+							{t("noDuplicatesDesc")}
 						</p>
 					</DemoBox>
-					<DemoBox title="Full Page Reload">
+					<DemoBox title={t("fullReload")}>
 						<p className="text-sm text-muted-foreground">
-							Navigating between groups with different root layouts triggers a
-							full page reload (not a soft navigation).
+							{t("fullReloadDesc")}
 						</p>
 					</DemoBox>
 				</div>

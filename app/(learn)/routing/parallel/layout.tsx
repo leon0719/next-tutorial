@@ -1,6 +1,7 @@
+import { getTranslations } from "next-intl/server";
 import { CodeBlock, DemoPage, FileTree, Section } from "@/components/demo-page";
 
-export default function ParallelLayout({
+export default async function ParallelLayout({
 	children,
 	analytics,
 	dashboard,
@@ -9,12 +10,11 @@ export default function ParallelLayout({
 	analytics: React.ReactNode;
 	dashboard: React.ReactNode;
 }) {
+	const t = await getTranslations("routing.parallel");
+
 	return (
-		<DemoPage
-			title="Parallel Routes"
-			description="Parallel routes render multiple pages simultaneously in the same layout using @named slots. Each slot can have independent loading and error states."
-		>
-			<Section title="File Structure">
+		<DemoPage title={t("title")} description={t("description")}>
+			<Section title={t("fileStructure")}>
 				<FileTree>{`app/(learn)/routing/parallel/
 ├── layout.tsx            ← This layout! Receives slots as props
 ├── page.tsx              ← children slot (main content)
@@ -29,30 +29,30 @@ export default function ParallelLayout({
     └── default.tsx       ← Fallback on hard nav`}</FileTree>
 			</Section>
 
-			<Section title="Live Demo — Slots Rendered Simultaneously">
+			<Section title={t("liveDemo")}>
 				<div className="grid gap-4 md:grid-cols-2">
 					<div className="rounded-lg border-2 border-dashed border-blue-500/30 p-1">
 						<div className="mb-1 px-2 text-xs font-medium text-blue-500">
-							@dashboard slot
+							{t("dashboardSlot")}
 						</div>
 						{dashboard}
 					</div>
 					<div className="rounded-lg border-2 border-dashed border-green-500/30 p-1">
 						<div className="mb-1 px-2 text-xs font-medium text-green-500">
-							@analytics slot
+							{t("analyticsSlot")}
 						</div>
 						{analytics}
 					</div>
 				</div>
 				<div className="mt-4 rounded-lg border-2 border-dashed border-purple-500/30 p-1">
 					<div className="mb-1 px-2 text-xs font-medium text-purple-500">
-						children (page.tsx)
+						{t("childrenSlot")}
 					</div>
 					{children}
 				</div>
 			</Section>
 
-			<Section title="How It Works">
+			<Section title={t("howItWorks")}>
 				<CodeBlock
 					filename="app/dashboard/layout.tsx"
 					language="tsx"
@@ -76,34 +76,30 @@ export default function DashboardLayout({
 }`}</CodeBlock>
 			</Section>
 
-			<Section title="Key Points">
+			<Section title={t("keyPoints")}>
 				<div className="grid gap-3 sm:grid-cols-2">
 					<div className="rounded-lg border p-4">
-						<h3 className="font-medium text-sm">default.tsx is Required</h3>
+						<h3 className="font-medium text-sm">{t("defaultRequired")}</h3>
 						<p className="text-sm text-muted-foreground mt-1">
-							On hard navigation (page refresh), Next.js needs a default for
-							unmatched slots. Without it, you get a 404.
+							{t("defaultRequiredDesc")}
 						</p>
 					</div>
 					<div className="rounded-lg border p-4">
-						<h3 className="font-medium text-sm">Independent Loading</h3>
+						<h3 className="font-medium text-sm">{t("independentLoading")}</h3>
 						<p className="text-sm text-muted-foreground mt-1">
-							Each slot can have its own loading.tsx and error.tsx, so one slow
-							slot won't block the others.
+							{t("independentLoadingDesc")}
 						</p>
 					</div>
 					<div className="rounded-lg border p-4">
-						<h3 className="font-medium text-sm">Conditional Rendering</h3>
+						<h3 className="font-medium text-sm">{t("conditionalRender")}</h3>
 						<p className="text-sm text-muted-foreground mt-1">
-							You can conditionally render slots based on auth state, user
-							roles, or any server-side condition.
+							{t("conditionalRenderDesc")}
 						</p>
 					</div>
 					<div className="rounded-lg border p-4">
-						<h3 className="font-medium text-sm">Soft vs Hard Navigation</h3>
+						<h3 className="font-medium text-sm">{t("softHardNav")}</h3>
 						<p className="text-sm text-muted-foreground mt-1">
-							Soft navigation preserves slot state. Hard navigation (refresh)
-							resets to default.tsx content.
+							{t("softHardNavDesc")}
 						</p>
 					</div>
 				</div>
