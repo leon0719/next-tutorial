@@ -2,6 +2,8 @@ import { Hono } from "hono";
 import { logger } from "hono/logger";
 import { helloRoute } from "./routes/hello";
 import { postsRoute } from "./routes/posts";
+import { ogRoute } from "./routes/og";
+import { streamRoute } from "./routes/stream";
 
 const app = new Hono().basePath("/api");
 
@@ -11,5 +13,7 @@ app.use("*", logger());
 // Mount routes
 app.route("/hello", helloRoute);
 app.route("/posts", postsRoute);
+app.route("/og", ogRoute);
+app.route("/stream", streamRoute);
 
 export default app;

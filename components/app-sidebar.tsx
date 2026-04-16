@@ -125,10 +125,10 @@ const navGroups: NavGroup[] = [
 		labelKey: "api",
 		icon: Server,
 		items: [
-			{ title: "Hello", href: "/api/hello" },
-			{ title: "Posts CRUD", href: "/api/posts" },
-			{ title: "OG Image", href: "/api/og" },
-			{ title: "Streaming", href: "/api/stream" },
+			{ title: "Hello", href: "/api-docs/hello" },
+			{ title: "Posts CRUD", href: "/api-docs/posts" },
+			{ title: "OG Image", href: "/api-docs/og" },
+			{ title: "Streaming", href: "/api-docs/stream" },
 		],
 	},
 ];

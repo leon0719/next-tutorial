@@ -35,6 +35,8 @@ export default getRequestConfig(async ({ requestLocale }) => {
 	const advanced = (
 		await import(`../messages/sections/advanced.${locale}.json`)
 	).default;
+	const api = (await import(`../messages/sections/api.${locale}.json`))
+		.default;
 
 	return {
 		locale,
@@ -47,6 +49,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
 			...ui,
 			...config,
 			...advanced,
+			...api,
 		},
 	};
 });

@@ -1,0 +1,64 @@
+{
+	"api": {
+		"hello": {
+			"title": "Hello API",
+			"description": "最簡單的 Hono GET endpoint — 了解 Next.js Route Handler 如何與 Hono 整合。",
+			"setup": "Hono 設定",
+			"setupDesc": "使用單一 catch-all route handler 將所有 /api/* 請求委派給 Hono。",
+			"routeCode": "路由程式碼",
+			"catchAll": "Catch-all Handler",
+			"tryIt": "試試看",
+			"tryItDesc": "點擊下方連結測試 API endpoint：",
+			"keyPoints": "重點整理",
+			"honoIntegration": "Hono 整合",
+			"honoIntegrationDesc": "Hono 透過 hono/vercel adapter 與 Next.js Route Handler 整合。單一 catch-all 路由處理所有 HTTP 方法。",
+			"middleware": "Middleware",
+			"middlewareDesc": "Hono 的 middleware chain（如 logger）為所有路由提供請求日誌等功能，類似 Express。"
+		},
+		"posts": {
+			"title": "Posts CRUD API",
+			"description": "完整的 RESTful CRUD API — 使用 Hono + Drizzle ORM + Zod 驗證。",
+			"endpoints": "API Endpoints",
+			"routeCode": "路由程式碼",
+			"validation": "Zod 驗證",
+			"validationDesc": "@hono/zod-validator 自動驗證 request body，無效資料回傳 400 錯誤。",
+			"tryIt": "試試看",
+			"tryItDesc": "測試 API endpoints：",
+			"keyPoints": "重點整理",
+			"typesSafe": "Type-safe",
+			"typesSafeDesc": "Zod schema 同時提供 runtime 驗證和 TypeScript 類型推論。一次定義，處處安全。",
+			"drizzleIntegration": "Drizzle 整合",
+			"drizzleIntegrationDesc": "Drizzle ORM 提供 type-safe 的 SQL 查詢。搭配 better-sqlite3，本地開發零設定。"
+		},
+		"og": {
+			"title": "OG 圖片生成",
+			"description": "使用 next/og 的 ImageResponse 動態生成 Open Graph 圖片 — 用 JSX 定義圖片內容。",
+			"preview": "即時預覽",
+			"previewDesc": "下方圖片由 /api/og endpoint 即時生成：",
+			"howItWorks": "運作方式",
+			"queryParams": "Query 參數",
+			"queryParamsDesc": "透過 URL query 參數自訂圖片內容。",
+			"keyPoints": "重點整理",
+			"jsxToImage": "JSX → 圖片",
+			"jsxToImageDesc": "使用熟悉的 JSX 語法定義圖片版面。支援 flexbox layout 和基本 CSS 屬性。",
+			"dynamicContent": "動態內容",
+			"dynamicContentDesc": "可根據 URL 參數、資料庫資料或任何伺服端資料動態生成不同圖片。"
+		},
+		"stream": {
+			"title": "Streaming Response",
+			"description": "使用 Hono 的 streamText 建立 streaming response — 資料逐行傳送，即時顯示。",
+			"liveDemo": "即時 Demo",
+			"liveDemoDesc": "點擊按鈕觀看 streaming response 逐行到達。",
+			"routeCode": "路由程式碼",
+			"clientCode": "客戶端讀取",
+			"keyPoints": "重點整理",
+			"progressiveUI": "漸進式 UI",
+			"progressiveUIDesc": "Streaming 讓使用者立即看到部分結果，不需等待完整回應。非常適合 AI 聊天、日誌和長時間處理。",
+			"honoStream": "Hono streamText",
+			"honoStreamDesc": "Hono 提供 streamText helper，簡化 streaming response 的建立。支援 writeln、sleep 等方法。",
+			"startStream": "開始 Stream",
+			"streaming": "Streaming 中...",
+			"clickToStart": "點擊「開始 Stream」以開始..."
+		}
+	}
+}

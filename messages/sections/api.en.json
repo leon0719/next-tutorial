@@ -1,0 +1,64 @@
+{
+	"api": {
+		"hello": {
+			"title": "Hello API",
+			"description": "The simplest Hono GET endpoint — learn how Next.js Route Handlers integrate with Hono.",
+			"setup": "Hono Setup",
+			"setupDesc": "A single catch-all route handler delegates all /api/* requests to Hono.",
+			"routeCode": "Route Code",
+			"catchAll": "Catch-all Handler",
+			"tryIt": "Try It",
+			"tryItDesc": "Click the link below to test the API endpoint:",
+			"keyPoints": "Key Points",
+			"honoIntegration": "Hono Integration",
+			"honoIntegrationDesc": "Hono integrates with Next.js Route Handlers via the hono/vercel adapter. A single catch-all route handles all HTTP methods.",
+			"middleware": "Middleware",
+			"middlewareDesc": "Hono's middleware chain (e.g. logger) provides request logging and other features for all routes, similar to Express."
+		},
+		"posts": {
+			"title": "Posts CRUD API",
+			"description": "A complete RESTful CRUD API — built with Hono + Drizzle ORM + Zod validation.",
+			"endpoints": "API Endpoints",
+			"routeCode": "Route Code",
+			"validation": "Zod Validation",
+			"validationDesc": "@hono/zod-validator automatically validates request bodies. Invalid data returns a 400 error.",
+			"tryIt": "Try It",
+			"tryItDesc": "Test the API endpoints:",
+			"keyPoints": "Key Points",
+			"typesSafe": "Type-safe",
+			"typesSafeDesc": "Zod schemas provide both runtime validation and TypeScript type inference. Define once, stay safe everywhere.",
+			"drizzleIntegration": "Drizzle Integration",
+			"drizzleIntegrationDesc": "Drizzle ORM provides type-safe SQL queries. Combined with better-sqlite3, zero config for local development."
+		},
+		"og": {
+			"title": "OG Image Generation",
+			"description": "Dynamically generate Open Graph images using ImageResponse from next/og — define image content with JSX.",
+			"preview": "Live Preview",
+			"previewDesc": "The image below is generated in real-time by the /api/og endpoint:",
+			"howItWorks": "How It Works",
+			"queryParams": "Query Parameters",
+			"queryParamsDesc": "Customize image content via URL query parameters.",
+			"keyPoints": "Key Points",
+			"jsxToImage": "JSX to Image",
+			"jsxToImageDesc": "Use familiar JSX syntax to define image layouts. Supports flexbox layout and basic CSS properties.",
+			"dynamicContent": "Dynamic Content",
+			"dynamicContentDesc": "Generate different images based on URL parameters, database data, or any server-side data."
+		},
+		"stream": {
+			"title": "Streaming Response",
+			"description": "Build streaming responses with Hono's streamText — data sent line by line, displayed in real-time.",
+			"liveDemo": "Live Demo",
+			"liveDemoDesc": "Click the button to watch streaming response lines arrive one by one.",
+			"routeCode": "Route Code",
+			"clientCode": "Client-side Reading",
+			"keyPoints": "Key Points",
+			"progressiveUI": "Progressive UI",
+			"progressiveUIDesc": "Streaming lets users see partial results immediately without waiting for the full response. Perfect for AI chat, logs, and long-running processes.",
+			"honoStream": "Hono streamText",
+			"honoStreamDesc": "Hono provides the streamText helper to simplify creating streaming responses. Supports writeln, sleep, and more.",
+			"startStream": "Start Stream",
+			"streaming": "Streaming...",
+			"clickToStart": "Click \"Start Stream\" to begin..."
+		}
+	}
+}

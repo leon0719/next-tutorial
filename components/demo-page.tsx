@@ -6,6 +6,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { CopyButton } from "@/components/copy-button";
 import { highlight } from "@/lib/shiki";
 
 interface DemoPageProps {
@@ -53,24 +54,34 @@ interface CodeBlockProps {
 }
 
 export async function CodeBlock({ filename, language, children }: CodeBlockProps) {
+	const code = children.trim();
 	// shiki generates trusted HTML from hardcoded code strings (not user input)
 	// All code examples are developer-authored static content in source files
-	const html = await highlight(children.trim(), language || "text");
+	const html = await highlight(code, language || "text");
 
 	return (
-		<div className="rounded-lg border overflow-hidden">
+		<div className="group relative rounded-lg border overflow-hidden">
 			{filename && (
-				<div className="flex items-center gap-2 border-b bg-zinc-950 dark:bg-zinc-900 px-4 py-2">
-					<span className="text-xs text-zinc-400">{filename}</span>
-					{language && (
-						<Badge variant="outline" className="text-[10px] text-zinc-500 border-zinc-700">
-							{language}
-						</Badge>
-					)}
+				<div className="flex items-center justify-between border-b bg-zinc-950 dark:bg-zinc-900 px-4 py-2">
+					<div className="flex items-center gap-2">
+						<span className="text-xs text-zinc-400">{filename}</span>
+						{language && (
+							<Badge variant="outline" className="text-[10px] text-zinc-500 border-zinc-700">
+								{language}
+							</Badge>
+						)}
+					</div>
+					<CopyButton text={code} />
+				</div>
+			)}
+			{!filename && (
+				<div className="absolute right-2 top-2 opacity-0 group-hover:opacity-100 transition-opacity">
+					<CopyButton text={code} />
 				</div>
 			)}
 			<div
 				className="overflow-x-auto text-sm leading-relaxed [&_pre]:p-4 [&_pre]:m-0 [&_.shiki]:bg-transparent"
+				// shiki output is trusted - generated from developer-authored static code examples
 				dangerouslySetInnerHTML={{ __html: html }}
 			/>
 		</div>
