@@ -1,0 +1,19 @@
+{
+  "common": {
+    "title": "Next.js Learning Hub",
+    "description": "互動式 Next.js 功能展示站",
+    "theme": "主題",
+    "language": "語言",
+    "demos": "個 Demo"
+  },
+  "nav": {
+    "home": "首頁",
+    "routing": "路由",
+    "data": "資料處理",
+    "rendering": "渲染",
+    "ui": "UI 與資源",
+    "advanced": "進階功能",
+    "config": "設定",
+    "api": "API"
+  }
+}

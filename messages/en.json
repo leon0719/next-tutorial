@@ -1,0 +1,19 @@
+{
+  "common": {
+    "title": "Next.js Learning Hub",
+    "description": "Interactive Next.js feature showcase",
+    "theme": "Theme",
+    "language": "Language",
+    "demos": "Demos"
+  },
+  "nav": {
+    "home": "Home",
+    "routing": "Routing",
+    "data": "Data",
+    "rendering": "Rendering",
+    "ui": "UI & Assets",
+    "advanced": "Advanced",
+    "config": "Config",
+    "api": "API"
+  }
+}
