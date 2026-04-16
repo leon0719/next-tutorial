@@ -29,7 +29,11 @@ export default function GlobalError({
 				<Button variant="outline" onClick={() => reset()}>
 					{t("retry")}
 				</Button>
-				<Button onClick={() => { window.location.href = "/"; }}>
+				<Button
+					onClick={() => {
+						window.location.href = "/";
+					}}
+				>
 					{t("backHome")}
 				</Button>
 			</div>

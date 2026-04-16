@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import { Providers } from "./providers";
@@ -13,6 +13,12 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
 	variable: "--font-geist-mono",
 	subsets: ["latin"],
+});
+
+const instrumentSerif = Instrument_Serif({
+	variable: "--font-heading",
+	subsets: ["latin"],
+	weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -32,7 +38,7 @@ export default async function RootLayout({
 	return (
 		<html
 			lang={locale}
-			className={`${geistSans.variable} ${geistMono.variable}`}
+			className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable}`}
 			suppressHydrationWarning
 		>
 			<body>
