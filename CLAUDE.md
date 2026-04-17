@@ -7,18 +7,33 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-bun run dev          # Start dev server (Turbopack)
+bun run dev          # Start dev server (Turbopack default in Next 16)
 bun run build        # Production build
+bun run analyze      # ANALYZE=true next build --webpack (bundle analyzer)
 bun run start        # Start production server
-bun run format       # biome check --write ./app
-bun run lint         # biome lint --write ./app
+bun run format       # biome check --write . (entire repo)
+bun run lint         # biome lint --write . (entire repo)
 bun run db:generate  # Generate Drizzle migrations
 bun run db:migrate   # Run Drizzle migrations
 bun run db:seed      # Seed database (uses npx tsx, not bun — better-sqlite3 native bindings)
 bun run db:studio    # Open Drizzle Studio GUI
+bun run test         # Unit + E2E (chains test:unit then test:e2e)
+bun run test:unit    # npx vitest run — node env, :memory: DB
+bun run test:e2e     # Playwright — local uses bun run dev (see caveat)
+bun run test:e2e:build # Escape hatch — CI=1 forces build+start (use when dev is occupied)
 ```
 
-**Always run `bun run format && bun run lint` before committing.** Build errors from biome are blocking.
+**Unit tests** use an in-memory SQLite via `DATABASE_URL=":memory:"` (set by `vitest.config.ts`). `tests/unit/setup.ts` migrates + clears the `posts` table between tests. Hono routes are tested by calling `app.request()` directly — no server needed.
+
+**E2E tests** (Playwright) spin up a dedicated server on port 3100 against `test.db` (seeded by `tests/e2e/global-setup.ts`). `drizzle.config.ts` honors `DATABASE_URL`. Two modes:
+- **Local (default)**: `bun run dev`. Caveat — Next 16 only allows one `next dev` per project; stop any running dev server before `bun run test:e2e`, or use `bun run test:e2e:build`.
+- **CI (`CI=1`)**: `bun run build && bun run start`. Slower but isolated from any dev process.
+
+**Pre-commit hook** (`simple-git-hooks` + `lint-staged`) runs `biome check --write` on staged `.{ts,tsx,js,jsx,json,css}` files automatically. Run `bunx simple-git-hooks` once after fresh clone to install. Biome errors still block commits.
+
+### i18n loading
+
+`i18n/request.ts` iterates the `SECTIONS` array to load per-category translation files in parallel. To add a new category, drop `messages/sections/{name}.{zh-TW,en}.json` and append `name` to `SECTIONS`. `extras.*.json` stays separate — it's deep-merged because it patches existing namespaces (e.g. `rendering.*`, `routing.*`).
 
 ## Architecture
 
@@ -63,6 +78,10 @@ export default async function Page() {
 - **ICU format**: Translation strings must NOT contain raw `<` or `>`. Use plain text (`Link component` not `<Link> component`).
 - Server: `getTranslations()` from `next-intl/server`. Client: `useTranslations()` from `next-intl`.
 - `NextIntlClientProvider` is in `app/layout.tsx` (root).
+
+### Proxy (formerly Middleware)
+
+- Root-level `proxy.ts` (renamed from `middleware.ts` in Next 16) sets security headers (X-Frame-Options, X-Content-Type-Options, Referrer-Policy) and injects `X-Response-Time` on every non-static request. Matcher excludes `_next/*`, `favicon.ico`, and image files. Migrate legacy `middleware.ts` with `npx @next/codemod@canary middleware-to-proxy .`.
 
 ### Hono API
 

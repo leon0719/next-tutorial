@@ -1,26 +1,38 @@
 import { getTranslations } from "next-intl/server";
 import { CodeBlock, DemoBox, DemoPage, Section } from "@/components/demo-page";
 
-export default async function MiddlewarePage() {
-	const t = await getTranslations("advanced.middleware");
+export default async function ProxyPage() {
+	const t = await getTranslations("advanced.proxy");
 	return (
 		<DemoPage title={t("title")} description={t("description")}>
+			<Section
+				title={t("renamedFromMiddlewareTitle")}
+				description={t("renamedFromMiddlewareDescription")}
+			>
+				<CodeBlock filename="migration" language="bash">{`# Official codemod
+npx @next/codemod@canary middleware-to-proxy .
+
+# Renames middleware.ts → proxy.ts and the exported function from
+#   export function middleware(...)
+# to
+#   export function proxy(...)`}</CodeBlock>
+			</Section>
+
 			<Section
 				title={t("howItWorksTitle")}
 				description={t("howItWorksDescription")}
 			>
 				<CodeBlock
-					filename="middleware.ts"
+					filename="proxy.ts"
 					language="tsx"
 				>{`import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-export function middleware(request: NextRequest) {
-  // Clone the response so we can modify headers
+export function proxy(request: NextRequest) {
   const response = NextResponse.next()
 
   // Add a custom header
-  response.headers.set('x-middleware-ran', 'true')
+  response.headers.set('x-proxy-ran', 'true')
 
   // Example: redirect unauthenticated users
   const token = request.cookies.get('session-token')
@@ -31,7 +43,7 @@ export function middleware(request: NextRequest) {
   return response
 }
 
-// Only run middleware on specific paths
+// Only run proxy on specific paths
 export const config = {
   matcher: ['/dashboard/:path*', '/api/:path*'],
 }`}</CodeBlock>
@@ -41,10 +53,7 @@ export const config = {
 				title={t("matcherConfigTitle")}
 				description={t("matcherConfigDescription")}
 			>
-				<CodeBlock
-					filename="middleware.ts"
-					language="tsx"
-				>{`export const config = {
+				<CodeBlock filename="proxy.ts" language="tsx">{`export const config = {
   matcher: [
     // Match specific paths
     '/dashboard/:path*',
@@ -53,8 +62,11 @@ export const config = {
     // Match all except static files and images
     '/((?!_next/static|_next/image|favicon.ico).*)',
 
-    // Match only specific HTTP methods (Next.js 16+)
-    { source: '/api/:path*', methods: ['POST', 'PUT'] },
+    // Match with has/missing conditions
+    {
+      source: '/api/:path*',
+      has: [{ type: 'header', key: 'authorization' }],
+    },
   ],
 }`}</CodeBlock>
 			</Section>
@@ -86,12 +98,12 @@ export const config = {
 
 			<Section title={t("rewritesRedirectsTitle")}>
 				<CodeBlock
-					filename="middleware.ts"
+					filename="proxy.ts"
 					language="tsx"
 				>{`import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // Rewrite: user sees /blog but gets /news content
@@ -106,12 +118,6 @@ export function middleware(request: NextRequest) {
 
   return NextResponse.next()
 }`}</CodeBlock>
-			</Section>
-
-			<Section title={t("proxyTitle")}>
-				<DemoBox title={t("proxyBoxTitle")}>
-					<p className="text-sm text-muted-foreground">{t("proxyBoxDesc")}</p>
-				</DemoBox>
 			</Section>
 
 			<Section title={t("keyPointsTitle")}>

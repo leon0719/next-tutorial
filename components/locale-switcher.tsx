@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 const COOKIE_NAME = "NEXT_LOCALE";
@@ -24,6 +24,7 @@ export function LocaleSwitcher() {
 
 	const switchLocale = useCallback(() => {
 		const next = locale === "zh-TW" ? "en" : "zh-TW";
+		// biome-ignore lint/suspicious/noDocumentCookie: next-intl cookie-based locale pattern; Cookie Store API browser support is still limited
 		document.cookie = `${COOKIE_NAME}=${next}; path=/; max-age=${60 * 60 * 24 * 365}`;
 		setLocale(next);
 		router.refresh();

@@ -50,13 +50,13 @@ export default async function DashboardPage() {
 }`}</CodeBlock>
 
 				<CodeBlock
-					filename="middleware.ts"
+					filename="proxy.ts"
 					language="tsx"
-				>{`// Approach 2: Middleware check (runs before the page)
+				>{`// Approach 2: Proxy check (runs before the page) — renamed from middleware in Next 16
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const token = request.cookies.get('session-token')
 
   if (!token && request.nextUrl.pathname.startsWith('/dashboard')) {
@@ -141,9 +141,9 @@ export default function Unauthorized() {
 
 			<Section title={t("keyPointsTitle")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title={t("middlewareVsServerTitle")}>
+					<DemoBox title={t("proxyVsServerTitle")}>
 						<p className="text-sm text-muted-foreground">
-							{t("middlewareVsServerDesc")}
+							{t("proxyVsServerDesc")}
 						</p>
 					</DemoBox>
 					<DemoBox title={t("neverTrustClientTitle")}>

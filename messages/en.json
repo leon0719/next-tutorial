@@ -32,7 +32,7 @@
 		"data_desc": "Server-side fetching, client-side queries, caching, revalidation, and server actions.",
 		"rendering_desc": "Server components, client components, composition patterns, and state management.",
 		"ui_desc": "CSS, images, fonts, metadata, animations, and theming.",
-		"advanced_desc": "Middleware, i18n, auth, draft mode, edge runtime, MDX, and more.",
+		"advanced_desc": "Proxy, i18n, auth, draft mode, edge runtime, MDX, and more.",
 		"config_desc": "Environment variables, redirects, headers, CSP, and bundle analysis.",
 		"api_desc": "Route handlers with Hono — REST CRUD, OG image generation, and streaming.",
 		"demos": "{count} Demos"

@@ -1,12 +1,14 @@
 {
 	"advanced": {
-		"middleware": {
-			"title": "Middleware",
-			"description": "Middleware runs before a request is completed, letting you modify the response by rewriting, redirecting, or adding headers. It executes on every matched route at the edge.",
+		"proxy": {
+			"title": "Proxy",
+			"description": "Proxy runs before a request is completed, letting you modify the response by rewriting, redirecting, or adding headers. It executes on every matched route at the edge.",
+			"renamedFromMiddlewareTitle": "Renamed from Middleware in Next.js 16",
+			"renamedFromMiddlewareDescription": "Next.js 16 renamed the middleware file convention to proxy. The file is moved from middleware.ts to proxy.ts and the exported function is renamed from middleware to proxy. Run the official codemod to migrate automatically.",
 			"howItWorksTitle": "How It Works",
-			"howItWorksDescription": "Create a middleware.ts (or .js) file at the root of your project (or inside src/). It runs before every matched request.",
+			"howItWorksDescription": "Create a proxy.ts (or .js) file at the root of your project (or inside src/). It runs before every matched request.",
 			"matcherConfigTitle": "Matcher Config",
-			"matcherConfigDescription": "The matcher determines which routes trigger your middleware. Without it, middleware runs on every request.",
+			"matcherConfigDescription": "The matcher determines which routes trigger your proxy. Without it, proxy runs on every request.",
 			"commonUseCasesTitle": "Common Use Cases",
 			"authChecksTitle": "Authentication Checks",
 			"authChecksDesc": "Verify tokens or session cookies before allowing access to protected routes. Redirect to login if unauthenticated.",
@@ -17,14 +19,11 @@
 			"rateLimitingTitle": "Rate Limiting",
 			"rateLimitingDesc": "Track request counts per IP using edge-compatible stores and return 429 responses when limits are exceeded.",
 			"rewritesRedirectsTitle": "Rewrites and Redirects",
-			"proxyTitle": "Next.js 16: proxy.ts",
-			"proxyBoxTitle": "New in Next.js 16",
-			"proxyBoxDesc": "Next.js 16 introduces proxy.ts as a complementary approach for certain use cases that were previously handled by middleware, such as proxying API requests or rewriting to external services. Middleware still works and is the right choice for auth checks, header modifications, and redirects. Check the Next.js docs for guidance on when to use each.",
 			"keyPointsTitle": "Key Points",
 			"runsAtEdgeTitle": "Runs at the Edge",
-			"runsAtEdgeDesc": "Middleware uses the Edge Runtime by default. You cannot use Node.js-only APIs like fs or native modules.",
-			"oneFileTitle": "One Middleware File",
-			"oneFileDesc": "There is only one middleware.ts per project. Use the matcher config or conditional logic inside the function to handle different routes."
+			"runsAtEdgeDesc": "Proxy uses the Edge Runtime by default. You cannot use Node.js-only APIs like fs or native modules.",
+			"oneFileTitle": "One Proxy File",
+			"oneFileDesc": "There is only one proxy.ts per project. Use the matcher config or conditional logic inside the function to handle different routes."
 		},
 		"i18n": {
 			"title": "Internationalization (i18n)",
@@ -71,8 +70,8 @@
 			"luciaBadge": "Lightweight",
 			"luciaDesc": "Minimal, session-based auth library. You own the database schema. Good for learning and custom setups.",
 			"keyPointsTitle": "Key Points",
-			"middlewareVsServerTitle": "Middleware vs Server Component",
-			"middlewareVsServerDesc": "Middleware is fast (edge) but limited — good for redirects. Server Component checks are more flexible — you can query databases and render different UI.",
+			"proxyVsServerTitle": "Proxy vs Server Component",
+			"proxyVsServerDesc": "Proxy is fast (edge) but limited — good for redirects. Server Component checks are more flexible — you can query databases and render different UI.",
 			"neverTrustClientTitle": "Never Trust the Client",
 			"neverTrustClientDesc": "Always verify auth on the server. Client-side checks (hiding UI) are for UX only. Server Components and Server Actions must independently verify permissions."
 		},
@@ -102,7 +101,7 @@
 		},
 		"edgeRuntime": {
 			"title": "Edge Runtime",
-			"description": "The Edge Runtime is a lightweight subset of Node.js APIs designed for low-latency responses. Routes and middleware can opt into it for faster cold starts and global distribution.",
+			"description": "The Edge Runtime is a lightweight subset of Node.js APIs designed for low-latency responses. Routes and proxy can opt into it for faster cold starts and global distribution.",
 			"optingInTitle": "Opting Into Edge Runtime",
 			"optingInDesc": "Export a runtime config from any route segment to switch from the default Node.js runtime to Edge.",
 			"edgeVsNodeTitle": "Edge vs Node.js Runtime",
@@ -138,8 +137,8 @@
 			"personalizationTitle": "Personalization",
 			"personalizationDesc": "Read cookies or headers to personalize responses without a round-trip to the origin. Combine with edge-compatible databases for dynamic content.",
 			"keyPointsTitle": "Key Points",
-			"middlewareAlwaysEdgeTitle": "Middleware Is Always Edge",
-			"middlewareAlwaysEdgeDesc": "middleware.ts always runs on the Edge Runtime. You do not need to export a runtime config — it is edge by default.",
+			"proxyAlwaysEdgeTitle": "Proxy Is Always Edge",
+			"proxyAlwaysEdgeDesc": "proxy.ts (formerly middleware.ts in Next 16) always runs on the Edge Runtime. You do not need to export a runtime config — it is edge by default.",
 			"chooseWiselyTitle": "Choose Wisely",
 			"chooseWiselyDesc": "Only use Edge Runtime when latency matters and your code stays within the API constraints. For most pages and APIs, the Node.js runtime is simpler and more capable."
 		},
@@ -213,7 +212,7 @@
 			"tracingTitle": "Distributed Tracing",
 			"tracingDesc": "Configure OpenTelemetry to trace requests across services with automatic span creation for fetch, database calls, and route handlers.",
 			"featureFlagsTitle": "Feature Flags",
-			"featureFlagsDesc": "Initialize feature flag SDKs (LaunchDarkly, Statsig) at startup so flags are available in all server components and middleware.",
+			"featureFlagsDesc": "Initialize feature flag SDKs (LaunchDarkly, Statsig) at startup so flags are available in all server components and proxy.",
 			"keyPointsTitle": "Key Points",
 			"runtimeCheckBadge": "Runtime Check",
 			"runtimeCheckDesc": "Use process.env.NEXT_RUNTIME to conditionally load Node.js-only code. Edge runtime has limited API support.",

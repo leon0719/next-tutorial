@@ -18,7 +18,10 @@ const highlighterPromise = createHighlighter({
 	],
 });
 
-export async function highlight(code: string, lang: string = "text"): Promise<string> {
+export async function highlight(
+	code: string,
+	lang: string = "text",
+): Promise<string> {
 	const highlighter = await highlighterPromise;
 
 	// Normalize language aliases

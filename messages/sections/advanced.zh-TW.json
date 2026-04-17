@@ -1,12 +1,14 @@
 {
 	"advanced": {
-		"middleware": {
-			"title": "中介軟體",
-			"description": "中介軟體在請求完成之前執行，讓你可以透過重寫、重新導向或新增標頭來修改回應。它在邊緣環境中對每個匹配的路由執行。",
+		"proxy": {
+			"title": "Proxy",
+			"description": "Proxy 在請求完成之前執行，讓你可以透過重寫、重新導向或新增標頭來修改回應。它在邊緣環境中對每個匹配的路由執行。",
+			"renamedFromMiddlewareTitle": "Next.js 16 從 Middleware 改名而來",
+			"renamedFromMiddlewareDescription": "Next.js 16 將 middleware 檔案慣例更名為 proxy。檔案從 middleware.ts 移動到 proxy.ts，匯出的函式也從 middleware 改名為 proxy。使用官方 codemod 可自動遷移。",
 			"howItWorksTitle": "運作方式",
-			"howItWorksDescription": "在專案根目錄（或 src/ 內）建立 middleware.ts（或 .js）檔案。它會在每個匹配的請求之前執行。",
+			"howItWorksDescription": "在專案根目錄（或 src/ 內）建立 proxy.ts（或 .js）檔案。它會在每個匹配的請求之前執行。",
 			"matcherConfigTitle": "Matcher 設定",
-			"matcherConfigDescription": "matcher 決定哪些路由會觸發你的中介軟體。沒有設定的話，中介軟體會在每個請求上執行。",
+			"matcherConfigDescription": "matcher 決定哪些路由會觸發你的 proxy。沒有設定的話，proxy 會在每個請求上執行。",
 			"commonUseCasesTitle": "常見使用情境",
 			"authChecksTitle": "身份驗證檢查",
 			"authChecksDesc": "在允許存取受保護的路由之前驗證令牌或 session cookie。未經驗證時重新導向到登入頁面。",
@@ -17,14 +19,11 @@
 			"rateLimitingTitle": "速率限制",
 			"rateLimitingDesc": "使用邊緣相容的儲存追蹤每個 IP 的請求數量，超過限制時回傳 429 回應。",
 			"rewritesRedirectsTitle": "重寫與重新導向",
-			"proxyTitle": "Next.js 16: proxy.ts",
-			"proxyBoxTitle": "Next.js 16 新功能",
-			"proxyBoxDesc": "Next.js 16 引入了 proxy.ts 作為某些過去由中介軟體處理的使用情境的補充方式，例如代理 API 請求或重寫到外部服務。中介軟體仍然有效，並且是身份驗證檢查、標頭修改和重新導向的正確選擇。請查閱 Next.js 文件以了解何時使用哪種方式。",
 			"keyPointsTitle": "重點摘要",
 			"runsAtEdgeTitle": "在邊緣執行",
-			"runsAtEdgeDesc": "中介軟體預設使用 Edge Runtime。你無法使用僅限 Node.js 的 API，例如 fs 或原生模組。",
-			"oneFileTitle": "一個中介軟體檔案",
-			"oneFileDesc": "每個專案只有一個 middleware.ts。使用 matcher 設定或函式內的條件邏輯來處理不同的路由。"
+			"runsAtEdgeDesc": "Proxy 預設使用 Edge Runtime。你無法使用僅限 Node.js 的 API，例如 fs 或原生模組。",
+			"oneFileTitle": "一個 Proxy 檔案",
+			"oneFileDesc": "每個專案只有一個 proxy.ts。使用 matcher 設定或函式內的條件邏輯來處理不同的路由。"
 		},
 		"i18n": {
 			"title": "國際化（i18n）",
@@ -71,8 +70,8 @@
 			"luciaBadge": "輕量級",
 			"luciaDesc": "極簡的、基於 session 的身份驗證函式庫。你擁有資料庫架構。適合學習和自訂設定。",
 			"keyPointsTitle": "重點摘要",
-			"middlewareVsServerTitle": "中介軟體 vs 伺服器元件",
-			"middlewareVsServerDesc": "中介軟體快速（邊緣）但受限 — 適合重新導向。伺服器元件檢查更靈活 — 你可以查詢資料庫並渲染不同的 UI。",
+			"proxyVsServerTitle": "Proxy vs 伺服器元件",
+			"proxyVsServerDesc": "Proxy 快速（邊緣）但受限 — 適合重新導向。伺服器元件檢查更靈活 — 你可以查詢資料庫並渲染不同的 UI。",
 			"neverTrustClientTitle": "永遠不要信任客戶端",
 			"neverTrustClientDesc": "始終在伺服器端驗證身份。客戶端檢查（隱藏 UI）僅用於使用者體驗。伺服器元件和 Server Actions 必須獨立驗證權限。"
 		},
@@ -102,7 +101,7 @@
 		},
 		"edgeRuntime": {
 			"title": "Edge Runtime",
-			"description": "Edge Runtime 是 Node.js API 的輕量級子集，專為低延遲回應而設計。路由和中介軟體可以選擇使用它，以獲得更快的冷啟動和全球分佈。",
+			"description": "Edge Runtime 是 Node.js API 的輕量級子集，專為低延遲回應而設計。路由和 Proxy 可以選擇使用它，以獲得更快的冷啟動和全球分佈。",
 			"optingInTitle": "選擇使用 Edge Runtime",
 			"optingInDesc": "從任何路由區段匯出 runtime 設定，從預設的 Node.js runtime 切換到 Edge。",
 			"edgeVsNodeTitle": "Edge vs Node.js Runtime",
@@ -138,8 +137,8 @@
 			"personalizationTitle": "個人化",
 			"personalizationDesc": "讀取 cookie 或標頭來個人化回應，無需往返源伺服器。結合邊緣相容的資料庫以提供動態內容。",
 			"keyPointsTitle": "重點摘要",
-			"middlewareAlwaysEdgeTitle": "中介軟體始終在 Edge 執行",
-			"middlewareAlwaysEdgeDesc": "middleware.ts 始終在 Edge Runtime 上執行。你不需要匯出 runtime 設定 — 它預設就是 edge。",
+			"proxyAlwaysEdgeTitle": "Proxy 始終在 Edge 執行",
+			"proxyAlwaysEdgeDesc": "proxy.ts（Next 16 前稱 middleware.ts）始終在 Edge Runtime 上執行。你不需要匯出 runtime 設定 — 它預設就是 edge。",
 			"chooseWiselyTitle": "明智選擇",
 			"chooseWiselyDesc": "只在延遲重要且你的程式碼在 API 限制範圍內時使用 Edge Runtime。對於大多數頁面和 API，Node.js runtime 更簡單且功能更強大。"
 		},
@@ -213,7 +212,7 @@
 			"tracingTitle": "分散式追蹤",
 			"tracingDesc": "設定 OpenTelemetry 來追蹤跨服務的請求，自動為 fetch、資料庫呼叫和路由處理程式建立 span。",
 			"featureFlagsTitle": "功能旗標",
-			"featureFlagsDesc": "在啟動時初始化功能旗標 SDK（LaunchDarkly、Statsig），以便在所有伺服器元件和中介軟體中使用旗標。",
+			"featureFlagsDesc": "在啟動時初始化功能旗標 SDK（LaunchDarkly、Statsig），以便在所有伺服器元件和 Proxy 中使用旗標。",
 			"keyPointsTitle": "重點摘要",
 			"runtimeCheckBadge": "Runtime 檢查",
 			"runtimeCheckDesc": "使用 process.env.NEXT_RUNTIME 來有條件地載入僅限 Node.js 的程式碼。Edge runtime 的 API 支援有限。",

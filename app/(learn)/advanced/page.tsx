@@ -6,9 +6,9 @@ export default async function AdvancedPage() {
 
 	const demos = [
 		{
-			title: t("middleware"),
-			description: t("middlewareDesc"),
-			href: "/advanced/middleware",
+			title: t("proxy"),
+			description: t("proxyDesc"),
+			href: "/advanced/proxy",
 			status: "ready" as const,
 		},
 		{

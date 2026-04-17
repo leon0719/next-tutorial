@@ -46,3 +46,13 @@ superpowers/
 local.db
 local.db-wal
 local.db-shm
+
+# Test DB (Playwright)
+test.db
+test.db-wal
+test.db-shm
+
+# Playwright
+/playwright-report
+/test-results
+/playwright/.cache

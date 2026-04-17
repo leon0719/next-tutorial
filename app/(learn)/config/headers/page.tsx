@@ -183,12 +183,12 @@ export default nextConfig;`}</CodeBlock>
 
 			<Section title={t("nonceBasedTitle")}>
 				<CodeBlock
-					filename="middleware.ts"
+					filename="proxy.ts"
 					language="typescript"
 				>{`import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
   const csp = \`
     default-src 'self';

@@ -133,9 +133,9 @@ export async function GET(request: Request) {
 
 			<Section title={t("keyPointsTitle")}>
 				<div className="grid gap-3 sm:grid-cols-2">
-					<DemoBox title={t("middlewareAlwaysEdgeTitle")}>
+					<DemoBox title={t("proxyAlwaysEdgeTitle")}>
 						<p className="text-sm text-muted-foreground">
-							{t("middlewareAlwaysEdgeDesc")}
+							{t("proxyAlwaysEdgeDesc")}
 						</p>
 					</DemoBox>
 					<DemoBox title={t("chooseWiselyTitle")}>

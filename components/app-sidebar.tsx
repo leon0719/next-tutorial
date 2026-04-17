@@ -1,10 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useTranslations } from "next-intl";
 import { Collapsible } from "@base-ui/react/collapsible";
+import type { LucideIcon } from "lucide-react";
 import {
 	ChevronRight,
 	Database,
@@ -16,6 +13,12 @@ import {
 	Settings,
 	Zap,
 } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
+import { LocaleSwitcher } from "@/components/locale-switcher";
+import { ThemeToggle } from "@/components/theme-toggle";
 import {
 	Sidebar,
 	SidebarContent,
@@ -29,9 +32,6 @@ import {
 	SidebarMenuItem,
 	SidebarRail,
 } from "@/components/ui/sidebar";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { LocaleSwitcher } from "@/components/locale-switcher";
-import type { LucideIcon } from "lucide-react";
 
 interface NavItem {
 	title: string;
@@ -105,7 +105,7 @@ const navGroups: NavGroup[] = [
 		icon: Zap,
 		items: [
 			{ title: "Overview", href: "/advanced" },
-			{ title: "Middleware", href: "/advanced/middleware" },
+			{ title: "Proxy", href: "/advanced/proxy" },
 			{ title: "i18n", href: "/advanced/i18n" },
 			{ title: "Auth", href: "/advanced/auth" },
 			{ title: "Draft Mode", href: "/advanced/draft-mode" },
@@ -160,11 +160,19 @@ export function AppSidebar() {
 			<SidebarHeader>
 				<SidebarMenu>
 					<SidebarMenuItem>
-						<SidebarMenuButton size="lg" render={<Link href="/" />} className="rounded-sm">
+						<SidebarMenuButton
+							size="lg"
+							render={<Link href="/" />}
+							className="rounded-sm"
+						>
 							<Home className="h-5 w-5" />
 							<div className="flex flex-col gap-0.5 leading-none">
-								<span className="font-heading font-bold uppercase tracking-wide text-sm">Next.js Learning Hub</span>
-								<span className="text-xs text-muted-foreground font-mono">v16.2.4</span>
+								<span className="font-heading font-bold uppercase tracking-wide text-sm">
+									Next.js Learning Hub
+								</span>
+								<span className="text-xs text-muted-foreground font-mono">
+									v16.2.4
+								</span>
 							</div>
 						</SidebarMenuButton>
 					</SidebarMenuItem>
@@ -191,7 +199,7 @@ export function AppSidebar() {
 										<SidebarGroupLabel className="font-heading uppercase tracking-wider text-xs font-bold">
 											<group.icon className="mr-2 h-4 w-4" />
 											{t(group.labelKey)}
-											<ChevronRight className="ml-auto h-4 w-4 transition-transform duration-200 group-data-[panel-open]/collapsible:rotate-90" />
+											<ChevronRight className="ml-auto h-4 w-4 transition-transform duration-200 group-data-panel-open/collapsible:rotate-90" />
 										</SidebarGroupLabel>
 									}
 								/>
@@ -203,7 +211,11 @@ export function AppSidebar() {
 													<SidebarMenuButton
 														isActive={pathname === item.href}
 														render={<Link href={item.href} />}
-														className={pathname === item.href ? "font-bold bg-brutal-orange text-white rounded-sm" : "rounded-sm hover:bg-foreground hover:text-background transition-colors duration-150"}
+														className={
+															pathname === item.href
+																? "font-bold bg-brutal-orange text-white rounded-sm"
+																: "rounded-sm hover:bg-foreground hover:text-background transition-colors duration-150"
+														}
 													>
 														{item.title}
 													</SidebarMenuButton>

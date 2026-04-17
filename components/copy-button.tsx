@@ -21,7 +21,11 @@ export function CopyButton({ text }: { text: string }) {
 			className="h-6 w-6 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800"
 			onClick={handleCopy}
 		>
-			{copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+			{copied ? (
+				<Check className="h-3.5 w-3.5" />
+			) : (
+				<Copy className="h-3.5 w-3.5" />
+			)}
 		</Button>
 	);
 }
