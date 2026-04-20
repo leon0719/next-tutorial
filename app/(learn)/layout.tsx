@@ -23,7 +23,7 @@ export default function LearnLayout({
 					<Separator orientation="vertical" className="mr-2 h-4" />
 					<DynamicBreadcrumb />
 				</header>
-				<main className="flex-1 p-6 sm:p-8 max-w-5xl">{children}</main>
+				<main className="flex-1 p-6 sm:p-8">{children}</main>
 			</SidebarInset>
 		</SidebarProvider>
 	);

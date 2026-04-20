@@ -1,4 +1,5 @@
 import { CopyButton } from "@/components/copy-button";
+import { OnThisPage } from "@/components/on-this-page";
 import { PageNav } from "@/components/page-nav";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { highlight } from "@/lib/shiki";
@@ -11,18 +12,23 @@ interface DemoPageProps {
 
 export function DemoPage({ title, description, children }: DemoPageProps) {
 	return (
-		<div className="space-y-10">
-			<div className="space-y-3">
-				<h1 className="font-heading text-3xl sm:text-4xl font-bold uppercase tracking-tight">
-					{title}
-				</h1>
-				<p className="text-base text-muted-foreground leading-relaxed max-w-3xl">
-					{description}
-				</p>
-				<div className="h-1 w-20 bg-brutal-orange" />
+		<div className="mx-auto w-full max-w-7xl">
+			<div className="grid gap-10 xl:grid-cols-[minmax(0,1fr)_17rem]">
+				<div className="min-w-0 space-y-10">
+					<div className="space-y-3">
+						<h1 className="font-heading text-3xl sm:text-4xl font-bold uppercase tracking-tight">
+							{title}
+						</h1>
+						<p className="text-base text-muted-foreground leading-relaxed max-w-3xl">
+							{description}
+						</p>
+						<div className="h-1 w-20 bg-brutal-orange" />
+					</div>
+					<div className="space-y-8">{children}</div>
+					<PageNav />
+				</div>
+				<OnThisPage />
 			</div>
-			<div className="space-y-8">{children}</div>
-			<PageNav />
 		</div>
 	);
 }
@@ -33,9 +39,25 @@ interface SectionProps {
 	children: React.ReactNode;
 }
 
-export function Section({ title, description, children }: SectionProps) {
+function slugify(s: string): string {
 	return (
-		<section className="space-y-4">
+		s
+			.trim()
+			.toLowerCase()
+			.replace(/\s+/g, "-")
+			.replace(/[^\p{L}\p{N}-]/gu, "") || "section"
+	);
+}
+
+export function Section({ title, description, children }: SectionProps) {
+	const id = slugify(title);
+	return (
+		<section
+			id={id}
+			data-toc-section=""
+			data-toc-title={title}
+			className="scroll-mt-20 space-y-4"
+		>
 			<div className="flex items-start gap-3">
 				<div className="mt-1 h-6 w-1.5 shrink-0 bg-brutal-orange" />
 				<div>
@@ -69,7 +91,7 @@ export async function CodeBlock({
 	const html = await highlight(code, language || "text");
 
 	return (
-		<div className="group relative rounded-sm border-3 border-foreground shadow-[4px_4px_0_var(--foreground)] overflow-hidden transition-all duration-150 hover:shadow-[2px_2px_0_var(--foreground)] hover:translate-x-[2px] hover:translate-y-[2px]">
+		<div className="group relative rounded-sm border-3 border-foreground shadow-[4px_4px_0_var(--foreground)] overflow-hidden transition-all duration-150 hover:shadow-[2px_2px_0_var(--foreground)] hover:translate-x-0.5 hover:translate-y-0.5">
 			{filename && (
 				<div className="flex items-center justify-between border-b-3 border-foreground bg-brutal-yellow px-4 py-2">
 					<div className="flex items-center gap-2">

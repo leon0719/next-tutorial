@@ -80,7 +80,7 @@ export function PageNav() {
 			{prev ? (
 				<Link
 					href={prev.href}
-					className="group flex items-center gap-3 rounded-sm border-3 border-foreground bg-background px-4 py-3 shadow-[3px_3px_0_var(--foreground)] transition-all duration-150 hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
+					className="group flex items-center gap-3 rounded-sm border-3 border-foreground bg-background px-4 py-3 shadow-[3px_3px_0_var(--foreground)] transition-all duration-150 hover:shadow-none hover:translate-x-0.75 hover:translate-y-0.75"
 				>
 					<ChevronLeft className="h-4 w-4" />
 					<div>
@@ -96,7 +96,7 @@ export function PageNav() {
 			{next ? (
 				<Link
 					href={next.href}
-					className="group flex items-center gap-3 rounded-sm border-3 border-foreground bg-background px-4 py-3 shadow-[3px_3px_0_var(--foreground)] transition-all duration-150 hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] text-right"
+					className="group flex items-center gap-3 rounded-sm border-3 border-foreground bg-background px-4 py-3 shadow-[3px_3px_0_var(--foreground)] transition-all duration-150 hover:shadow-none hover:translate-x-0.75 hover:translate-y-0.75 text-right"
 				>
 					<div>
 						<div className="font-heading text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
