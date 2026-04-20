@@ -10,7 +10,10 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
+import { CategoryProgress } from "@/components/category-progress";
+import { ContinueReading } from "@/components/continue-reading";
 import { Badge } from "@/components/ui/badge";
+import { navGroups } from "@/lib/pages";
 
 const categories = [
 	{
@@ -120,6 +123,8 @@ export default async function HomePage() {
 								<ArrowRight className="h-4 w-4" />
 							</Link>
 						</div>
+
+						<ContinueReading />
 					</div>
 				</div>
 			</div>
@@ -127,48 +132,55 @@ export default async function HomePage() {
 			{/* Categories Grid */}
 			<div className="mx-auto max-w-6xl px-6 py-16">
 				<div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-					{categories.map((category, index) => (
-						<Link
-							key={category.titleKey}
-							href={category.href}
-							className="group"
-							style={{ animationDelay: `${index * 80}ms` }}
-						>
-							<div className="animate-fade-up relative h-full rounded-sm border-3 border-foreground bg-card p-6 shadow-[4px_4px_0_var(--foreground)] transition-all duration-150 hover:shadow-none hover:translate-x-1 hover:translate-y-1">
-								{/* Corner accent triangle */}
-								<div
-									className={`absolute top-0 right-0 w-14 h-14 ${category.bgClass}`}
-									style={{ clipPath: "polygon(100% 0, 0 0, 100% 100%)" }}
-								/>
+					{categories.map((category, index) => {
+						const group = navGroups.find(
+							(g) => g.labelKey === category.titleKey,
+						);
+						const hrefs = group?.items.map((i) => i.href) ?? [];
+						return (
+							<Link
+								key={category.titleKey}
+								href={category.href}
+								className="group"
+								style={{ animationDelay: `${index * 80}ms` }}
+							>
+								<div className="animate-fade-up relative h-full rounded-sm border-3 border-foreground bg-card p-6 shadow-[4px_4px_0_var(--foreground)] transition-all duration-150 hover:shadow-none hover:translate-x-1 hover:translate-y-1">
+									{/* Corner accent triangle */}
+									<div
+										className={`absolute top-0 right-0 w-14 h-14 ${category.bgClass}`}
+										style={{ clipPath: "polygon(100% 0, 0 0, 100% 100%)" }}
+									/>
 
-								<div className="relative">
-									<div className="flex items-center justify-between mb-4">
-										<div
-											className={`rounded-sm border-2 border-foreground p-2.5 ${category.bgClass} ${category.textClass}`}
-										>
-											<category.icon className="h-5 w-5" />
+									<div className="relative">
+										<div className="flex items-center justify-between mb-4">
+											<div
+												className={`rounded-sm border-2 border-foreground p-2.5 ${category.bgClass} ${category.textClass}`}
+											>
+												<category.icon className="h-5 w-5" />
+											</div>
+											<Badge
+												variant="secondary"
+												className={`font-heading text-xs ${category.bgClass} ${category.textClass} border-foreground`}
+											>
+												{tHome("demos", { count: category.count })}
+											</Badge>
 										</div>
-										<Badge
-											variant="secondary"
-											className={`font-heading text-xs ${category.bgClass} ${category.textClass} border-foreground`}
-										>
-											{tHome("demos", { count: category.count })}
-										</Badge>
-									</div>
-									<h2 className="font-heading text-lg font-bold uppercase tracking-wide mb-1.5">
-										{tNav(category.titleKey)}
-									</h2>
-									<p className="text-sm text-muted-foreground leading-relaxed">
-										{tHome(category.descKey)}
-									</p>
-									<div className="mt-4 flex items-center font-heading text-sm font-bold uppercase tracking-wider">
-										<span>Explore</span>
-										<ArrowRight className="ml-1 h-3.5 w-3.5" />
+										<h2 className="font-heading text-lg font-bold uppercase tracking-wide mb-1.5">
+											{tNav(category.titleKey)}
+										</h2>
+										<p className="text-sm text-muted-foreground leading-relaxed">
+											{tHome(category.descKey)}
+										</p>
+										{hrefs.length > 0 && <CategoryProgress hrefs={hrefs} />}
+										<div className="mt-4 flex items-center font-heading text-sm font-bold uppercase tracking-wider">
+											<span>Explore</span>
+											<ArrowRight className="ml-1 h-3.5 w-3.5" />
+										</div>
 									</div>
 								</div>
-							</div>
-						</Link>
-					))}
+							</Link>
+						);
+					})}
 				</div>
 			</div>
 		</div>

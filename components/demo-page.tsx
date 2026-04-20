@@ -30,14 +30,26 @@ export function DemoPage({
 			<div className="grid gap-10 xl:grid-cols-[minmax(0,1fr)_17rem]">
 				<div className="min-w-0 space-y-10">
 					<div className="space-y-3">
-						<h1 className="font-heading text-3xl sm:text-4xl font-bold uppercase tracking-tight">
+						<h1
+							className="animate-fade-up font-heading text-3xl sm:text-4xl font-bold uppercase tracking-tight"
+							style={{ animationDelay: "0ms" }}
+						>
 							{title}
 						</h1>
-						<p className="text-base text-muted-foreground leading-relaxed max-w-3xl">
+						<p
+							className="animate-fade-up text-base text-muted-foreground leading-relaxed max-w-3xl"
+							style={{ animationDelay: "70ms" }}
+						>
 							{description}
 						</p>
-						<div className="h-1 w-20 bg-brutal-orange" />
-						<div className="flex flex-wrap items-center gap-2 pt-1">
+						<div
+							className="animate-fade-up h-1 w-20 bg-brutal-orange"
+							style={{ animationDelay: "140ms" }}
+						/>
+						<div
+							className="animate-fade-up flex flex-wrap items-center gap-2 pt-1"
+							style={{ animationDelay: "210ms" }}
+						>
 							<span className="inline-flex items-center gap-1.5 border-2 border-foreground bg-brutal-yellow px-2 py-0.5 font-mono text-[11px] font-bold tracking-wide text-foreground">
 								<span className="inline-block h-1.5 w-1.5 bg-foreground" />
 								NEXT {NEXT_VERSION}
@@ -55,7 +67,12 @@ export function DemoPage({
 							)}
 						</div>
 					</div>
-					<div className="space-y-8">{children}</div>
+					<div
+						className="animate-fade-up space-y-8"
+						style={{ animationDelay: "280ms" }}
+					>
+						{children}
+					</div>
 					<PageNav />
 				</div>
 				<OnThisPage />

@@ -3,16 +3,28 @@
 import { Check, Copy } from "lucide-react";
 import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useUI } from "@/lib/stores/ui";
 
 export function CopyButton({ text }: { text: string }) {
 	const [copied, setCopied] = useState(false);
+	const pushToast = useUI((s) => s.pushToast);
 
 	const handleCopy = useCallback(() => {
-		navigator.clipboard.writeText(text).then(() => {
-			setCopied(true);
-			setTimeout(() => setCopied(false), 2000);
-		});
-	}, [text]);
+		if (!navigator.clipboard) {
+			pushToast({ message: "Clipboard unavailable", kind: "warning" });
+			return;
+		}
+		navigator.clipboard
+			.writeText(text)
+			.then(() => {
+				setCopied(true);
+				setTimeout(() => setCopied(false), 2000);
+				pushToast({ message: "Code copied", kind: "success" });
+			})
+			.catch(() => {
+				pushToast({ message: "Copy failed", kind: "warning" });
+			});
+	}, [text, pushToast]);
 
 	return (
 		<Button

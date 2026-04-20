@@ -1,11 +1,11 @@
 "use client";
 
 import { Collapsible } from "@base-ui/react/collapsible";
-import { ChevronRight, Home } from "lucide-react";
+import { ChevronRight, Home, MousePointer2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { ThemeToggle } from "@/components/theme-toggle";
 import {
@@ -22,6 +22,9 @@ import {
 	SidebarRail,
 } from "@/components/ui/sidebar";
 import { type NavGroup, NEXT_VERSION, navGroups } from "@/lib/pages";
+import { usePrefs } from "@/lib/stores/prefs";
+import { useProgress } from "@/lib/stores/progress";
+import { cn } from "@/lib/utils";
 
 function isGroupActive(group: NavGroup, pathname: string): boolean {
 	return group.items.some((item) => pathname === item.href);
@@ -30,6 +33,12 @@ function isGroupActive(group: NavGroup, pathname: string): boolean {
 export function AppSidebar() {
 	const pathname = usePathname();
 	const t = useTranslations("nav");
+	const visited = useProgress((s) => s.visited);
+	const customCursor = usePrefs((s) => s.customCursor);
+	const toggleCursor = usePrefs((s) => s.toggleCustomCursor);
+	const [mounted, setMounted] = useState(false);
+	useEffect(() => setMounted(true), []);
+
 	const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() => {
 		const initial: Record<string, boolean> = {};
 		for (const group of navGroups) {
@@ -66,6 +75,11 @@ export function AppSidebar() {
 				{navGroups.map((group) => {
 					const active = isGroupActive(group, pathname);
 					const isOpen = openGroups[group.labelKey] || active;
+					const groupHrefs = group.items.map((i) => i.href);
+					const groupVisited = mounted
+						? groupHrefs.reduce((n, href) => (visited[href] ? n + 1 : n), 0)
+						: 0;
+					const groupComplete = mounted && groupVisited === group.items.length;
 					return (
 						<Collapsible.Root
 							key={group.labelKey}
@@ -81,29 +95,59 @@ export function AppSidebar() {
 									render={
 										<SidebarGroupLabel className="font-heading uppercase tracking-wider text-xs font-bold">
 											<group.icon className="mr-2 h-4 w-4" />
-											{t(group.labelKey)}
-											<ChevronRight className="ml-auto h-4 w-4 transition-transform duration-200 group-data-panel-open/collapsible:rotate-90" />
+											<span className="flex-1">{t(group.labelKey)}</span>
+											{mounted && groupVisited > 0 && (
+												<span
+													className={cn(
+														"mr-1 inline-flex items-center rounded-sm border px-1 font-mono text-[9px] tabular-nums",
+														groupComplete
+															? "border-foreground bg-brutal-orange text-background"
+															: "border-foreground/40 bg-background text-muted-foreground",
+													)}
+												>
+													{groupVisited}/{group.items.length}
+												</span>
+											)}
+											<ChevronRight className="h-4 w-4 transition-transform duration-200 group-data-panel-open/collapsible:rotate-90" />
 										</SidebarGroupLabel>
 									}
 								/>
 								<Collapsible.Panel>
 									<SidebarGroupContent>
 										<SidebarMenu>
-											{group.items.map((item) => (
-												<SidebarMenuItem key={item.href}>
-													<SidebarMenuButton
-														isActive={pathname === item.href}
-														render={<Link href={item.href} />}
-														className={
-															pathname === item.href
-																? "font-bold bg-brutal-orange text-white rounded-sm"
-																: "rounded-sm hover:bg-foreground hover:text-background transition-colors duration-150"
-														}
-													>
-														{item.title}
-													</SidebarMenuButton>
-												</SidebarMenuItem>
-											))}
+											{group.items.map((item) => {
+												const isActive = pathname === item.href;
+												const isVisited =
+													mounted && Boolean(visited[item.href]);
+												return (
+													<SidebarMenuItem key={item.href}>
+														<SidebarMenuButton
+															isActive={isActive}
+															render={<Link href={item.href} />}
+															className={
+																isActive
+																	? "font-bold bg-brutal-orange text-white rounded-sm"
+																	: "rounded-sm hover:bg-foreground hover:text-background transition-colors duration-150"
+															}
+														>
+															<span className="flex w-full items-center gap-2">
+																<span
+																	aria-hidden
+																	className={cn(
+																		"inline-block h-1.5 w-1.5 shrink-0 border transition-colors duration-150",
+																		isActive
+																			? "border-white bg-white"
+																			: isVisited
+																				? "border-foreground bg-brutal-orange"
+																				: "border-foreground/30 bg-transparent",
+																	)}
+																/>
+																<span className="truncate">{item.title}</span>
+															</span>
+														</SidebarMenuButton>
+													</SidebarMenuItem>
+												);
+											})}
 										</SidebarMenu>
 									</SidebarGroupContent>
 								</Collapsible.Panel>
@@ -114,9 +158,27 @@ export function AppSidebar() {
 			</SidebarContent>
 
 			<SidebarFooter className="border-t-3 border-foreground">
-				<div className="flex items-center justify-between px-2">
+				<div className="flex items-center justify-between gap-1 px-2">
 					<LocaleSwitcher />
-					<ThemeToggle />
+					<div className="flex items-center gap-1">
+						<button
+							type="button"
+							onClick={toggleCursor}
+							aria-label={
+								customCursor ? "Disable custom cursor" : "Enable custom cursor"
+							}
+							aria-pressed={customCursor}
+							className={cn(
+								"inline-flex h-8 w-8 items-center justify-center border-2 border-foreground transition-all duration-150",
+								customCursor
+									? "bg-brutal-orange text-background shadow-[2px_2px_0_var(--foreground)]"
+									: "bg-background hover:bg-muted",
+							)}
+						>
+							<MousePointer2 className="h-3.5 w-3.5" strokeWidth={2.5} />
+						</button>
+						<ThemeToggle />
+					</div>
 				</div>
 			</SidebarFooter>
 

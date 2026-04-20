@@ -4,6 +4,7 @@ import { Dialog } from "@base-ui/react/dialog";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { allPages } from "@/lib/pages";
+import { useUI } from "@/lib/stores/ui";
 
 function isEditableTarget(target: EventTarget | null): boolean {
 	if (!(target instanceof HTMLElement)) return false;
@@ -21,6 +22,7 @@ const SHORTCUTS: { keys: string[]; label: string }[] = [
 	{ keys: ["["], label: "Previous page" },
 	{ keys: ["]"], label: "Next page" },
 	{ keys: ["G", "H"], label: "Go to home" },
+	{ keys: ["F"], label: "Toggle focus mode" },
 	{ keys: ["?"], label: "Show this help" },
 	{ keys: ["ESC"], label: "Close dialog" },
 ];
@@ -28,6 +30,7 @@ const SHORTCUTS: { keys: string[]; label: string }[] = [
 export function KeyboardShortcuts() {
 	const router = useRouter();
 	const pathname = usePathname();
+	const toggleFocusMode = useUI((s) => s.toggleFocusMode);
 	const [helpOpen, setHelpOpen] = useState(false);
 	const gPending = useRef(false);
 	const gTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -75,6 +78,11 @@ export function KeyboardShortcuts() {
 				setHelpOpen((prev) => !prev);
 				return;
 			}
+			if (key.toLowerCase() === "f") {
+				e.preventDefault();
+				toggleFocusMode();
+				return;
+			}
 			if (key.toLowerCase() === "g") {
 				e.preventDefault();
 				gPending.current = true;
@@ -90,7 +98,7 @@ export function KeyboardShortcuts() {
 			window.removeEventListener("keydown", onKey);
 			if (gTimer.current) clearTimeout(gTimer.current);
 		};
-	}, [pathname, router]);
+	}, [pathname, router, toggleFocusMode]);
 
 	return (
 		<Dialog.Root open={helpOpen} onOpenChange={setHelpOpen}>
@@ -118,7 +126,7 @@ export function KeyboardShortcuts() {
 									{s.keys.map((k) => (
 										<span
 											key={`${s.label}-${k}`}
-											className="inline-flex min-w-[1.75rem] items-center justify-center rounded-sm border-2 border-foreground bg-background px-1.5 py-0.5 font-mono text-[11px] font-bold text-foreground shadow-[2px_2px_0_var(--foreground)]"
+											className="inline-flex min-w-7 items-center justify-center rounded-sm border-2 border-foreground bg-background px-1.5 py-0.5 font-mono text-[11px] font-bold text-foreground shadow-[2px_2px_0_var(--foreground)]"
 										>
 											{k}
 										</span>

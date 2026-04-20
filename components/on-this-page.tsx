@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { flashSection } from "@/lib/section-flash";
 import { cn } from "@/lib/utils";
 
 type TocItem = { id: string; title: string };
@@ -49,10 +50,11 @@ export function OnThisPage() {
 		if (!el) return;
 		el.scrollIntoView({ behavior: "smooth", block: "start" });
 		history.replaceState(null, "", `#${id}`);
+		flashSection(id);
 	};
 
 	return (
-		<aside className="hidden xl:block">
+		<aside data-focus-hide className="hidden xl:block">
 			<div className="sticky top-20">
 				<div className="relative border-3 border-foreground bg-background shadow-[4px_4px_0_var(--foreground)]">
 					<span

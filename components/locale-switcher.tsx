@@ -1,8 +1,10 @@
 "use client";
 
+import { Languages } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useUI } from "@/lib/stores/ui";
 
 const COOKIE_NAME = "NEXT_LOCALE";
 
@@ -16,6 +18,7 @@ function getLocaleFromCookie(): string {
 
 export function LocaleSwitcher() {
 	const router = useRouter();
+	const pushToast = useUI((s) => s.pushToast);
 	const [locale, setLocale] = useState("zh-TW");
 
 	useEffect(() => {
@@ -28,7 +31,12 @@ export function LocaleSwitcher() {
 		document.cookie = `${COOKIE_NAME}=${next}; path=/; max-age=${60 * 60 * 24 * 365}`;
 		setLocale(next);
 		router.refresh();
-	}, [locale, router]);
+		pushToast({
+			message: next === "zh-TW" ? "語系：中文" : "Language: English",
+			kind: "info",
+			icon: Languages,
+		});
+	}, [locale, router, pushToast]);
 
 	return (
 		<Button
