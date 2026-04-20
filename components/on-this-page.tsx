@@ -54,7 +54,7 @@ export function OnThisPage() {
 	};
 
 	return (
-		<aside data-focus-hide className="hidden xl:block">
+		<aside data-focus-hide className="hidden lg:block">
 			<div className="sticky top-20">
 				<div className="relative border-3 border-foreground bg-background shadow-[4px_4px_0_var(--foreground)]">
 					<span
@@ -84,7 +84,7 @@ export function OnThisPage() {
 										>
 											<span
 												className={cn(
-													"pt-0.5 font-mono text-xs font-bold tabular-nums",
+													"pt-0.5 font-mono text-[13px] font-bold tabular-nums",
 													active
 														? "text-brutal-orange"
 														: "text-muted-foreground group-hover:text-foreground",
@@ -94,7 +94,7 @@ export function OnThisPage() {
 											</span>
 											<span
 												className={cn(
-													"font-heading text-[13px] uppercase leading-snug tracking-wide",
+													"font-heading text-sm uppercase leading-snug tracking-wide",
 													active
 														? "font-bold text-foreground"
 														: "font-semibold text-muted-foreground group-hover:text-foreground",
@@ -109,13 +109,13 @@ export function OnThisPage() {
 						</ol>
 					</nav>
 					<div className="flex items-center justify-between border-t-3 border-foreground bg-brutal-yellow/50 px-3 py-2">
-						<span className="font-heading text-[11px] font-bold uppercase tracking-[0.18em] text-foreground/70">
+						<span className="font-heading text-xs font-bold uppercase tracking-[0.18em] text-foreground/70">
 							{items.length.toString().padStart(2, "0")} Sections
 						</span>
 						<button
 							type="button"
 							onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-							className="font-heading text-[11px] font-bold uppercase tracking-[0.18em] text-foreground underline-offset-2 hover:underline"
+							className="font-heading text-xs font-bold uppercase tracking-[0.18em] text-foreground underline-offset-2 hover:underline"
 						>
 							↑ Top
 						</button>

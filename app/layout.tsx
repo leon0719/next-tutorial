@@ -22,7 +22,10 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-	title: "Next.js Learning Hub",
+	title: {
+		template: "%s · Next.js Learning Hub",
+		default: "Next.js Learning Hub",
+	},
 	description:
 		"Interactive Next.js feature showcase — learn every feature with live demos",
 };

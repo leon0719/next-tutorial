@@ -98,10 +98,10 @@ export function AppSidebar() {
 											{hydrated && groupVisited > 0 && (
 												<span
 													className={cn(
-														"mr-1 inline-flex items-center rounded-sm border px-1 font-mono text-[9px] tabular-nums",
+														"mr-1 inline-flex items-center rounded-sm border-2 px-1 font-mono text-[9px] font-bold tabular-nums",
 														groupComplete
 															? "border-foreground bg-brutal-orange text-background"
-															: "border-foreground/40 bg-background text-muted-foreground",
+															: "border-foreground bg-brutal-yellow text-foreground",
 													)}
 												>
 													{groupVisited}/{group.items.length}
@@ -138,7 +138,7 @@ export function AppSidebar() {
 																			? "border-white bg-white"
 																			: isVisited
 																				? "border-foreground bg-brutal-orange"
-																				: "border-foreground/30 bg-transparent",
+																				: "border-foreground/70 bg-transparent",
 																	)}
 																/>
 																<span className="truncate">{item.title}</span>

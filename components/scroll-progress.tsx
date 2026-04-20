@@ -6,17 +6,34 @@ export function ScrollProgress() {
 	const [progress, setProgress] = useState(0);
 
 	useEffect(() => {
-		function handleScroll() {
+		let rafId = 0;
+		let pending = false;
+
+		function compute() {
+			pending = false;
 			const scrollTop =
 				document.documentElement.scrollTop || document.body.scrollTop;
 			const scrollHeight =
 				document.documentElement.scrollHeight -
 				document.documentElement.clientHeight;
-			setProgress(scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0);
+			const next = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+			setProgress((prev) => (Math.abs(prev - next) < 0.1 ? prev : next));
 		}
 
-		window.addEventListener("scroll", handleScroll, { passive: true });
-		return () => window.removeEventListener("scroll", handleScroll);
+		function onScroll() {
+			if (pending) return;
+			pending = true;
+			rafId = requestAnimationFrame(compute);
+		}
+
+		compute();
+		window.addEventListener("scroll", onScroll, { passive: true });
+		window.addEventListener("resize", onScroll, { passive: true });
+		return () => {
+			if (rafId) cancelAnimationFrame(rafId);
+			window.removeEventListener("scroll", onScroll);
+			window.removeEventListener("resize", onScroll);
+		};
 	}, []);
 
 	return (

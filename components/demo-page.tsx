@@ -1,4 +1,15 @@
-import { ExternalLink } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import {
+	Boxes,
+	Braces,
+	Code2,
+	ExternalLink,
+	FileCode,
+	FileText,
+	Palette,
+	Route,
+	Terminal,
+} from "lucide-react";
 import { CopyButton } from "@/components/copy-button";
 import { OnThisPage } from "@/components/on-this-page";
 import { PageNav } from "@/components/page-nav";
@@ -27,7 +38,7 @@ export function DemoPage({
 
 	return (
 		<div className="mx-auto w-full max-w-7xl">
-			<div className="grid gap-10 xl:grid-cols-[minmax(0,1fr)_17rem]">
+			<div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_17rem]">
 				<div className="min-w-0 space-y-10">
 					<div className="space-y-3">
 						<h1
@@ -128,6 +139,91 @@ interface CodeBlockProps {
 	children: string;
 }
 
+type FileMeta = {
+	icon: LucideIcon;
+	label: string;
+	headerClass: string;
+	chipBg: string;
+};
+
+const ROUTE_FILE =
+	/^(page|layout|loading|error|not-found|template|route|default|proxy|middleware|instrumentation|global-error)\.(tsx?|jsx?)$/;
+
+function classifyFile(
+	filename: string | undefined,
+	language: string | undefined,
+): FileMeta {
+	const base = (filename ?? "").split("/").pop()?.toLowerCase() ?? "";
+	const chipBg = "bg-background text-foreground";
+
+	if (base && ROUTE_FILE.test(base)) {
+		return {
+			icon: Route,
+			label: "ROUTE",
+			headerClass: "bg-brutal-orange text-white",
+			chipBg,
+		};
+	}
+	if (/\.(css|scss|sass)$/.test(base)) {
+		return {
+			icon: Palette,
+			label: "STYLE",
+			headerClass: "bg-brutal-pink text-white",
+			chipBg,
+		};
+	}
+	if (/\.mdx?$/.test(base)) {
+		return {
+			icon: FileText,
+			label: "DOC",
+			headerClass: "bg-brutal-purple text-foreground",
+			chipBg,
+		};
+	}
+	if (/\.(tsx|jsx)$/.test(base)) {
+		return {
+			icon: Boxes,
+			label: "COMPONENT",
+			headerClass: "bg-brutal-cyan text-foreground",
+			chipBg,
+		};
+	}
+	if (
+		/\.(json|ya?ml|toml)$/.test(base) ||
+		/(^|\.)env(\..+)?$/.test(base) ||
+		/\.config\.(ts|js|mjs|cjs)$/.test(base)
+	) {
+		return {
+			icon: Braces,
+			label: "CONFIG",
+			headerClass: "bg-brutal-yellow text-foreground",
+			chipBg,
+		};
+	}
+	if (/\.(ts|mts|cts|js|mjs|cjs)$/.test(base)) {
+		return {
+			icon: Code2,
+			label: "SCRIPT",
+			headerClass: "bg-brutal-blue text-white",
+			chipBg,
+		};
+	}
+	if (language === "bash" || language === "shell" || language === "sh") {
+		return {
+			icon: Terminal,
+			label: "SHELL",
+			headerClass: "bg-foreground text-background",
+			chipBg,
+		};
+	}
+	return {
+		icon: FileCode,
+		label: "FILE",
+		headerClass: "bg-brutal-yellow text-foreground",
+		chipBg,
+	};
+}
+
 export async function CodeBlock({
 	filename,
 	language,
@@ -137,17 +233,29 @@ export async function CodeBlock({
 	// shiki generates trusted HTML from hardcoded code strings (not user input)
 	// All code examples are developer-authored static content in source files
 	const html = await highlight(code, language || "text");
+	const meta = classifyFile(filename, language);
+	const Icon = meta.icon;
 
 	return (
 		<div className="group relative rounded-sm border-3 border-foreground shadow-[4px_4px_0_var(--foreground)] overflow-hidden transition-all duration-150 hover:shadow-[2px_2px_0_var(--foreground)] hover:translate-x-0.5 hover:translate-y-0.5">
 			{filename && (
-				<div className="flex items-center justify-between border-b-3 border-foreground bg-brutal-yellow px-4 py-2">
-					<div className="flex items-center gap-2">
-						<span className="font-heading text-xs font-bold text-foreground">
+				<div
+					className={`relative flex items-center justify-between border-b-3 border-foreground px-4 py-2 ${meta.headerClass}`}
+				>
+					<div className="flex items-center gap-2.5 min-w-0">
+						<Icon className="h-3.5 w-3.5 shrink-0" strokeWidth={2.5} />
+						<span className="font-heading text-xs font-bold tracking-tight truncate">
 							{filename}
 						</span>
+						<span
+							className={`hidden sm:inline-flex shrink-0 rounded-sm border-2 border-foreground px-1.5 py-0.5 font-mono text-[10px] font-bold tracking-wider ${meta.chipBg}`}
+						>
+							{meta.label}
+						</span>
 						{language && (
-							<span className="rounded-sm border-2 border-foreground bg-background px-1.5 py-0.5 text-[10px] font-bold text-foreground">
+							<span
+								className={`shrink-0 rounded-sm border-2 border-foreground px-1.5 py-0.5 font-mono text-[10px] font-bold ${meta.chipBg}`}
+							>
 								{language}
 							</span>
 						)}

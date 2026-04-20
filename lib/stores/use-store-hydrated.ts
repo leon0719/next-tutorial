@@ -9,7 +9,10 @@ interface PersistedStoreLike {
 }
 
 export function useStoreHydrated(store: PersistedStoreLike): boolean {
-	const [hydrated, setHydrated] = useState(() => store.persist.hasHydrated());
+	// Always start as false so SSR output matches first client render.
+	// Zustand's persist middleware can finish synchronously in the browser,
+	// so reading hasHydrated() during useState init would diverge from SSR.
+	const [hydrated, setHydrated] = useState(false);
 
 	useEffect(() => {
 		const unsubHydrate = store.persist.onHydrate(() => setHydrated(false));

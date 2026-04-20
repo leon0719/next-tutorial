@@ -1,5 +1,8 @@
 import { getTranslations } from "next-intl/server";
 import { CategoryOverview } from "@/components/category-overview";
+import { buildDemoMetadata } from "@/lib/metadata";
+
+export const generateMetadata = () => buildDemoMetadata("overviews.routing");
 
 export default async function RoutingPage() {
 	const t = await getTranslations("overviews.routing");

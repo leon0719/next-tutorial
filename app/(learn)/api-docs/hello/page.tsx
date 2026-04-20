@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { CodeBlock, DemoBox, DemoPage, Section } from "@/components/demo-page";
+import { buildDemoMetadata } from "@/lib/metadata";
+
+export const generateMetadata = () => buildDemoMetadata("api.hello");
 
 export default async function HelloApiPage() {
 	const t = await getTranslations("api.hello");

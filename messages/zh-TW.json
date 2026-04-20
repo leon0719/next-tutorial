@@ -36,5 +36,23 @@
 		"config_desc": "環境變數、重導向、Headers、CSP 與 Bundle 分析。",
 		"api_desc": "使用 Hono 的 Route Handlers — REST CRUD、OG 圖片生成與 Streaming。",
 		"demos": "{count} 個 Demo"
+	},
+	"paths": {
+		"title": "推薦路徑",
+		"heading": "選擇你的學習路線",
+		"subtitle": "依進度精選的主題序列。跟著路線走比漫無目的瀏覽更快掌握 Next.js 16 的核心概念。",
+		"steps": "{count} 步",
+		"duration": "~{min} 分鐘",
+		"startHere": "從這開始",
+		"beginner": {
+			"level": "LV 1 · 入門",
+			"title": "Next.js 基礎精華",
+			"description": "從零建立第一個頁面、認識動態路由、學會伺服端資料取得與樣式方案。"
+		},
+		"advanced": {
+			"level": "LV 2 · 進階",
+			"title": "全端高階技能",
+			"description": "平行路由、Server Actions、Streaming、Edge Runtime、Proxy — 進入真正的 Next.js 深水區。"
+		}
 	}
 }

@@ -36,5 +36,23 @@
 		"config_desc": "Environment variables, redirects, headers, CSP, and bundle analysis.",
 		"api_desc": "Route handlers with Hono — REST CRUD, OG image generation, and streaming.",
 		"demos": "{count} Demos"
+	},
+	"paths": {
+		"title": "Recommended Paths",
+		"heading": "Pick a learning track",
+		"subtitle": "Curated sequences ordered by difficulty. Following a track is faster than browsing random demos — especially if you want to grok Next.js 16's core ideas end-to-end.",
+		"steps": "{count} steps",
+		"duration": "~{min} min",
+		"startHere": "Start here",
+		"beginner": {
+			"level": "LV 1 · Beginner",
+			"title": "Next.js Essentials",
+			"description": "Build your first pages, meet dynamic routes, learn server-side data fetching and styling."
+		},
+		"advanced": {
+			"level": "LV 2 · Advanced",
+			"title": "Power Features",
+			"description": "Parallel routes, Server Actions, Streaming, Edge Runtime, Proxy — the real depth of Next.js."
+		}
 	}
 }

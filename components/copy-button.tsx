@@ -30,7 +30,7 @@ export function CopyButton({ text }: { text: string }) {
 		<Button
 			variant="ghost"
 			size="icon"
-			className="h-6 w-6 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800"
+			className="h-6 w-6 text-current opacity-60 hover:bg-foreground/10 hover:text-current hover:opacity-100"
 			onClick={handleCopy}
 		>
 			{copied ? (
