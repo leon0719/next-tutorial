@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { useActionState, useState } from "react";
+import { useFormStatus } from "react-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -18,6 +19,16 @@ function CharCount({ current, max }: { current: number; max: number }) {
 		>
 			{current}/{max}
 		</span>
+	);
+}
+
+function SubmitButton() {
+	const t = useTranslations("data.serverActions");
+	const { pending } = useFormStatus();
+	return (
+		<Button type="submit" size="sm" disabled={pending}>
+			{pending ? t("creating") : t("createPostButton")}
+		</Button>
 	);
 }
 
@@ -44,7 +55,7 @@ const FIELDS = [
 
 export function PostForm() {
 	const t = useTranslations("data.serverActions");
-	const [state, formAction, isPending] = useActionState(createPost, null);
+	const [state, formAction] = useActionState(createPost, null);
 	const [values, setValues] = useState({
 		title: "",
 		content: "",
@@ -90,9 +101,7 @@ export function PostForm() {
 							/>
 						</div>
 					))}
-					<Button type="submit" size="sm" disabled={isPending}>
-						{isPending ? t("creating") : t("createPostButton")}
-					</Button>
+					<SubmitButton />
 					{state?.message && (
 						<p
 							className={`text-sm ${state.success ? "text-green-600 dark:text-green-400" : "text-destructive"}`}
