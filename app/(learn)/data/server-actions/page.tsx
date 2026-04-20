@@ -52,28 +52,35 @@ export async function createPost(
 			<Section title={t("usingWithActionState")}>
 				<CodeBlock filename="components/form.tsx" language="tsx">{`'use client'
 import { useActionState } from 'react'
+import { useFormStatus } from 'react-dom'
 import { createPost } from '@/app/actions'
 
-export function PostForm() {
-  // useActionState manages form state + pending status
-  const [state, formAction, isPending] = useActionState(
-    createPost,
-    null  // initial state
+// Nested inside <form>, useFormStatus reads the parent form's
+// submission state — no prop drilling, no closure over isPending.
+function SubmitButton() {
+  const { pending } = useFormStatus()
+  return (
+    <button type="submit" disabled={pending}>
+      {pending ? 'Creating...' : 'Create'}
+    </button>
   )
+}
+
+export function PostForm() {
+  // useActionState owns state + formAction
+  const [state, formAction] = useActionState(createPost, null)
 
   return (
     <form action={formAction}>
       <input name="title" />
       <input name="content" />
-      <button disabled={isPending}>
-        {isPending ? 'Creating...' : 'Create'}
-      </button>
+      <SubmitButton />
       {state?.message && <p>{state.message}</p>}
     </form>
   )
   // ✅ Works without JavaScript (progressive enhancement)
-  // ✅ Shows pending state while action runs
-  // ✅ Displays result from server action
+  // ✅ SubmitButton auto-disables while the action runs
+  // ✅ Two hooks, two responsibilities: state vs. pending
 }`}</CodeBlock>
 			</Section>
 
