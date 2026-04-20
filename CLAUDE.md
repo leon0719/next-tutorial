@@ -81,7 +81,7 @@ export default async function Page() {
 
 ### Proxy (formerly Middleware)
 
-- Root-level `proxy.ts` (renamed from `middleware.ts` in Next 16) sets security headers (X-Frame-Options, X-Content-Type-Options, Referrer-Policy) and injects `X-Response-Time` on every non-static request. Matcher excludes `_next/*`, `favicon.ico`, and image files. Migrate legacy `middleware.ts` with `npx @next/codemod@canary middleware-to-proxy .`.
+- Root-level `proxy.ts` (renamed from `middleware.ts` in Next 16) sets security headers (X-Frame-Options, X-Content-Type-Options, X-DNS-Prefetch-Control, Referrer-Policy) and logs requests in dev only. Matcher excludes `api/*`, `_next/*`, `favicon.ico`, and image files. Migrate legacy `middleware.ts` with `npx @next/codemod@canary middleware-to-proxy .`.
 
 ### Hono API
 
@@ -110,5 +110,5 @@ export default async function Page() {
 - **shadcn/ui**: base-nova style. `SidebarMenuButton` uses `render` prop for Link composition (not `asChild`). `Button` does NOT support `render` with non-button elements.
 - **Biome**: Tabs, double quotes, recommended rules, Tailwind CSS directives enabled.
 - **Styling**: Tailwind CSS v4 (`@import "tailwindcss"` syntax), CSS variables for theming.
-- **Fonts**: Playfair Display (headings via `font-heading`), Geist Sans (body), Geist Mono (code).
+- **Fonts**: Geist Sans (body, `--font-geist-sans`), Geist Mono (code, `--font-geist-mono`), Space Mono (accents, `--font-space-mono`). Loaded via `next/font/google` in `app/layout.tsx`.
 - **State**: Zustand for client state, TanStack Query for server state, nuqs for URL state.
