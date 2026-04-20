@@ -2,23 +2,22 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePrefs } from "@/lib/stores/prefs";
+import { useStoreHydrated } from "@/lib/stores/use-store-hydrated";
 import { cn } from "@/lib/utils";
 
 const INTERACTIVE_SELECTOR =
 	"a, button, [role='button'], input, textarea, select, [data-cursor='interactive']";
 
 export function CustomCursor() {
+	const hydrated = useStoreHydrated(usePrefs);
 	const enabled = usePrefs((s) => s.customCursor);
-	const [mounted, setMounted] = useState(false);
 	const [active, setActive] = useState(false);
 	const [hovering, setHovering] = useState(false);
 	const ringRef = useRef<HTMLDivElement>(null);
 	const dotRef = useRef<HTMLDivElement>(null);
 
-	useEffect(() => setMounted(true), []);
-
 	useEffect(() => {
-		if (!mounted || !enabled) return;
+		if (!hydrated || !enabled) return;
 		if (window.matchMedia?.("(pointer: coarse)").matches) return;
 
 		document.body.classList.add("custom-cursor-active");
@@ -72,7 +71,7 @@ export function CustomCursor() {
 			window.removeEventListener("pointerenter", onEnter);
 			cancelAnimationFrame(rafId);
 		};
-	}, [enabled, mounted]);
+	}, [enabled, hydrated]);
 
 	if (!active) return null;
 

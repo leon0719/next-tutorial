@@ -2,33 +2,17 @@
 
 import { BookmarkCheck, ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useShallow } from "zustand/react/shallow";
 import { allPages, navGroups } from "@/lib/pages";
 import { useProgress } from "@/lib/stores/progress";
+import { useStoreHydrated } from "@/lib/stores/use-store-hydrated";
 
 export function ContinueReading() {
-	const [mounted, setMounted] = useState(false);
-	const visited = useProgress((s) => s.visited);
+	const hydrated = useStoreHydrated(useProgress);
+	const last = useProgress(useShallow((s) => s.getLast()));
+	const visitedCount = useProgress((s) => Object.keys(s.visited).length);
 
-	useEffect(() => setMounted(true), []);
-
-	const last = useMemo(() => {
-		const entries = Object.entries(visited);
-		if (entries.length === 0) return null;
-		let bestHref = entries[0][0];
-		let bestAt = entries[0][1].at;
-		for (const [href, { at }] of entries) {
-			if (at > bestAt) {
-				bestAt = at;
-				bestHref = href;
-			}
-		}
-		return { href: bestHref, at: bestAt };
-	}, [visited]);
-
-	const visitedCount = Object.keys(visited).length;
-
-	if (!mounted || !last) return null;
+	if (!hydrated || !last) return null;
 
 	const page = allPages.find((p) => p.href === last.href);
 	if (!page) return null;

@@ -5,7 +5,7 @@ import { ChevronRight, Home, MousePointer2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { ThemeToggle } from "@/components/theme-toggle";
 import {
@@ -24,6 +24,7 @@ import {
 import { type NavGroup, NEXT_VERSION, navGroups } from "@/lib/pages";
 import { usePrefs } from "@/lib/stores/prefs";
 import { useProgress } from "@/lib/stores/progress";
+import { useStoreHydrated } from "@/lib/stores/use-store-hydrated";
 import { cn } from "@/lib/utils";
 
 function isGroupActive(group: NavGroup, pathname: string): boolean {
@@ -33,11 +34,10 @@ function isGroupActive(group: NavGroup, pathname: string): boolean {
 export function AppSidebar() {
 	const pathname = usePathname();
 	const t = useTranslations("nav");
+	const hydrated = useStoreHydrated(useProgress);
 	const visited = useProgress((s) => s.visited);
 	const customCursor = usePrefs((s) => s.customCursor);
 	const toggleCursor = usePrefs((s) => s.toggleCustomCursor);
-	const [mounted, setMounted] = useState(false);
-	useEffect(() => setMounted(true), []);
 
 	const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() => {
 		const initial: Record<string, boolean> = {};
@@ -76,10 +76,10 @@ export function AppSidebar() {
 					const active = isGroupActive(group, pathname);
 					const isOpen = openGroups[group.labelKey] || active;
 					const groupHrefs = group.items.map((i) => i.href);
-					const groupVisited = mounted
+					const groupVisited = hydrated
 						? groupHrefs.reduce((n, href) => (visited[href] ? n + 1 : n), 0)
 						: 0;
-					const groupComplete = mounted && groupVisited === group.items.length;
+					const groupComplete = hydrated && groupVisited === group.items.length;
 					return (
 						<Collapsible.Root
 							key={group.labelKey}
@@ -96,7 +96,7 @@ export function AppSidebar() {
 										<SidebarGroupLabel className="font-heading uppercase tracking-wider text-xs font-bold">
 											<group.icon className="mr-2 h-4 w-4" />
 											<span className="flex-1">{t(group.labelKey)}</span>
-											{mounted && groupVisited > 0 && (
+											{hydrated && groupVisited > 0 && (
 												<span
 													className={cn(
 														"mr-1 inline-flex items-center rounded-sm border px-1 font-mono text-[9px] tabular-nums",
@@ -118,7 +118,7 @@ export function AppSidebar() {
 											{group.items.map((item) => {
 												const isActive = pathname === item.href;
 												const isVisited =
-													mounted && Boolean(visited[item.href]);
+													hydrated && Boolean(visited[item.href]);
 												return (
 													<SidebarMenuItem key={item.href}>
 														<SidebarMenuButton

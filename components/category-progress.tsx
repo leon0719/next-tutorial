@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useProgress } from "@/lib/stores/progress";
+import { useStoreHydrated } from "@/lib/stores/use-store-hydrated";
 
 interface CategoryProgressProps {
 	hrefs: string[];
@@ -12,12 +12,10 @@ export function CategoryProgress({
 	hrefs,
 	tone = "dark",
 }: CategoryProgressProps) {
-	const [mounted, setMounted] = useState(false);
+	const hydrated = useStoreHydrated(useProgress);
 	const countVisitedIn = useProgress((s) => s.countVisitedIn);
 
-	useEffect(() => setMounted(true), []);
-
-	const count = mounted ? countVisitedIn(hrefs) : 0;
+	const count = hydrated ? countVisitedIn(hrefs) : 0;
 	const total = hrefs.length;
 	const percent = total === 0 ? 0 : Math.round((count / total) * 100);
 	const done = count === total && total > 0;
