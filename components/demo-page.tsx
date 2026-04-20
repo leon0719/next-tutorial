@@ -1,16 +1,30 @@
+import { ExternalLink } from "lucide-react";
 import { CopyButton } from "@/components/copy-button";
 import { OnThisPage } from "@/components/on-this-page";
 import { PageNav } from "@/components/page-nav";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { NEXT_DOCS_BASE, NEXT_VERSION } from "@/lib/pages";
 import { highlight } from "@/lib/shiki";
 
 interface DemoPageProps {
 	title: string;
 	description: string;
+	docs?: string;
 	children: React.ReactNode;
 }
 
-export function DemoPage({ title, description, children }: DemoPageProps) {
+export function DemoPage({
+	title,
+	description,
+	docs,
+	children,
+}: DemoPageProps) {
+	const docsHref = docs
+		? docs.startsWith("http")
+			? docs
+			: `${NEXT_DOCS_BASE}${docs.startsWith("/") ? docs : `/${docs}`}`
+		: null;
+
 	return (
 		<div className="mx-auto w-full max-w-7xl">
 			<div className="grid gap-10 xl:grid-cols-[minmax(0,1fr)_17rem]">
@@ -23,6 +37,23 @@ export function DemoPage({ title, description, children }: DemoPageProps) {
 							{description}
 						</p>
 						<div className="h-1 w-20 bg-brutal-orange" />
+						<div className="flex flex-wrap items-center gap-2 pt-1">
+							<span className="inline-flex items-center gap-1.5 border-2 border-foreground bg-brutal-yellow px-2 py-0.5 font-mono text-[11px] font-bold tracking-wide text-foreground">
+								<span className="inline-block h-1.5 w-1.5 bg-foreground" />
+								NEXT {NEXT_VERSION}
+							</span>
+							{docsHref && (
+								<a
+									href={docsHref}
+									target="_blank"
+									rel="noopener noreferrer"
+									className="group inline-flex items-center gap-1.5 border-2 border-foreground bg-background px-2 py-0.5 font-heading text-[11px] font-bold uppercase tracking-[0.15em] text-foreground transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-brutal-cyan hover:shadow-[2px_2px_0_var(--foreground)]"
+								>
+									Next.js Docs
+									<ExternalLink className="h-2.5 w-2.5" strokeWidth={3} />
+								</a>
+							)}
+						</div>
 					</div>
 					<div className="space-y-8">{children}</div>
 					<PageNav />
