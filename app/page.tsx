@@ -13,7 +13,7 @@ import { getTranslations } from "next-intl/server";
 import { CategoryProgress } from "@/components/category-progress";
 import { ContinueReading } from "@/components/continue-reading";
 import { Badge } from "@/components/ui/badge";
-import { navGroups } from "@/lib/pages";
+import { allPages, NEXT_VERSION, navGroups } from "@/lib/pages";
 
 const categories = [
 	{
@@ -21,7 +21,6 @@ const categories = [
 		descKey: "routing_desc" as const,
 		icon: Route,
 		href: "/routing",
-		count: 8,
 		bgClass: "bg-brutal-blue",
 		textClass: "text-white",
 	},
@@ -30,7 +29,6 @@ const categories = [
 		descKey: "data_desc" as const,
 		icon: Database,
 		href: "/data",
-		count: 7,
 		bgClass: "bg-brutal-cyan",
 		textClass: "text-foreground",
 	},
@@ -39,7 +37,6 @@ const categories = [
 		descKey: "rendering_desc" as const,
 		icon: Layers,
 		href: "/rendering",
-		count: 6,
 		bgClass: "bg-brutal-orange",
 		textClass: "text-white",
 	},
@@ -48,7 +45,6 @@ const categories = [
 		descKey: "ui_desc" as const,
 		icon: Palette,
 		href: "/ui",
-		count: 6,
 		bgClass: "bg-brutal-pink",
 		textClass: "text-white",
 	},
@@ -57,7 +53,6 @@ const categories = [
 		descKey: "advanced_desc" as const,
 		icon: Zap,
 		href: "/advanced",
-		count: 10,
 		bgClass: "bg-brutal-yellow",
 		textClass: "text-foreground",
 	},
@@ -66,7 +61,6 @@ const categories = [
 		descKey: "config_desc" as const,
 		icon: Settings,
 		href: "/config",
-		count: 4,
 		bgClass: "bg-brutal-purple",
 		textClass: "text-foreground",
 	},
@@ -75,7 +69,6 @@ const categories = [
 		descKey: "api_desc" as const,
 		icon: Server,
 		href: "/api-docs/hello",
-		count: 4,
 		bgClass: "bg-brutal-orange",
 		textClass: "text-white",
 	},
@@ -85,7 +78,7 @@ export default async function HomePage() {
 	const tCommon = await getTranslations("common");
 	const tNav = await getTranslations("nav");
 	const tHome = await getTranslations("home");
-	const totalDemos = categories.reduce((sum, cat) => sum + cat.count, 0);
+	const totalDemos = allPages.length;
 
 	return (
 		<div className="min-h-screen bg-background">
@@ -104,7 +97,7 @@ export default async function HomePage() {
 								<span className="absolute inline-flex h-full w-full rounded-full bg-brutal-orange animate-ping opacity-75" />
 								<span className="relative inline-flex h-2 w-2 rounded-full bg-brutal-orange" />
 							</span>
-							Next.js 16.2.4 · React 19 · {totalDemos} Demos
+							Next.js {NEXT_VERSION} · React 19 · {totalDemos} Demos
 						</div>
 
 						<h1 className="mt-8 font-heading text-5xl font-bold uppercase tracking-tight sm:text-6xl lg:text-7xl">
@@ -137,6 +130,7 @@ export default async function HomePage() {
 							(g) => g.labelKey === category.titleKey,
 						);
 						const hrefs = group?.items.map((i) => i.href) ?? [];
+						const demoCount = group?.items.length ?? 0;
 						return (
 							<Link
 								key={category.titleKey}
@@ -162,7 +156,7 @@ export default async function HomePage() {
 												variant="secondary"
 												className={`font-heading text-xs ${category.bgClass} ${category.textClass} border-foreground`}
 											>
-												{tHome("demos", { count: category.count })}
+												{tHome("demos", { count: demoCount })}
 											</Badge>
 										</div>
 										<h2 className="font-heading text-lg font-bold uppercase tracking-wide mb-1.5">

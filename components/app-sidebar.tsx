@@ -36,6 +36,7 @@ export function AppSidebar() {
 	const t = useTranslations("nav");
 	const hydrated = useStoreHydrated(useProgress);
 	const visited = useProgress((s) => s.visited);
+	const countVisitedIn = useProgress((s) => s.countVisitedIn);
 	const customCursor = usePrefs((s) => s.customCursor);
 	const toggleCursor = usePrefs((s) => s.toggleCustomCursor);
 
@@ -76,9 +77,7 @@ export function AppSidebar() {
 					const active = isGroupActive(group, pathname);
 					const isOpen = openGroups[group.labelKey] || active;
 					const groupHrefs = group.items.map((i) => i.href);
-					const groupVisited = hydrated
-						? groupHrefs.reduce((n, href) => (visited[href] ? n + 1 : n), 0)
-						: 0;
+					const groupVisited = hydrated ? countVisitedIn(groupHrefs) : 0;
 					const groupComplete = hydrated && groupVisited === group.items.length;
 					return (
 						<Collapsible.Root
