@@ -1,11 +1,15 @@
 "use client";
 
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import { useTranslations } from "next-intl";
 import { useOptimistic } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { deletePost } from "./actions";
 import { DeleteButton } from "./delete-button";
+
+dayjs.extend(relativeTime);
 
 type Post = {
 	id: number;
@@ -38,7 +42,7 @@ export function OptimisticPostList({ initialPosts }: { initialPosts: Post[] }) {
 				{optimisticPosts.length === 0 ? (
 					<p className="text-sm text-muted-foreground">{t("emptyMessage")}</p>
 				) : (
-					<div className="space-y-2">
+					<div className="max-h-[400px] space-y-2 overflow-y-auto pr-1">
 						{optimisticPosts.map((post) => (
 							<div
 								key={post.id}
@@ -46,8 +50,11 @@ export function OptimisticPostList({ initialPosts }: { initialPosts: Post[] }) {
 							>
 								<div>
 									<p className="text-sm font-medium">{post.title}</p>
-									<p className="text-xs text-muted-foreground">
-										{post.authorName} · {post.createdAt}
+									<p
+										className="text-xs text-muted-foreground"
+										title={post.createdAt}
+									>
+										{post.authorName} · {dayjs(post.createdAt).fromNow()}
 									</p>
 								</div>
 								<DeleteButton
