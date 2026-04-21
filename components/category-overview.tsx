@@ -32,8 +32,8 @@ export function CategoryOverview({
 
 			<div className="mt-8 grid gap-4 sm:grid-cols-2">
 				{demos.map((demo) => (
-					<Link key={demo.href} href={demo.href}>
-						<Card className="h-full transition-colors hover:border-foreground/20">
+					<Link key={demo.href} href={demo.href} className="group block h-full">
+						<Card className="h-full group-hover:border-foreground/20 group-hover:shadow-none group-hover:translate-x-1 group-hover:translate-y-1">
 							<CardHeader>
 								<div className="flex items-center justify-between">
 									<CardTitle className="text-lg">{demo.title}</CardTitle>

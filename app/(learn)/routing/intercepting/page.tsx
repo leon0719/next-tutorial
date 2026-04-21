@@ -69,8 +69,12 @@ export default async function InterceptingRoutesPage() {
 			<Section title={t("photoDemo")} description={t("photoDemoDesc")}>
 				<div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
 					{photos.map((photo) => (
-						<Link key={photo.id} href={`/routing/intercepting/${photo.id}`}>
-							<Card className="overflow-hidden transition-colors hover:border-foreground/20">
+						<Link
+							key={photo.id}
+							href={`/routing/intercepting/${photo.id}`}
+							className="group block"
+						>
+							<Card className="overflow-hidden group-hover:border-foreground/20 group-hover:shadow-none group-hover:translate-x-1 group-hover:translate-y-1">
 								<div className={`h-24 ${photo.color}`} />
 								<CardContent className="p-3">
 									<p className="text-sm font-medium">{photo.title}</p>
