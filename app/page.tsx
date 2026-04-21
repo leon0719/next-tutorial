@@ -66,7 +66,7 @@ const tiles: Tile[] = [
 		icon: Database,
 		href: "/data",
 		bgClass: "bg-brutal-cyan",
-		textClass: "text-foreground",
+		textClass: "text-brutal-ink",
 		size: "wide",
 		gridClass: "sm:col-span-2 lg:col-span-6",
 	},
@@ -96,7 +96,7 @@ const tiles: Tile[] = [
 		icon: Zap,
 		href: "/advanced",
 		bgClass: "bg-brutal-yellow",
-		textClass: "text-foreground",
+		textClass: "text-brutal-ink",
 		size: "wide",
 		gridClass: "sm:col-span-2 lg:col-span-6",
 	},
@@ -106,7 +106,7 @@ const tiles: Tile[] = [
 		icon: Settings,
 		href: "/config",
 		bgClass: "bg-brutal-purple",
-		textClass: "text-foreground",
+		textClass: "text-brutal-ink",
 		size: "normal",
 		gridClass: "lg:col-span-3",
 	},
@@ -140,7 +140,7 @@ export default async function HomePage() {
 
 				<div className="relative mx-auto max-w-6xl px-6 py-24 sm:py-32">
 					<div className="text-center">
-						<div className="inline-flex items-center gap-2 rounded-sm border-3 border-foreground bg-brutal-yellow px-4 py-1.5 font-heading text-xs font-bold uppercase tracking-wider shadow-[2px_2px_0_var(--foreground)]">
+						<div className="inline-flex items-center gap-2 rounded-sm border-3 border-foreground bg-brutal-yellow px-4 py-1.5 font-heading text-xs font-bold uppercase tracking-wider text-brutal-ink shadow-[2px_2px_0_var(--foreground)]">
 							<span className="relative flex h-2 w-2">
 								<span className="absolute inline-flex h-full w-full rounded-full bg-brutal-orange animate-ping opacity-75" />
 								<span className="relative inline-flex h-2 w-2 rounded-full bg-brutal-orange" />

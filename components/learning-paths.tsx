@@ -38,7 +38,7 @@ export async function LearningPaths() {
 		<section className="mx-auto max-w-6xl px-6 pt-16 pb-4">
 			<div className="mb-8 flex flex-col items-start gap-3 sm:flex-row sm:items-end sm:justify-between">
 				<div>
-					<div className="inline-flex items-center gap-1.5 border-2 border-foreground bg-brutal-yellow px-2 py-0.5 font-heading text-[10px] font-bold uppercase tracking-[0.22em]">
+					<div className="inline-flex items-center gap-1.5 border-2 border-foreground bg-brutal-yellow px-2 py-0.5 font-heading text-[10px] font-bold uppercase tracking-[0.22em] text-brutal-ink">
 						<Compass className="h-3 w-3" strokeWidth={3} />
 						{t("title")}
 					</div>
@@ -63,7 +63,7 @@ export async function LearningPaths() {
 					})}
 					startHere={t("startHere")}
 					icon={<Sprout className="h-5 w-5" strokeWidth={2.25} />}
-					accentClass="bg-brutal-cyan text-foreground"
+					accentClass="bg-brutal-cyan text-brutal-ink"
 					steps={resolveSteps(PATHS.beginner)}
 				/>
 				<PathCard

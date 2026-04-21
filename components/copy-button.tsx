@@ -2,16 +2,15 @@
 
 import { Check, Copy } from "lucide-react";
 import { useCallback, useState } from "react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { useUI } from "@/lib/stores/ui";
 
 export function CopyButton({ text }: { text: string }) {
 	const [copied, setCopied] = useState(false);
-	const pushToast = useUI((s) => s.pushToast);
 
 	const handleCopy = useCallback(() => {
 		if (!navigator.clipboard) {
-			pushToast({ message: "Clipboard unavailable", kind: "warning" });
+			toast.warning("Clipboard unavailable");
 			return;
 		}
 		navigator.clipboard
@@ -19,12 +18,12 @@ export function CopyButton({ text }: { text: string }) {
 			.then(() => {
 				setCopied(true);
 				setTimeout(() => setCopied(false), 2000);
-				pushToast({ message: "Code copied", kind: "success" });
+				toast.success("Code copied");
 			})
 			.catch(() => {
-				pushToast({ message: "Copy failed", kind: "warning" });
+				toast.warning("Copy failed");
 			});
-	}, [text, pushToast]);
+	}, [text]);
 
 	return (
 		<Button

@@ -8,7 +8,14 @@ import { z } from "zod";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+	Field,
+	FieldError,
+	FieldGroup,
+	FieldLabel,
+} from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 const contactSchema = z.object({
 	name: z.string().min(2, "Name must be at least 2 characters"),
@@ -48,66 +55,94 @@ export function ContactFormDemo() {
 					</div>
 				</CardHeader>
 				<CardContent>
-					<form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-						<div>
-							<Input placeholder={t("namePlaceholder")} {...register("name")} />
-							{errors.name && (
-								<p className="text-xs text-destructive mt-1">
-									{errors.name.message}
-								</p>
-							)}
-						</div>
-						<div>
-							<Input
-								placeholder={t("emailPlaceholder")}
-								type="email"
-								{...register("email")}
-							/>
-							{errors.email && (
-								<p className="text-xs text-destructive mt-1">
-									{errors.email.message}
-								</p>
-							)}
-						</div>
-						<div>
-							<Input
-								placeholder={t("subjectPlaceholder")}
-								{...register("subject")}
-							/>
-							{errors.subject && (
-								<p className="text-xs text-destructive mt-1">
-									{errors.subject.message}
-								</p>
-							)}
-						</div>
-						<div>
-							<textarea
-								placeholder={t("messagePlaceholder")}
-								{...register("message")}
-								className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-							/>
-							{errors.message && (
-								<p className="text-xs text-destructive mt-1">
-									{errors.message.message}
-								</p>
-							)}
-						</div>
-						<div className="flex gap-2">
-							<Button type="submit" size="sm" disabled={isSubmitting}>
-								{t("submit")}
-							</Button>
-							<Button
-								type="button"
-								variant="outline"
-								size="sm"
-								onClick={() => {
-									reset();
-									setSubmitted(null);
-								}}
-							>
-								{t("reset")}
-							</Button>
-						</div>
+					<form onSubmit={handleSubmit(onSubmit)}>
+						<FieldGroup>
+							<Field data-invalid={!!errors.name || undefined}>
+								<FieldLabel htmlFor="contact-name" className="sr-only">
+									{t("namePlaceholder")}
+								</FieldLabel>
+								<Input
+									id="contact-name"
+									placeholder={t("namePlaceholder")}
+									aria-invalid={!!errors.name || undefined}
+									aria-describedby={
+										errors.name ? "contact-name-error" : undefined
+									}
+									{...register("name")}
+								/>
+								<FieldError id="contact-name-error">
+									{errors.name?.message}
+								</FieldError>
+							</Field>
+							<Field data-invalid={!!errors.email || undefined}>
+								<FieldLabel htmlFor="contact-email" className="sr-only">
+									{t("emailPlaceholder")}
+								</FieldLabel>
+								<Input
+									id="contact-email"
+									type="email"
+									placeholder={t("emailPlaceholder")}
+									aria-invalid={!!errors.email || undefined}
+									aria-describedby={
+										errors.email ? "contact-email-error" : undefined
+									}
+									{...register("email")}
+								/>
+								<FieldError id="contact-email-error">
+									{errors.email?.message}
+								</FieldError>
+							</Field>
+							<Field data-invalid={!!errors.subject || undefined}>
+								<FieldLabel htmlFor="contact-subject" className="sr-only">
+									{t("subjectPlaceholder")}
+								</FieldLabel>
+								<Input
+									id="contact-subject"
+									placeholder={t("subjectPlaceholder")}
+									aria-invalid={!!errors.subject || undefined}
+									aria-describedby={
+										errors.subject ? "contact-subject-error" : undefined
+									}
+									{...register("subject")}
+								/>
+								<FieldError id="contact-subject-error">
+									{errors.subject?.message}
+								</FieldError>
+							</Field>
+							<Field data-invalid={!!errors.message || undefined}>
+								<FieldLabel htmlFor="contact-message" className="sr-only">
+									{t("messagePlaceholder")}
+								</FieldLabel>
+								<Textarea
+									id="contact-message"
+									placeholder={t("messagePlaceholder")}
+									aria-invalid={!!errors.message || undefined}
+									aria-describedby={
+										errors.message ? "contact-message-error" : undefined
+									}
+									{...register("message")}
+								/>
+								<FieldError id="contact-message-error">
+									{errors.message?.message}
+								</FieldError>
+							</Field>
+							<div className="flex gap-2">
+								<Button type="submit" size="sm" disabled={isSubmitting}>
+									{t("submit")}
+								</Button>
+								<Button
+									type="button"
+									variant="outline"
+									size="sm"
+									onClick={() => {
+										reset();
+										setSubmitted(null);
+									}}
+								>
+									{t("reset")}
+								</Button>
+							</div>
+						</FieldGroup>
 					</form>
 				</CardContent>
 			</Card>

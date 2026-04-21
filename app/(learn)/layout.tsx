@@ -1,18 +1,17 @@
 import { AppSidebar } from "@/components/app-sidebar";
 import { CommandPalette } from "@/components/command-palette";
-import { CustomCursor } from "@/components/custom-cursor";
 import { DynamicBreadcrumb } from "@/components/dynamic-breadcrumb";
 import { FocusModeController } from "@/components/focus-mode-controller";
 import { KeyboardShortcuts } from "@/components/keyboard-shortcuts";
 import { ScrollProgress } from "@/components/scroll-progress";
 import { SectionFlashController } from "@/components/section-flash-controller";
-import { Toaster } from "@/components/toaster";
 import { Separator } from "@/components/ui/separator";
 import {
 	SidebarInset,
 	SidebarProvider,
 	SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { Toaster } from "@/components/ui/sonner";
 import { VisitTracker } from "@/components/visit-tracker";
 
 export default function LearnLayout({
@@ -43,7 +42,6 @@ export default function LearnLayout({
 			<FocusModeController />
 			<SectionFlashController />
 			<Toaster />
-			<CustomCursor />
 		</SidebarProvider>
 	);
 }

@@ -6,6 +6,7 @@ import { useFormStatus } from "react-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { createPost } from "./actions";
 import { AUTHOR_MAX, CONTENT_MAX, TITLE_MAX } from "./constants";
@@ -73,42 +74,46 @@ export function PostForm() {
 				</div>
 			</CardHeader>
 			<CardContent>
-				<form action={formAction} className="space-y-3">
-					{FIELDS.map((field) => (
-						<div key={field.name}>
-							<div className="flex items-center justify-between mb-1">
-								<label htmlFor={field.name} className="text-sm font-medium">
-									{t(field.labelKey)}
-								</label>
-								<CharCount
-									current={values[field.name].length}
-									max={field.max}
+				<form action={formAction}>
+					<FieldGroup>
+						{FIELDS.map((field) => (
+							<Field key={field.name}>
+								<div className="flex items-center justify-between">
+									<FieldLabel htmlFor={field.name}>
+										{t(field.labelKey)}
+									</FieldLabel>
+									<CharCount
+										current={values[field.name].length}
+										max={field.max}
+									/>
+								</div>
+								<Input
+									id={field.name}
+									name={field.name}
+									placeholder={t(field.placeholderKey)}
+									maxLength={field.max}
+									required
+									value={values[field.name]}
+									onChange={(e) =>
+										setValues((prev) => ({
+											...prev,
+											[field.name]: e.target.value,
+										}))
+									}
 								/>
-							</div>
-							<Input
-								id={field.name}
-								name={field.name}
-								placeholder={t(field.placeholderKey)}
-								maxLength={field.max}
-								required
-								value={values[field.name]}
-								onChange={(e) =>
-									setValues((prev) => ({
-										...prev,
-										[field.name]: e.target.value,
-									}))
-								}
-							/>
-						</div>
-					))}
-					<SubmitButton />
-					{state?.message && (
-						<p
-							className={`text-sm ${state.success ? "text-green-600 dark:text-green-400" : "text-destructive"}`}
-						>
-							{state.message}
-						</p>
-					)}
+							</Field>
+						))}
+						<SubmitButton />
+						{state?.message && (
+							<p
+								role="status"
+								aria-live="polite"
+								className={`text-sm ${state.success ? "text-green-600 dark:text-green-400" : "text-destructive"}`}
+							>
+								{state.message}
+							</p>
+						)}
+					</FieldGroup>
 				</form>
 			</CardContent>
 		</Card>

@@ -13,7 +13,32 @@
 		"ui": "UI & Assets",
 		"advanced": "Advanced",
 		"config": "Config",
-		"api": "API (Hono)"
+		"api": "API (Hono)",
+		"commandPalette": {
+			"triggerLabel": "Search",
+			"openAriaLabel": "Open command palette",
+			"title": "Command Palette",
+			"description": "Search pages and demos. Use arrow keys to navigate, enter to select.",
+			"placeholder": "Type to search pages...",
+			"empty": "— No Results —",
+			"hintNavigate": "Navigate",
+			"hintOpen": "Open",
+			"hintShortcuts": "Shortcuts"
+		},
+		"shortcuts": {
+			"title": "Keyboard Shortcuts",
+			"description": "List of keyboard shortcuts available on this site.",
+			"hint": "Shortcuts are ignored while typing in inputs.",
+			"items": {
+				"openSearch": "Open search",
+				"prevPage": "Previous page",
+				"nextPage": "Next page",
+				"goHome": "Go to home",
+				"toggleFocus": "Toggle focus mode",
+				"showHelp": "Show this help",
+				"closeDialog": "Close dialog"
+			}
+		}
 	},
 	"error": {
 		"title": "Something went wrong",

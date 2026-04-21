@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function ThemeDemo() {
 	const { theme, setTheme, resolvedTheme } = useTheme();
@@ -15,7 +16,7 @@ export function ThemeDemo() {
 	if (!mounted) {
 		return (
 			<div className="rounded-lg border p-6">
-				<div className="h-48 animate-pulse bg-muted rounded" />
+				<Skeleton className="h-48 w-full" />
 			</div>
 		);
 	}

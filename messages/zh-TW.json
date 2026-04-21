@@ -13,7 +13,32 @@
 		"ui": "UI 與資源",
 		"advanced": "進階功能",
 		"config": "設定",
-		"api": "API (Hono)"
+		"api": "API (Hono)",
+		"commandPalette": {
+			"triggerLabel": "搜尋",
+			"openAriaLabel": "開啟命令面板",
+			"title": "命令面板",
+			"description": "搜尋頁面與 Demo。使用方向鍵瀏覽，Enter 選擇。",
+			"placeholder": "輸入以搜尋頁面...",
+			"empty": "— 沒有結果 —",
+			"hintNavigate": "瀏覽",
+			"hintOpen": "開啟",
+			"hintShortcuts": "快捷鍵"
+		},
+		"shortcuts": {
+			"title": "鍵盤快捷鍵",
+			"description": "本站可用的鍵盤快捷鍵列表。",
+			"hint": "於輸入欄位中不會觸發快捷鍵。",
+			"items": {
+				"openSearch": "開啟搜尋",
+				"prevPage": "上一頁",
+				"nextPage": "下一頁",
+				"goHome": "返回首頁",
+				"toggleFocus": "切換專注模式",
+				"showHelp": "顯示此說明",
+				"closeDialog": "關閉對話框"
+			}
+		}
 	},
 	"error": {
 		"title": "出了點問題",

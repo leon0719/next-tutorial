@@ -27,14 +27,14 @@ export function ContinueReading() {
 	return (
 		<div className="relative mx-auto mt-8 max-w-2xl">
 			<div className="relative border-3 border-foreground bg-background shadow-[5px_5px_0_var(--foreground)]">
-				<div className="flex items-center justify-between border-b-3 border-foreground bg-brutal-yellow px-4 py-2">
+				<div className="flex items-center justify-between border-b-3 border-foreground bg-brutal-yellow px-4 py-2 text-brutal-ink">
 					<div className="flex items-center gap-2">
 						<BookmarkCheck className="h-4 w-4" strokeWidth={2.5} />
 						<span className="font-heading text-[11px] font-bold uppercase tracking-[0.22em]">
 							Continue Reading
 						</span>
 					</div>
-					<span className="font-mono text-[11px] font-bold text-foreground/80">
+					<span className="font-mono text-[11px] font-bold text-brutal-ink/80">
 						{visitedCount}/{allPages.length} · {percent}%
 					</span>
 				</div>

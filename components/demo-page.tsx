@@ -61,8 +61,8 @@ export function DemoPage({
 							className="animate-fade-up flex flex-wrap items-center gap-2 pt-1"
 							style={{ animationDelay: "210ms" }}
 						>
-							<span className="inline-flex items-center gap-1.5 border-2 border-foreground bg-brutal-yellow px-2 py-0.5 font-mono text-[11px] font-bold tracking-wide text-foreground">
-								<span className="inline-block h-1.5 w-1.5 bg-foreground" />
+							<span className="inline-flex items-center gap-1.5 border-2 border-foreground bg-brutal-yellow px-2 py-0.5 font-mono text-[11px] font-bold tracking-wide text-brutal-ink">
+								<span className="inline-block h-1.5 w-1.5 bg-brutal-ink" />
 								NEXT {NEXT_VERSION}
 							</span>
 							{docsHref && (
@@ -176,7 +176,7 @@ function classifyFile(
 		return {
 			icon: FileText,
 			label: "DOC",
-			headerClass: "bg-brutal-purple text-foreground",
+			headerClass: "bg-brutal-purple text-brutal-ink",
 			chipBg,
 		};
 	}
@@ -184,7 +184,7 @@ function classifyFile(
 		return {
 			icon: Boxes,
 			label: "COMPONENT",
-			headerClass: "bg-brutal-cyan text-foreground",
+			headerClass: "bg-brutal-cyan text-brutal-ink",
 			chipBg,
 		};
 	}
@@ -196,7 +196,7 @@ function classifyFile(
 		return {
 			icon: Braces,
 			label: "CONFIG",
-			headerClass: "bg-brutal-yellow text-foreground",
+			headerClass: "bg-brutal-yellow text-brutal-ink",
 			chipBg,
 		};
 	}
@@ -219,7 +219,7 @@ function classifyFile(
 	return {
 		icon: FileCode,
 		label: "FILE",
-		headerClass: "bg-brutal-yellow text-foreground",
+		headerClass: "bg-brutal-yellow text-brutal-ink",
 		chipBg,
 	};
 }

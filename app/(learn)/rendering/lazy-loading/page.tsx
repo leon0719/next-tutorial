@@ -1,14 +1,15 @@
 import dynamic from "next/dynamic";
 import { getTranslations } from "next-intl/server";
 import { CodeBlock, DemoBox, DemoPage, Section } from "@/components/demo-page";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const DynamicHeavyComponent = dynamic(
 	() => import("./heavy-component").then((mod) => mod.HeavyComponent),
 	{
 		loading: () => (
-			<div className="rounded-lg border p-8 animate-pulse bg-muted/30">
-				<div className="h-4 bg-muted rounded w-1/3 mb-4" />
-				<div className="h-40 bg-muted rounded" />
+			<div className="rounded-lg border p-8">
+				<Skeleton className="mb-4 h-4 w-1/3" />
+				<Skeleton className="h-40 w-full" />
 			</div>
 		),
 	},

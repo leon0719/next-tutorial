@@ -1,7 +1,7 @@
 "use client";
 
 import { Collapsible } from "@base-ui/react/collapsible";
-import { ChevronRight, Home, MousePointer2 } from "lucide-react";
+import { ChevronRight, Home } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -22,7 +22,6 @@ import {
 	SidebarRail,
 } from "@/components/ui/sidebar";
 import { type NavGroup, NEXT_VERSION, navGroups } from "@/lib/pages";
-import { usePrefs } from "@/lib/stores/prefs";
 import { useProgress } from "@/lib/stores/progress";
 import { useStoreHydrated } from "@/lib/stores/use-store-hydrated";
 import { cn } from "@/lib/utils";
@@ -37,9 +36,6 @@ export function AppSidebar() {
 	const hydrated = useStoreHydrated(useProgress);
 	const visited = useProgress((s) => s.visited);
 	const countVisitedIn = useProgress((s) => s.countVisitedIn);
-	const customCursor = usePrefs((s) => s.customCursor);
-	const toggleCursor = usePrefs((s) => s.toggleCustomCursor);
-
 	const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() => {
 		const initial: Record<string, boolean> = {};
 		for (const group of navGroups) {
@@ -101,7 +97,7 @@ export function AppSidebar() {
 														"mr-1 inline-flex items-center rounded-sm border-2 px-1 font-mono text-[9px] font-bold tabular-nums",
 														groupComplete
 															? "border-foreground bg-brutal-orange text-background"
-															: "border-foreground bg-brutal-yellow text-foreground",
+															: "border-foreground bg-brutal-yellow text-brutal-ink",
 													)}
 												>
 													{groupVisited}/{group.items.length}
@@ -159,25 +155,7 @@ export function AppSidebar() {
 			<SidebarFooter className="border-t-3 border-foreground">
 				<div className="flex items-center justify-between gap-1 px-2">
 					<LocaleSwitcher />
-					<div className="flex items-center gap-1">
-						<button
-							type="button"
-							onClick={toggleCursor}
-							aria-label={
-								customCursor ? "Disable custom cursor" : "Enable custom cursor"
-							}
-							aria-pressed={customCursor}
-							className={cn(
-								"inline-flex h-8 w-8 items-center justify-center border-2 border-foreground transition-all duration-150",
-								customCursor
-									? "bg-brutal-orange text-background shadow-[2px_2px_0_var(--foreground)]"
-									: "bg-background hover:bg-muted",
-							)}
-						>
-							<MousePointer2 className="h-3.5 w-3.5" strokeWidth={2.5} />
-						</button>
-						<ThemeToggle />
-					</div>
+					<ThemeToggle />
 				</div>
 			</SidebarFooter>
 

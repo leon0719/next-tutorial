@@ -48,10 +48,14 @@
 			"includes": ["components/ui/**"],
 			"linter": {
 				"rules": {
-					"suspicious": { "noDocumentCookie": "off" },
+					"suspicious": {
+						"noDocumentCookie": "off"
+					},
 					"a11y": {
 						"useFocusableInteractive": "off",
-						"useSemanticElements": "off"
+						"useSemanticElements": "off",
+						"useKeyWithClickEvents": "off",
+						"noLabelWithoutControl": "off"
 					},
 					"correctness": { "useExhaustiveDependencies": "off" }
 				}
